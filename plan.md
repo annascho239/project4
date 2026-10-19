@@ -22,7 +22,7 @@ Main risk: the existing pause button changes only fog and lights while JavaScrip
 - [x] **Coordinate ambience and pause.** Added verified CC0 ambient audio and a shared pausable scheduler; Pause/Resume now coordinates CSS/Web Animations, the audio element, Web Audio, hints, story timing, ambient generation, and scene interaction.
 - [x] **Complete The Last Ride.** Added distinct correct/wrong audiovisual trigger feedback, a 7-second beginning/middle/end sequence, interaction locking, clean reset, replay, ambient-audio ducking, and a static reduced-motion presentation.
 - [x] **Accessibility and responsive check.** Headless Chrome smoke tests passed for controls, 44×44 minimum targets, wrong-order feedback, keyboard replay, interaction locking, pause/resume, reduced motion, and layouts at 320×568, 375×667, and 430×932.
-- [ ] **Deploy and verify.** Commit the Phase 1 checkpoint, push `main`, confirm `https://annascho239.github.io/project4/` serves it, then have the Developer test that URL on a physical smartphone.
+- [ ] **Deploy and verify.** Phase 1 commit `b69cd05` was pushed to `main`. The public GitHub Pages HTML matched local `index.html` byte-for-byte, and both browser suites passed against `https://annascho239.github.io/project4/`. Remaining: the Developer must test that URL on a physical smartphone.
 
 Test each result before continuing, including related behavior that already works. Update priorities as evidence emerges and preserve meaningful working checkpoints in git. Before delivery, verify the deployed app against the brief and specification.
 
@@ -36,7 +36,8 @@ No peer playtest observations have been recorded yet. Automated and Agent-run ch
 - `tests/phase1-reduced-motion.html`: all checks passed with Chrome forced to `prefers-reduced-motion: reduce`; recurring ambient animation stayed off and the static story completed and reset.
 - A 375×667 rendered scene was visually inspected. The background composition remained legible, controls did not obscure the focal point, and the carousel effect aligned with the horses.
 - The original OpenGameArt page identifies the selected ambient track as CC0. The downloaded Ogg file was recognized as stereo Vorbis audio at 44.1 kHz.
-- Remaining evidence: confirm the deployed commit is live, then record the Developer's physical-phone result and any peer observations.
+- GitHub Pages served the same SHA-1 content hash for the local and deployed `index.html` (`8770c114d6824085ef6fd13880681e2511bd1cbf`), and both deployed smoke-test pages reported `pass`.
+- Remaining evidence: record the Developer's physical-phone result and any peer observations.
 
 Keep implementation progress and verification here. Update `research.md` when evidence changes a decision and `spec.md` when intended behavior changes; link to those updates rather than duplicating them. Record consequential changes, not every small adjustment.
 
