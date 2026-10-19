@@ -127,13 +127,11 @@
       outline-offset: 3px;
     }
 
-    /* Carousel — left foreground */
-    #carousel-zone {
-      left: 2%;
-      bottom: 18%;
-      width: 38%;
-      height: 28%;
-    }
+    /* Carousel horses */
+    .horse { /* no outline */ }
+    #horse-1 { left: 0%;  bottom: 35%; width: 12%; height: 18%; }
+    #horse-2 { left: 11%; bottom: 33%; width: 12%; height: 18%; }
+    #horse-3 { left: 22%; bottom: 35%; width: 12%; height: 18%; }
 
     /* Clown booth — right side */
     #clown-zone {
@@ -143,12 +141,12 @@
       height: 26%;
     }
 
-    /* Fortune teller booth — center mid-ground */
-    #fortune-zone {
-      left: 30%;
-      top: 42%;
-      width: 38%;
-      height: 22%;
+    /* Circus tent — center upper */
+    #tent-zone {
+      left: 20%;
+      top: 10%;
+      width: 58%;
+      height: 38%;
     }
 
     /* ── Start screen ──────────────────────────────────── */
@@ -201,6 +199,157 @@
       outline: none;
     }
 
+    /* ── String lights ─────────────────────────────────── */
+
+    .light {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ffcc55;
+      box-shadow: 0 0 6px 3px rgba(255, 200, 80, 0.7),
+                  0 0 16px 6px rgba(255, 160, 40, 0.35);
+      animation: flicker linear infinite;
+    }
+
+    @keyframes flicker {
+      0%   { opacity: 1;   }
+      8%   { opacity: 0.2; }
+      10%  { opacity: 1;   }
+      40%  { opacity: 0.9; }
+      42%  { opacity: 0.1; }
+      44%  { opacity: 0.9; }
+      76%  { opacity: 0.3; }
+      78%  { opacity: 1;   }
+      100% { opacity: 1;   }
+    }
+
+    /* ── Bats ───────────────────────────────────────────── */
+
+    .bat {
+      position: absolute;
+      width: 28px;
+      height: 14px;
+      pointer-events: none;
+    }
+
+    .bat svg {
+      width: 100%;
+      height: 100%;
+      animation: wingFlap 0.25s ease-in-out infinite alternate;
+      transform-origin: center;
+    }
+
+    @keyframes wingFlap {
+      from { transform: scaleY(1);    }
+      to   { transform: scaleY(0.35); }
+    }
+
+    @keyframes batFly {
+      from { transform: translateX(-60px); opacity: 0; }
+      5%   { opacity: 1; }
+      95%  { opacity: 1; }
+      to   { transform: translateX(calc(100vw + 60px)); opacity: 0; }
+    }
+
+    /* ── Fog ───────────────────────────────────────────── */
+
+    .fog {
+      position: absolute;
+      bottom: 0;
+      width: 300%;
+      left: -100%;
+      height: 22%;
+      background: linear-gradient(
+        to top,
+        rgba(180, 200, 160, 0.35) 0%,
+        rgba(160, 185, 140, 0.18) 40%,
+        transparent 100%
+      );
+    }
+
+    .fog-1 {
+      animation: fogLeft 10s ease-in-out infinite alternate;
+    }
+
+    .fog-2 {
+      height: 14%;
+      opacity: 0.6;
+      animation: fogRight 15s ease-in-out infinite alternate;
+      animation-delay: -6s;
+    }
+
+    @keyframes fogLeft {
+      from { transform: translateX(-25%); opacity: 0.9; }
+      to   { transform: translateX(25%);  opacity: 0.5; }
+    }
+
+    @keyframes fogRight {
+      from { transform: translateX(25%);  opacity: 0.5; }
+      to   { transform: translateX(-25%); opacity: 0.9; }
+    }
+
+    /* ── Carousel story ─────────────────────────────────── */
+
+    .horse-glow {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(160,220,255,0.7) 0%, transparent 70%);
+      animation: horsePulse 0.5s ease-out forwards;
+      pointer-events: none;
+    }
+    @keyframes horsePulse {
+      0%   { opacity: 1;   transform: scale(0.8); }
+      60%  { opacity: 0.8; transform: scale(1.3); }
+      100% { opacity: 0;   transform: scale(1.5); }
+    }
+
+    .carousel-spin {
+      position: absolute;
+      left: -2%;
+      bottom: 28%;
+      width: 40%;
+      height: 32%;
+      border-radius: 50%;
+      border: 3px solid rgba(160, 220, 255, 0.5);
+      box-shadow: 0 0 20px 8px rgba(120, 200, 255, 0.3);
+      animation: spinRing 1.5s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes spinRing {
+      from { transform: rotate(0deg);   }
+      to   { transform: rotate(360deg); }
+    }
+
+    .ghost {
+      position: absolute;
+      width: 22px;
+      height: 30px;
+      background: radial-gradient(ellipse at 50% 40%, rgba(200,235,255,0.85) 0%, rgba(180,220,255,0.3) 60%, transparent 100%);
+      border-radius: 50% 50% 40% 40%;
+      animation: ghostRise 3s ease-in forwards;
+      pointer-events: none;
+    }
+    @keyframes ghostRise {
+      0%   { opacity: 0;   transform: translateY(0)     scale(0.5); }
+      20%  { opacity: 0.9; transform: translateY(-20px) scale(1);   }
+      80%  { opacity: 0.8; transform: translateY(-80px) scale(1.1); }
+      100% { opacity: 0;   transform: translateY(-110px) scale(0.8); }
+    }
+
+    .story-flash {
+      position: absolute;
+      inset: 0;
+      background: rgba(220, 240, 255, 0.85);
+      pointer-events: none;
+      animation: flashOut 0.6s ease-out forwards;
+    }
+    @keyframes flashOut {
+      0%   { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
     /* Reduced-motion: disable all transitions/animations */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -223,9 +372,11 @@
 
   <!-- Layer 2: Interactive hotspots -->
   <div id="hotspot-layer">
-    <div id="carousel-zone"  class="hotspot" role="button" tabindex="0" aria-label="Carousel"></div>
+    <div id="horse-1" class="hotspot horse" role="button" tabindex="0" aria-label="Horse 1"></div>
+    <div id="horse-2" class="hotspot horse" role="button" tabindex="0" aria-label="Horse 2"></div>
+    <div id="horse-3" class="hotspot horse" role="button" tabindex="0" aria-label="Horse 3"></div>
     <div id="clown-zone"     class="hotspot" role="button" tabindex="0" aria-label="Clown booth"></div>
-    <div id="fortune-zone"   class="hotspot" role="button" tabindex="0" aria-label="Fortune teller booth"></div>
+    <div id="tent-zone"      class="hotspot" role="button" tabindex="0" aria-label="Circus tent"></div>
   </div>
 
   <!-- Layer 3: Story animations -->
@@ -278,15 +429,76 @@
 
   function togglePause() {
     paused = !paused;
-    pauseBtn.textContent      = paused ? '▶' : '⏸';
+    pauseBtn.textContent = paused ? '▶' : '⏸';
     pauseBtn.setAttribute('aria-label', paused ? 'Resume' : 'Pause');
-    // TODO: pause/resume ambient animations and audio
+    const playState = paused ? 'paused' : 'running';
+    [...fogEls, ...lightEls].forEach(el => el.style.animationPlayState = playState);
   }
 
   /* ── Ambient effects (stubs) ────────────────────────── */
 
+  const ambientLayer = document.getElementById('ambient-layer');
+  const fogEls = [];
+  const lightEls = [];
+
+  /* Horizontal positions (% from left) and vertical position (% from top)
+     for each string light — adjust to match your image */
+  const lightPositions = [
+    { x: 5,  y: 22 }, { x: 13, y: 24 }, { x: 22, y: 26 },
+    { x: 31, y: 27 }, { x: 40, y: 28 }, { x: 50, y: 29 },
+    { x: 60, y: 28 }, { x: 69, y: 27 }, { x: 78, y: 26 },
+    { x: 88, y: 24 }, { x: 96, y: 22 },
+  ];
+
   function startAmbient() {
-    // TODO: fog layer, bat animations, light flicker
+    /* Fog */
+    [1, 2].forEach(n => {
+      const fog = document.createElement('div');
+      fog.className = `fog fog-${n}`;
+      ambientLayer.appendChild(fog);
+      fogEls.push(fog);
+    });
+
+    /* Bats — spawn periodically, fly across */
+    let batInterval = null;
+
+    function spawnBat() {
+      if (paused) return;
+      const bat = document.createElement('div');
+      bat.className = 'bat';
+      const topPct = 8 + Math.random() * 35; /* upper portion of scene */
+      const duration = 4 + Math.random() * 4;
+      const size = 20 + Math.random() * 16;
+      bat.style.top    = topPct + '%';
+      bat.style.left   = '0';
+      bat.style.width  = size + 'px';
+      bat.style.height = (size * 0.5) + 'px';
+      bat.style.animation = `batFly ${duration}s linear forwards`;
+      bat.innerHTML = `<svg viewBox="0 0 40 20" fill="#111">
+        <path d="M20 10 C14 4 4 2 0 6 C4 8 8 8 10 10 C8 12 4 14 2 18 C6 16 12 14 16 12 L20 14 L24 12 C28 14 34 16 38 18 C36 14 32 12 30 10 C32 8 36 8 40 6 C36 2 26 4 20 10Z"/>
+      </svg>`;
+      ambientLayer.appendChild(bat);
+      bat.addEventListener('animationend', () => bat.remove());
+    }
+
+    spawnBat();
+    setTimeout(spawnBat, 1800);
+    batInterval = setInterval(() => {
+      spawnBat();
+      if (Math.random() > 0.6) setTimeout(spawnBat, 900);
+    }, 4000 + Math.random() * 3000);
+
+    /* String lights */
+    lightPositions.forEach(({ x, y }, i) => {
+      const light = document.createElement('div');
+      light.className = 'light';
+      light.style.left = x + '%';
+      light.style.top  = y + '%';
+      light.style.animationDuration  = (2.5 + Math.random() * 3) + 's';
+      light.style.animationDelay     = -(Math.random() * 4) + 's';
+      ambientLayer.appendChild(light);
+      lightEls.push(light);
+    });
   }
 
   /* ── Hint system ────────────────────────────────────── */
@@ -298,7 +510,7 @@
     { delay: 15000, text: "Something lurks in the shadows…" },
     { delay: 35000, text: "The carousel looks like it hasn't moved in years." },
     { delay: 60000, text: "That clown's grin seems… off." },
-    { delay: 90000, text: "What secrets does the fortune teller keep?" },
+    { delay: 90000, text: "Something massive stirs inside the tent…" },
   ];
 
   function scheduleHints() {
@@ -315,16 +527,85 @@
     hintTimer = setTimeout(() => hintEl.classList.remove('visible'), 5000);
   }
 
-  /* ── Hotspot interactions (stubs) ───────────────────── */
+  /* ── Carousel story ─────────────────────────────────── */
+
+  const CAROUSEL_SEQUENCE = ['horse-1', 'horse-2', 'horse-3'];
+  let carouselProgress = 0;
+  const storyLayer = document.getElementById('story-layer');
+
+  function onHorseTap(id) {
+    const expected = CAROUSEL_SEQUENCE[carouselProgress];
+    if (id !== expected) {
+      /* Wrong order — flash red and reset */
+      const el = document.getElementById(id);
+      el.style.outline = '2px solid rgba(255,60,60,0.8)';
+      setTimeout(() => el.style.outline = '', 400);
+      carouselProgress = 0;
+      return;
+    }
+
+    /* Correct tap — glow the horse */
+    const el = document.getElementById(id);
+    const glow = document.createElement('div');
+    glow.className = 'horse-glow';
+    el.appendChild(glow);
+    glow.addEventListener('animationend', () => glow.remove());
+
+    carouselProgress++;
+    if (carouselProgress >= CAROUSEL_SEQUENCE.length) {
+      carouselProgress = 0;
+      playCarouselStory();
+    }
+  }
+
+  function playCarouselStory() {
+    storyPlaying = true;
+
+    /* Spinning ring over carousel */
+    const spin = document.createElement('div');
+    spin.className = 'carousel-spin';
+    storyLayer.appendChild(spin);
+
+    /* Ghost children rise after 1.5s */
+    const ghostPositions = [
+      { left: '4%',  bottom: '42%' },
+      { left: '13%', bottom: '44%' },
+      { left: '22%', bottom: '42%' },
+    ];
+    ghostPositions.forEach(({ left, bottom }, i) => {
+      setTimeout(() => {
+        const ghost = document.createElement('div');
+        ghost.className = 'ghost';
+        ghost.style.left   = left;
+        ghost.style.bottom = bottom;
+        storyLayer.appendChild(ghost);
+        ghost.addEventListener('animationend', () => ghost.remove());
+      }, 1500 + i * 400);
+    });
+
+    /* Flash and end after 6.5s */
+    setTimeout(() => {
+      const flash = document.createElement('div');
+      flash.className = 'story-flash';
+      storyLayer.appendChild(flash);
+      flash.addEventListener('animationend', () => {
+        flash.remove();
+        spin.remove();
+        storyPlaying = false;
+      });
+    }, 6500);
+  }
+
+  /* ── Hotspot dispatch ───────────────────────────────── */
 
   function onHotspotTap(id) {
     if (paused || storyPlaying) return;
-    console.log('tapped:', id);
-    // TODO: trigger progress for each story
+    if (id.startsWith('horse')) { onHorseTap(id); return; }
+    /* TODO: clown and tent stories */
   }
 
   document.querySelectorAll('.hotspot').forEach(el => {
-    el.addEventListener('click',   () => onHotspotTap(el.id));
+    el.addEventListener('click', () => onHotspotTap(el.id));
     el.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') onHotspotTap(el.id);
     });

@@ -74,16 +74,18 @@ Start a fresh chat with:
 
 **Risk:** Tap targets on a painted face need to be large enough on mobile — overlay invisible tap zones over each feature.
 
-### Story 3 — The Fortune Teller
+### Story 3 — The Tent
 
-**Trigger:** Tap the curtained game booth three times
+**Trigger object:** The large ripped circus tent (center, upper portion of scene)
+**Trigger:** Tap the tent three times
 **Sequence:**
-- Each tap: booth shudders, a low hum grows
-- On third tap: curtain parts, hunched figure appears behind a glowing crystal ball
-- Crystal ball shows a skull (glow pulse animation)
-- Fog pours from booth base (particle or CSS)
-- Booth slams shut with a bang SFX, curtain settles
-- Total runtime: 6–9 seconds
+- Each tap: the sickly interior glow pulses and a low rumble builds
+- On third tap: the tent flap tears open wider, a massive shadow figure briefly fills the entrance
+- A burst of sick green light floods outward, then cuts to black
+- The flap falls back, the glow dims to its original state
+- Total runtime: 6–8 seconds
+
+**Risk:** The tent is a large zone — taps anywhere on it should count, not just the flap.
 
 ---
 
