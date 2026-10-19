@@ -710,6 +710,12 @@
     return timer;
   }
 
+  function cancelScheduled(timer) {
+    if (!timer) return;
+    timer.clear();
+    activeTimers.delete(timer);
+  }
+
   function announce(message) {
     statusEl.textContent = message;
   }
@@ -868,30 +874,43 @@
   /* ── Hint system ────────────────────────────────────── */
 
   const hintEl = document.getElementById('hint');
-  let hintTimer = null;
+  let hintHideTimer = null;
+  let nextHintTimer = null;
+  let discoveryHintLevel = 0;
 
-  const hints = [
-    { delay:  12000, text: "The air smells of old popcorn… and something worse." },
-    { delay:  30000, text: "The carousel horses look like they're waiting for a rider." },
-    { delay:  55000, text: "Three horses remain. Their lights once chased from left to right." },
-    { delay:  85000, text: "The last ride only starts when every horse remembers its place." },
+  const discoveryHints = [
+    "The carousel creaks louder than anything else here.",
+    "Three horses wait beneath the dead carnival lights.",
+    "The carousel's lights once chased from left to right.",
   ];
 
-  function scheduleHints() {
-    hints.forEach(({ delay, text }) => {
-      schedule(() => showHint(text), delay);
-    });
+  function contextualHint() {
+    if (carouselProgress === 1) return 'The first note lingers. The center horse shivers.';
+    if (carouselProgress === 2) return 'Two notes echo together. The horse on the right stays silent.';
+    const index = Math.min(discoveryHintLevel, discoveryHints.length - 1);
+    discoveryHintLevel++;
+    return discoveryHints[index];
+  }
+
+  function scheduleHints(delay = 12000) {
+    cancelScheduled(nextHintTimer);
+    nextHintTimer = schedule(() => {
+      showHint(contextualHint());
+      scheduleHints(20000);
+    }, delay);
   }
 
   function showHint(text) {
-    if (storyPlaying) {
-      schedule(() => showHint(text), 1000);
-      return;
-    }
+    if (storyPlaying) return;
     hintEl.textContent = text;
     hintEl.classList.add('visible');
-    hintTimer?.clear();
-    hintTimer = schedule(() => hintEl.classList.remove('visible'), 5000);
+    cancelScheduled(hintHideTimer);
+    hintHideTimer = schedule(() => hintEl.classList.remove('visible'), 5000);
+  }
+
+  function showInteractionHint(text) {
+    showHint(text);
+    scheduleHints(16000);
   }
 
   /* ── Story text helpers ─────────────────────────────── */
@@ -943,6 +962,7 @@
       schedule(() => el.style.outline = '', 400);
       playTone(110, 0.24, 'sawtooth', 0.035);
       carouselProgress = 0;
+      showInteractionHint('The tune breaks. The horses fall silent and wait to begin again.');
       announce('Wrong horse. The carousel sequence reset.');
       return;
     }
@@ -960,6 +980,10 @@
     if (carouselProgress >= CAROUSEL_SEQUENCE.length) {
       carouselProgress = 0;
       playCarouselStory();
+    } else if (carouselProgress === 1) {
+      showInteractionHint('A faint note answers. The center horse begins to stir.');
+    } else {
+      showInteractionHint('Two notes echo together. One horse remains silent.');
     }
   }
 
@@ -968,6 +992,8 @@
     ambientAudio.volume = 0.1;
     hotspotLayer.inert = true;
     hotspotLayer.setAttribute('aria-hidden', 'true');
+    cancelScheduled(nextHintTimer);
+    cancelScheduled(hintHideTimer);
     hintEl.classList.remove('visible');
     announce('The Last Ride begins.');
     showStoryTitle('The Last Ride');
@@ -1029,6 +1055,7 @@
     hotspotLayer.removeAttribute('aria-hidden');
     ambientAudio.volume = 0.24;
     announce('The Last Ride has ended. The carousel can be played again.');
+    scheduleHints(10000);
   }
 
   /* ── Clown story ────────────────────────────────────── */

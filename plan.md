@@ -32,6 +32,8 @@ No peer playtest observations have been recorded yet. Automated and Agent-run ch
 
 Developer observation on 2026-10-19: tapping visible parts of the carousel horses was unreliable because the original 44px rectangles covered only the center of each figure. Revision: divide the full carousel footprint into three adjacent, non-overlapping zones extending from the horses' heads through their legs. This preserves the ordered trigger while making the illustrated figures reliable targets.
 
+Developer observation on 2026-10-19: fixed-time hints felt random and disconnected from horse taps. Revision: make timed hints depend on current sequence progress, show immediate narrative feedback after correct and incorrect taps, and postpone the next discovery hint after interaction.
+
 ### Implementation evidence — 2026-10-19
 
 - `tests/phase1-smoke.html`: all checks passed in headless Chrome, including ambience creation, audio asset loading, three responsive layouts, target sizing, wrong-order reset, story start/end, pause freeze, interaction lock/unlock, and keyboard replay.

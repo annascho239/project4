@@ -26,7 +26,7 @@ Deliver a stable smartphone playtest of an abandoned carnival that rewards explo
 - The tent is the focal point. The carousel, clown booth, and game stalls provide three distinct environmental features.
 - Fog, bats, and unevenly flickering string lights create the ambient motion.
 - `assets/void-estate.ogg` loops quietly after Enter. Its verified CC0 source is recorded in `research.md` and in the in-app credits.
-- Progressive text hints begin atmospheric and eventually suggest the carousel's interaction without directly stating the full solution.
+- Text hints are contextual rather than random: discovery hints become more explicit over time, correct taps describe the next horse reacting, and a wrong tap explains that the tune broke and the sequence reset. Interaction postpones the next timed hint so messages do not compete.
 - The Phase 1 story is **The Last Ride**. The User taps the three carousel horses from left to right. Correct taps glow and play rising notes; a wrong tap gives red visual feedback, a low tone, and resets progress.
 - Completing the sequence begins a 7-second audiovisual story: the carousel activates, ghost riders emerge, the line “They never left” reveals the ending, and a final flash returns the scene to idle.
 - The clown and tent remain environmental features. Their experimental story code and assets are preserved but their hotspots are inactive until Phase 2.

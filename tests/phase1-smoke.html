@@ -75,8 +75,15 @@
     horses[1].click();
     await wait(30);
     check(doc.getElementById('status').textContent.includes('reset'), 'Wrong horse gives reset feedback');
+    check(doc.getElementById('hint').textContent.includes('tune breaks'), 'Wrong tap gives a matching visible hint');
 
-    horses.forEach(horse => horse.click());
+    horses[0].click();
+    await wait(30);
+    check(doc.getElementById('hint').textContent.includes('center horse'), 'First correct tap hints at the center horse');
+    horses[1].click();
+    await wait(30);
+    check(doc.getElementById('hint').textContent.includes('One horse remains'), 'Second correct tap acknowledges progress');
+    horses[2].click();
     await wait(150);
     check(Boolean(doc.querySelector('.carousel-spin')), 'Correct sequence starts The Last Ride');
     check(doc.getElementById('hotspot-layer').inert, 'Story locks scene interaction');
