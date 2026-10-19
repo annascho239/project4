@@ -31,7 +31,10 @@
     await wait(100);
     check(doc.querySelectorAll('.fog, .light, .bat').length === 0, 'Recurring ambient motion does not start');
 
-    [...doc.querySelectorAll('.horse')].forEach(horse => horse.click());
+    const carousel = doc.getElementById('carousel-zone');
+    carousel.click();
+    carousel.click();
+    carousel.click();
     await wait(100);
     check(Boolean(doc.querySelector('.reduced-story-glow')), 'Story uses its static reduced-motion presentation');
     check(!doc.querySelector('.carousel-spin'), 'Spinning effect is omitted');

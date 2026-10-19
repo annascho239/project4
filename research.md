@@ -52,15 +52,15 @@ Start a fresh chat with:
 
 ### Story 1 — The Carousel
 
-**Trigger:** Tap three carousel horses in a specific order (left → center → right, or another order set by a clue)
+**Trigger:** Tap anywhere on the carousel three times; each tap wakes the next horse from left to right.
 **Sequence:**
-- Horses light up individually on each correct tap (audiovisual feedback)
+- Horses light up individually on each carousel tap (audiovisual feedback)
 - On third tap: carousel starts spinning, distorted calliope music plays
 - Ghostly children appear riding the horses (CSS animation / overlay)
 - Shriek SFX, then children dissolve, carousel grinds to a halt
 - Total runtime: 5–8 seconds; scene returns to idle
 
-**Risk:** Ordering puzzles can feel arbitrary — clue system needs to hint the order, not just the objects.
+**Phase 1 revision:** The original separate-horse ordering puzzle proved unreliable because the illustrated horses overlap. One carousel-wide target now advances three clear audiovisual progress steps without requiring precise taps.
 
 ### Story 2 — The Clown
 
@@ -137,7 +137,7 @@ Investigate unfamiliar techniques or asset sources as needed. Verify usage terms
 
 ### Phase 1 decisions — 2026-10-19
 
-- The carousel is the one complete Phase 1 story because its three distinct horses naturally support ordered discovery and visible progress.
+- The carousel is the one complete Phase 1 story because three taps on the ride naturally support discovery and visible progress without precision targeting.
 - The clown and tent remain visual features, but their experimental hotspots are inactive for the first playtest. Presenting unfinished extra stories would make it unclear which interaction represents the intended quality bar. Their code and assets remain available for Phase 2.
 - Ambient audio uses the verified CC0 track above. Short trigger and story sounds are synthesized locally so feedback responds immediately and remains pausable through the shared audio context.
 - The live target is `https://annascho239.github.io/project4/`, which was serving the last committed version when checked before this Phase 1 update.

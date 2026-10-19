@@ -44,17 +44,14 @@
     check(doc.querySelectorAll('.bat').length >= 1, 'Bat ambience starts');
     check(doc.getElementById('ambient-audio').error === null, 'Ambient audio asset loads without an error');
 
-    const horses = [...doc.querySelectorAll('.horse')];
+    const carousel = doc.getElementById('carousel-zone');
     if (new URLSearchParams(location.search).has('show-targets')) {
-      const colors = ['rgba(255, 80, 80, .35)', 'rgba(80, 180, 255, .35)', 'rgba(100, 255, 130, .35)'];
-      horses.forEach((horse, index) => { horse.style.background = colors[index]; });
+      carousel.style.background = 'rgba(100, 255, 130, .3)';
     }
-    const horseTestPoints = [
-      [{ x: 8, y: 52 }, { x: 5, y: 58 }, { x: 10, y: 63 }],
-      [{ x: 22, y: 55 }, { x: 20, y: 56 }, { x: 24, y: 56 }],
-      [{ x: 34, y: 55 }, { x: 28, y: 58 }, { x: 31, y: 62 }, { x: 17, y: 60 }],
+    const carouselTestPoints = [
+      { x: 8, y: 22 }, { x: 24, y: 32 }, { x: 10, y: 52 }, { x: 30, y: 60 },
     ];
-    check(horses.length === 3, 'Only the three Phase 1 horse hotspots are active');
+    check(doc.querySelectorAll('.hotspot').length === 1, 'Only the carousel-wide Phase 1 hotspot is active');
     for (const [width, height] of [[320, 568], [375, 667], [390, 844], [393, 852], [430, 932]]) {
       frame.style.width = `${width}px`;
       frame.style.height = `${height}px`;
@@ -73,40 +70,33 @@
         Math.abs(backgroundRect.left - sceneRect.left) < 0.5 && Math.abs(backgroundRect.width - sceneRect.width) < 0.5,
         `${width}×${height}: background and hotspot coordinates stay aligned`
       );
-      horses.forEach((horse, index) => {
-        const rect = horse.getBoundingClientRect();
-        check(rect.width >= 44 && rect.height >= 44, `${width}px: horse ${index + 1} target is at least 44×44`);
-        const samplePoints = horseTestPoints[index]
-          .map(point => [
-            sceneRect.left + sceneRect.width * point.x / 100,
-            sceneRect.top + sceneRect.height * point.y / 100,
-          ])
-          .filter(([x, y]) => x >= 0 && x < win.innerWidth && y >= 0 && y < win.innerHeight);
-        check(
-          samplePoints.length > 0 &&
-          samplePoints.every(([x, y]) => doc.elementFromPoint(x, y) === horse),
-          `${width}px: sampled horse ${index + 1} silhouette maps to the correct trigger (${samplePoints.map(([x, y]) => doc.elementFromPoint(x, y)?.id || 'none').join(', ')})`
-        );
-      });
+      const carouselRect = carousel.getBoundingClientRect();
+      check(carouselRect.width >= 44 && carouselRect.height >= 44, `${width}px: carousel target is at least 44×44`);
+      const samplePoints = carouselTestPoints
+        .map(point => [
+          sceneRect.left + sceneRect.width * point.x / 100,
+          sceneRect.top + sceneRect.height * point.y / 100,
+        ])
+        .filter(([x, y]) => x >= 0 && x < win.innerWidth && y >= 0 && y < win.innerHeight);
+      check(
+        samplePoints.length > 0 && samplePoints.every(([x, y]) => doc.elementFromPoint(x, y) === carousel),
+        `${width}px: visible carousel structure maps to its single trigger`
+      );
     }
     /* Keep the interaction sequence at a modern tall-phone size. */
     frame.style.width = '393px';
     frame.style.height = '852px';
 
-    horses[1].click();
+    carousel.click();
     await wait(30);
-    check(doc.getElementById('status').textContent.includes('reset'), 'Wrong horse gives reset feedback');
-    check(doc.getElementById('hint').textContent.includes('tune breaks'), 'Wrong tap gives a matching visible hint');
-
-    horses[0].click();
+    check(doc.getElementById('status').textContent.includes('1 of 3'), 'First carousel tap reports progress');
+    check(doc.getElementById('hint').textContent.includes('One horse wakes'), 'First tap wakes one horse');
+    carousel.click();
     await wait(30);
-    check(doc.getElementById('hint').textContent.includes('center horse'), 'First correct tap hints at the center horse');
-    horses[1].click();
-    await wait(30);
-    check(doc.getElementById('hint').textContent.includes('One horse remains'), 'Second correct tap acknowledges progress');
-    horses[2].click();
+    check(doc.getElementById('hint').textContent.includes('second horse'), 'Second tap wakes another horse');
+    carousel.click();
     await wait(150);
-    check(Boolean(doc.querySelector('.carousel-spin')), 'Correct sequence starts The Last Ride');
+    check(Boolean(doc.querySelector('.carousel-spin')), 'Three carousel taps start The Last Ride');
     check(doc.getElementById('hotspot-layer').inert, 'Story locks scene interaction');
 
     doc.getElementById('pause-btn').click();
@@ -123,9 +113,9 @@
     check(!doc.querySelector('.carousel-spin'), 'Story ends after resume');
     check(!doc.getElementById('hotspot-layer').inert, 'Interaction unlocks after the story');
 
-    horses.forEach(horse => {
-      horse.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-    });
+    for (let tap = 0; tap < 3; tap++) {
+      carousel.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    }
     await wait(150);
     check(Boolean(doc.querySelector('.carousel-spin')), 'Keyboard input replays the story');
 

@@ -26,8 +26,8 @@ Deliver a stable smartphone playtest of an abandoned carnival that rewards explo
 - The tent is the focal point. The carousel, clown booth, and game stalls provide three distinct environmental features.
 - Fog, bats, and unevenly flickering string lights create the ambient motion.
 - `assets/void-estate.ogg` loops quietly after Enter. Its verified CC0 source is recorded in `research.md` and in the in-app credits.
-- Text hints are contextual rather than random: discovery hints become more explicit over time, correct taps describe the next horse reacting, and a wrong tap explains that the tune broke and the sequence reset. Interaction postpones the next timed hint so messages do not compete.
-- The Phase 1 story is **The Last Ride**. The User taps the three carousel horses from left to right. Correct taps glow and play rising notes; a wrong tap gives red visual feedback, a low tone, and resets progress.
+- Text hints are contextual rather than random: discovery hints become more explicit over time, and each carousel tap describes another horse waking. Interaction postpones the next timed hint so messages do not compete.
+- The Phase 1 story is **The Last Ride**. The User taps anywhere on the carousel three times. Each tap wakes the next horse from left to right with a glow and rising note; the third tap begins the story.
 - Completing the sequence begins a 7-second audiovisual story: the carousel activates, ghost riders emerge, the line “They never left” reveals the ending, and a final flash returns the scene to idle.
 - The clown and tent remain environmental features. Their experimental story code and assets are preserved but their hotspots are inactive until Phase 2.
 
@@ -44,15 +44,15 @@ Deliver a stable smartphone playtest of an abandoned carnival that rewards explo
 
 - The scene fills a phone viewport without scrolling and remains centered at a maximum width of 430px on larger screens.
 - The background, ambience, story effects, and hotspots share one 941:1672 scene coordinate layer. That layer uses a centered-cover calculation so cropping cannot move illustrated objects away from their interactions on tall phones.
-- Interactive controls and horse targets are at least 44 by 44 CSS pixels at supported phone widths.
-- Horse targets follow the three overlapping illustrated silhouettes rather than screen columns. The rightmost horse's hit region includes its head, torso, and legs without taking over the visible head of the center horse.
+- Interactive controls and the carousel target are at least 44 by 44 CSS pixels at supported phone widths.
+- One large target follows the full visible carousel structure so overlapping horse silhouettes cannot create ambiguous or unreliable taps.
 - Enter, Pause/Resume, credits, and carousel horses work with touch/click and keyboard.
 - Focus indicators, readable high-contrast text, descriptive accessible names, and live status updates are present.
 
 ### Phase 1 acceptance checks
 
 1. Enter starts the scene once; ambient audio and all three visual ambient systems begin when reduced motion is not requested.
-2. Each correct and incorrect horse tap gives distinct visual and audio feedback and communicates progress.
+2. Every carousel tap gives visual and audio feedback, advances exactly one step, and communicates progress toward three taps.
 3. The carousel story has a clear beginning, middle, and end, lasts 5–10 seconds, locks other story interaction, resets cleanly, and replays.
 4. Pause during ambience, a hint, and the story freezes the coordinated experience; Resume continues rather than restarting or skipping it.
 5. The experience remains usable at 320×568, 375×667, and 430×932 CSS pixels and with keyboard-only input.
