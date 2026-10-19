@@ -45,6 +45,7 @@ Deliver a stable smartphone playtest of an abandoned carnival that rewards explo
 - The scene fills a phone viewport without scrolling and remains centered at a maximum width of 430px on larger screens.
 - The background, ambience, story effects, and hotspots share one 941:1672 scene coordinate layer. That layer uses a centered-cover calculation so cropping cannot move illustrated objects away from their interactions on tall phones.
 - Interactive controls and horse targets are at least 44 by 44 CSS pixels at supported phone widths.
+- Horse targets follow the three overlapping illustrated silhouettes rather than screen columns. The rightmost horse's hit region includes its head, torso, and legs without taking over the visible head of the center horse.
 - Enter, Pause/Resume, credits, and carousel horses work with touch/click and keyboard.
 - Focus indicators, readable high-contrast text, descriptive accessible names, and live status updates are present.
 

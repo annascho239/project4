@@ -45,6 +45,15 @@
     check(doc.getElementById('ambient-audio').error === null, 'Ambient audio asset loads without an error');
 
     const horses = [...doc.querySelectorAll('.horse')];
+    if (new URLSearchParams(location.search).has('show-targets')) {
+      const colors = ['rgba(255, 80, 80, .35)', 'rgba(80, 180, 255, .35)', 'rgba(100, 255, 130, .35)'];
+      horses.forEach((horse, index) => { horse.style.background = colors[index]; });
+    }
+    const horseTestPoints = [
+      [{ x: 8, y: 52 }, { x: 5, y: 58 }, { x: 10, y: 63 }],
+      [{ x: 22, y: 55 }, { x: 20, y: 56 }, { x: 24, y: 56 }],
+      [{ x: 34, y: 55 }, { x: 28, y: 58 }, { x: 31, y: 62 }, { x: 17, y: 60 }],
+    ];
     check(horses.length === 3, 'Only the three Phase 1 horse hotspots are active');
     for (const [width, height] of [[320, 568], [375, 667], [390, 844], [393, 852], [430, 932]]) {
       frame.style.width = `${width}px`;
@@ -67,18 +76,16 @@
       horses.forEach((horse, index) => {
         const rect = horse.getBoundingClientRect();
         check(rect.width >= 44 && rect.height >= 44, `${width}px: horse ${index + 1} target is at least 44×44`);
-        const visibleLeft = Math.max(0, rect.left);
-        const visibleRight = Math.min(win.innerWidth, rect.right);
-        const samplePoints = [
-          [visibleLeft + 2, rect.top + 2],
-          [visibleRight - 2, rect.top + 2],
-          [visibleLeft + 2, rect.bottom - 2],
-          [visibleRight - 2, rect.bottom - 2],
-        ];
+        const samplePoints = horseTestPoints[index]
+          .map(point => [
+            sceneRect.left + sceneRect.width * point.x / 100,
+            sceneRect.top + sceneRect.height * point.y / 100,
+          ])
+          .filter(([x, y]) => x >= 0 && x < win.innerWidth && y >= 0 && y < win.innerHeight);
         check(
-          visibleRight - visibleLeft >= 4 &&
+          samplePoints.length > 0 &&
           samplePoints.every(([x, y]) => doc.elementFromPoint(x, y) === horse),
-          `${width}px: visible horse ${index + 1} area maps to the correct trigger`
+          `${width}px: sampled horse ${index + 1} silhouette maps to the correct trigger (${samplePoints.map(([x, y]) => doc.elementFromPoint(x, y)?.id || 'none').join(', ')})`
         );
       });
     }

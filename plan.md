@@ -36,6 +36,8 @@ Developer observation on 2026-10-19: fixed-time hints felt random and disconnect
 
 Developer observation on 2026-10-19: the third horse remained difficult to tap on a physical phone. Root cause: the background used centered `object-fit: cover` cropping while hotspots were sized against the uncropped viewport. Revision: place the background and every scene-space layer on one image-proportioned canvas and test the visible third-horse target on tall phones.
 
+Follow-up evidence on 2026-10-19: a Developer screenshot showed that the three horses overlap diagonally, so even correctly scaled vertical bands assigned much of the circled third horse to the center trigger. Revision: trace separate silhouette-shaped regions from the screenshot and test known visible points on each horse.
+
 ### Implementation evidence — 2026-10-19
 
 - `tests/phase1-smoke.html`: all checks passed in headless Chrome, including ambience creation, audio asset loading, five responsive layouts, shared background/hotspot alignment, visible horse targeting, wrong-order reset, story start/end, pause freeze, interaction lock/unlock, and keyboard replay. The complete interaction sequence also passed at 393×852.
