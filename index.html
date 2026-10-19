@@ -173,10 +173,12 @@
     }
 
     /* Carousel horses */
-    .horse { /* no outline */ }
-    #horse-1 { left: 0;                  bottom: 35%; width: 44px; height: 18%; min-height: 72px; }
-    #horse-2 { left: max(44px, 11%);     bottom: 33%; width: 44px; height: 18%; min-height: 72px; }
-    #horse-3 { left: max(88px, 22%);     bottom: 35%; width: 44px; height: 18%; min-height: 72px; }
+    .horse { border-radius: 0; }
+    /* Divide the full carousel into adjacent zones so limbs and heads are tappable
+       without overlapping targets sending a tap to the wrong horse. */
+    #horse-1 { left: 0%;  top: 42%; width: 14%; height: 31%; }
+    #horse-2 { left: 14%; top: 42%; width: 14%; height: 31%; }
+    #horse-3 { left: 28%; top: 42%; width: 14%; height: 31%; }
 
     /* Clown nose */
     #clown-nose {

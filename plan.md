@@ -30,6 +30,8 @@ Test each result before continuing, including related behavior that already work
 
 No peer playtest observations have been recorded yet. Automated and Agent-run checks are implementation evidence, not a substitute for the required physical-phone playtest.
 
+Developer observation on 2026-10-19: tapping visible parts of the carousel horses was unreliable because the original 44px rectangles covered only the center of each figure. Revision: divide the full carousel footprint into three adjacent, non-overlapping zones extending from the horses' heads through their legs. This preserves the ordered trigger while making the illustrated figures reliable targets.
+
 ### Implementation evidence — 2026-10-19
 
 - `tests/phase1-smoke.html`: all checks passed in headless Chrome, including ambience creation, audio asset loading, three responsive layouts, target sizing, wrong-order reset, story start/end, pause freeze, interaction lock/unlock, and keyboard replay.

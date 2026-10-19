@@ -57,6 +57,16 @@
       horses.forEach((horse, index) => {
         const rect = horse.getBoundingClientRect();
         check(rect.width >= 44 && rect.height >= 44, `${width}px: horse ${index + 1} target is at least 44×44`);
+        const samplePoints = [
+          [rect.left + 2, rect.top + 2],
+          [rect.right - 2, rect.top + 2],
+          [rect.left + 2, rect.bottom - 2],
+          [rect.right - 2, rect.bottom - 2],
+        ];
+        check(
+          samplePoints.every(([x, y]) => doc.elementFromPoint(x, y) === horse),
+          `${width}px: horse ${index + 1} is clickable across its full zone`
+        );
       });
     }
     frame.style.width = '375px';
