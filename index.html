@@ -407,6 +407,67 @@
       animation: flashOut 0.5s ease-out forwards;
     }
 
+    /* ── Tent story ──────────────────────────────────────── */
+
+    .tent-pulse {
+      position: absolute;
+      left: 15%;
+      top: 8%;
+      width: 62%;
+      height: 42%;
+      border-radius: 40% 40% 10% 10%;
+      background: radial-gradient(ellipse at 50% 60%, rgba(80,200,80,0.55) 0%, transparent 70%);
+      pointer-events: none;
+      animation: tentGlow 0.6s ease-out forwards;
+    }
+    @keyframes tentGlow {
+      0%   { opacity: 0; transform: scale(0.9); }
+      40%  { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 0; transform: scale(1); }
+    }
+
+    .tent-figure {
+      position: absolute;
+      left: 28%;
+      top: 12%;
+      width: 36%;
+      height: 34%;
+      background: url('assets/ghosttent.png') center/contain no-repeat;
+      pointer-events: none;
+      animation: figureAppear 2.5s ease-in-out forwards;
+    }
+    @keyframes figureAppear {
+      0%   { opacity: 0; transform: scaleY(0.3); }
+      25%  { opacity: 1; transform: scaleY(1);   }
+      70%  { opacity: 1; transform: scaleY(1);   }
+      100% { opacity: 0; transform: scaleY(0.8); }
+    }
+
+    .tent-flash {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 49% 28%, rgba(60,255,60,0.7) 0%, transparent 70%);
+      pointer-events: none;
+      animation: tentFlashOut 0.8s ease-out forwards;
+    }
+
+    .tent-dark {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      pointer-events: none;
+      animation: darkFade 1s ease-in-out forwards;
+    }
+    @keyframes darkFade {
+      0%   { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @keyframes tentFlashOut {
+      0%   { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
     /* Reduced-motion: disable all transitions/animations */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -694,13 +755,62 @@
     }, 4500);
   }
 
+  /* ── Tent story ─────────────────────────────────────── */
+
+  let tentTaps = 0;
+
+  function onTentTap() {
+    tentTaps++;
+
+    /* Green glow pulse on each tap */
+    const pulse = document.createElement('div');
+    pulse.className = 'tent-pulse';
+    pulse.style.opacity = 0.4 + tentTaps * 0.2;
+    storyLayer.appendChild(pulse);
+    pulse.addEventListener('animationend', () => pulse.remove());
+
+    if (tentTaps >= 3) {
+      tentTaps = 0;
+      playTentStory();
+    }
+  }
+
+  function playTentStory() {
+    storyPlaying = true;
+
+    /* Shadow figure looms */
+    const figure = document.createElement('div');
+    figure.className = 'tent-figure';
+    storyLayer.appendChild(figure);
+
+    /* Green flash at peak */
+    setTimeout(() => {
+      const flash = document.createElement('div');
+      flash.className = 'tent-flash';
+      storyLayer.appendChild(flash);
+      flash.addEventListener('animationend', () => flash.remove());
+    }, 1500);
+
+    /* Darkness follows */
+    setTimeout(() => {
+      const dark = document.createElement('div');
+      dark.className = 'tent-dark';
+      storyLayer.appendChild(dark);
+      dark.addEventListener('animationend', () => {
+        dark.remove();
+        figure.remove();
+        storyPlaying = false;
+      });
+    }, 2000);
+  }
+
   /* ── Hotspot dispatch ───────────────────────────────── */
 
   function onHotspotTap(id) {
     if (paused || storyPlaying) return;
     if (id.startsWith('horse'))      { onHorseTap(id);  return; }
     if (id === 'clown-nose')         { onClownTap();    return; }
-    /* TODO: tent story */
+    if (id === 'tent-zone')          { onTentTap();     return; }
   }
 
   document.querySelectorAll('.hotspot').forEach(el => {
