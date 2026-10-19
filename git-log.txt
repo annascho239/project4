@@ -1,0 +1,18 @@
+Project 4 Git History Export
+Generated: 2026-10-19
+Repository: https://github.com/annascho239/project4
+
+This export covers the substantive project history through commit d1a9288.
+The commit that adds this file appears in the repository's canonical Git history.
+
+73292fb | 2026-10-19 | anna-s-c | Initial commit: project scaffold, background image, and index.html
+5e8ac0b | 2026-10-19 | anna-s-c | Add ambient effects and carousel story
+03ca88a | 2026-10-19 | anna-s-c | Add clown nose story
+3ac2b06 | 2026-10-19 | anna-s-c | Add tent story and PNG assets for hand and ghost
+b69cd05 | 2026-10-19 | anna-s-c | Complete Phase 1 playtest prototype
+2463d4a | 2026-10-19 | anna-s-c | Record Phase 1 deployment verification
+0cac48f | 2026-10-19 | anna-s-c | Expand carousel horse tap targets
+e38ff3e | 2026-10-19 | anna-s-c | Make carousel hints respond to player progress
+76c0d3f | 2026-10-19 | anna-s-c | Align interactions with the cropped scene
+01acfae | 2026-10-19 | anna-s-c | Trace horse hotspots to visible silhouettes
+d1a9288 | 2026-10-19 | anna-s-c | Simplify carousel trigger to three broad taps
