@@ -27,13 +27,21 @@
 
     /* ── Layers ─────────────────────────────────────────── */
 
+    /* The background and every scene-space effect share this image-sized canvas.
+       JS sizes it with the same centered-cover rule at every phone aspect ratio. */
+    #scene {
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+    }
+
     #bg {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: center top;
+      object-fit: fill;
       display: block;
     }
 
@@ -351,7 +359,7 @@
       from { transform: translateX(-60px); opacity: 0; }
       5%   { opacity: 1; }
       95%  { opacity: 1; }
-      to   { transform: translateX(calc(100vw + 60px)); opacity: 0; }
+      to   { transform: translateX(calc(var(--scene-width) + 120px)); opacity: 0; }
     }
 
     /* ── Fog ───────────────────────────────────────────── */
@@ -600,24 +608,27 @@
 <body>
 <div id="app">
 
-  <!-- Layer 0: Background -->
-  <img id="bg" src="assets/halloweenbackground.png" alt="Abandoned carnival at night">
+  <div id="scene">
 
-  <!-- Layer 1: Ambient effects -->
-  <div id="ambient-layer">
-    <!-- fog, bats, flickering lights added in JS -->
+    <!-- Layer 0: Background -->
+    <img id="bg" src="assets/halloweenbackground.png" alt="Abandoned carnival at night">
+
+    <!-- Layer 1: Ambient effects -->
+    <div id="ambient-layer">
+      <!-- fog, bats, flickering lights added in JS -->
+    </div>
+
+    <!-- Layer 2: Interactive hotspots -->
+    <div id="hotspot-layer">
+      <div id="horse-1" class="hotspot horse" role="button" tabindex="0" aria-label="Left carousel horse, first in the sequence"></div>
+      <div id="horse-2" class="hotspot horse" role="button" tabindex="0" aria-label="Center carousel horse, second in the sequence"></div>
+      <div id="horse-3" class="hotspot horse" role="button" tabindex="0" aria-label="Right carousel horse, third in the sequence"></div>
+      <!-- Clown and tent story hotspots return in Phase 2. Their code/assets are preserved. -->
+    </div>
+
+    <!-- Layer 3: Story animations -->
+    <div id="story-layer" aria-hidden="true"></div>
   </div>
-
-  <!-- Layer 2: Interactive hotspots -->
-  <div id="hotspot-layer">
-    <div id="horse-1" class="hotspot horse" role="button" tabindex="0" aria-label="Left carousel horse, first in the sequence"></div>
-    <div id="horse-2" class="hotspot horse" role="button" tabindex="0" aria-label="Center carousel horse, second in the sequence"></div>
-    <div id="horse-3" class="hotspot horse" role="button" tabindex="0" aria-label="Right carousel horse, third in the sequence"></div>
-    <!-- Clown and tent story hotspots return in Phase 2. Their code/assets are preserved. -->
-  </div>
-
-  <!-- Layer 3: Story animations -->
-  <div id="story-layer" aria-hidden="true"></div>
 
   <!-- Layer 4: HUD -->
   <div id="ui-layer">
@@ -656,12 +667,32 @@
   let started = false;
 
   const app = document.getElementById('app');
+  const scene = document.getElementById('scene');
   const hotspotLayer = document.getElementById('hotspot-layer');
   const storyLayer = document.getElementById('story-layer');
   const statusEl = document.getElementById('status');
   const ambientAudio = document.getElementById('ambient-audio');
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   let audioContext = null;
+
+  const SCENE_ASPECT = 941 / 1672;
+
+  function alignSceneToBackground() {
+    const appWidth = app.clientWidth;
+    const appHeight = app.clientHeight;
+    const appAspect = appWidth / appHeight;
+    const sceneWidth = appAspect > SCENE_ASPECT ? appWidth : appHeight * SCENE_ASPECT;
+    const sceneHeight = appAspect > SCENE_ASPECT ? appWidth / SCENE_ASPECT : appHeight;
+
+    scene.style.width = `${sceneWidth}px`;
+    scene.style.height = `${sceneHeight}px`;
+    scene.style.left = `${(appWidth - sceneWidth) / 2}px`;
+    scene.style.setProperty('--scene-width', `${sceneWidth}px`);
+  }
+
+  alignSceneToBackground();
+  if ('ResizeObserver' in window) new ResizeObserver(alignSceneToBackground).observe(app);
+  else window.addEventListener('resize', alignSceneToBackground);
 
   class PausableTimer {
     constructor(callback, delay) {

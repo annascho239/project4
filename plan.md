@@ -21,7 +21,7 @@ Main risk: the existing pause button changes only fog and lights while JavaScrip
 - [x] **Approve Phase 1 scope.** Use the carousel as the one complete story; preserve but deactivate the unfinished clown and tent interactions. Developer authorized the Agent to choose the most stable Phase 1 approach on 2026-10-19.
 - [x] **Coordinate ambience and pause.** Added verified CC0 ambient audio and a shared pausable scheduler; Pause/Resume now coordinates CSS/Web Animations, the audio element, Web Audio, hints, story timing, ambient generation, and scene interaction.
 - [x] **Complete The Last Ride.** Added distinct correct/wrong audiovisual trigger feedback, a 7-second beginning/middle/end sequence, interaction locking, clean reset, replay, ambient-audio ducking, and a static reduced-motion presentation.
-- [x] **Accessibility and responsive check.** Headless Chrome smoke tests passed for controls, 44×44 minimum targets, wrong-order feedback, keyboard replay, interaction locking, pause/resume, reduced motion, and layouts at 320×568, 375×667, and 430×932.
+- [x] **Accessibility and responsive check.** Headless Chrome smoke tests passed for controls, 44×44 minimum targets, wrong-order feedback, keyboard replay, interaction locking, pause/resume, reduced motion, and layouts at 320×568, 375×667, 390×844, 393×852, and 430×932.
 - [ ] **Deploy and verify.** Phase 1 commit `b69cd05` was pushed to `main`. The public GitHub Pages HTML matched local `index.html` byte-for-byte, and both browser suites passed against `https://annascho239.github.io/project4/`. Remaining: the Developer must test that URL on a physical smartphone.
 
 Test each result before continuing, including related behavior that already works. Update priorities as evidence emerges and preserve meaningful working checkpoints in git. Before delivery, verify the deployed app against the brief and specification.
@@ -34,9 +34,11 @@ Developer observation on 2026-10-19: tapping visible parts of the carousel horse
 
 Developer observation on 2026-10-19: fixed-time hints felt random and disconnected from horse taps. Revision: make timed hints depend on current sequence progress, show immediate narrative feedback after correct and incorrect taps, and postpone the next discovery hint after interaction.
 
+Developer observation on 2026-10-19: the third horse remained difficult to tap on a physical phone. Root cause: the background used centered `object-fit: cover` cropping while hotspots were sized against the uncropped viewport. Revision: place the background and every scene-space layer on one image-proportioned canvas and test the visible third-horse target on tall phones.
+
 ### Implementation evidence — 2026-10-19
 
-- `tests/phase1-smoke.html`: all checks passed in headless Chrome, including ambience creation, audio asset loading, three responsive layouts, target sizing, wrong-order reset, story start/end, pause freeze, interaction lock/unlock, and keyboard replay.
+- `tests/phase1-smoke.html`: all checks passed in headless Chrome, including ambience creation, audio asset loading, five responsive layouts, shared background/hotspot alignment, visible horse targeting, wrong-order reset, story start/end, pause freeze, interaction lock/unlock, and keyboard replay. The complete interaction sequence also passed at 393×852.
 - `tests/phase1-reduced-motion.html`: all checks passed with Chrome forced to `prefers-reduced-motion: reduce`; recurring ambient animation stayed off and the static story completed and reset.
 - A 375×667 rendered scene was visually inspected. The background composition remained legible, controls did not obscure the focal point, and the carousel effect aligned with the horses.
 - The original OpenGameArt page identifies the selected ambient track as CC0. The downloaded Ogg file was recognized as stereo Vorbis audio at 44.1 kHz.

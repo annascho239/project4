@@ -46,7 +46,7 @@
 
     const horses = [...doc.querySelectorAll('.horse')];
     check(horses.length === 3, 'Only the three Phase 1 horse hotspots are active');
-    for (const [width, height] of [[320, 568], [375, 667], [430, 932]]) {
+    for (const [width, height] of [[320, 568], [375, 667], [390, 844], [393, 852], [430, 932]]) {
       frame.style.width = `${width}px`;
       frame.style.height = `${height}px`;
       await wait(30);
@@ -54,23 +54,37 @@
         doc.documentElement.scrollWidth <= win.innerWidth,
         `${width}×${height} layout has no horizontal overflow (${doc.documentElement.scrollWidth}px content / ${win.innerWidth}px viewport)`
       );
+      const sceneRect = doc.getElementById('scene').getBoundingClientRect();
+      const backgroundRect = doc.getElementById('bg').getBoundingClientRect();
+      check(
+        Math.abs((sceneRect.width / sceneRect.height) - (941 / 1672)) < 0.001,
+        `${width}×${height}: scene preserves the background aspect ratio`
+      );
+      check(
+        Math.abs(backgroundRect.left - sceneRect.left) < 0.5 && Math.abs(backgroundRect.width - sceneRect.width) < 0.5,
+        `${width}×${height}: background and hotspot coordinates stay aligned`
+      );
       horses.forEach((horse, index) => {
         const rect = horse.getBoundingClientRect();
         check(rect.width >= 44 && rect.height >= 44, `${width}px: horse ${index + 1} target is at least 44×44`);
+        const visibleLeft = Math.max(0, rect.left);
+        const visibleRight = Math.min(win.innerWidth, rect.right);
         const samplePoints = [
-          [rect.left + 2, rect.top + 2],
-          [rect.right - 2, rect.top + 2],
-          [rect.left + 2, rect.bottom - 2],
-          [rect.right - 2, rect.bottom - 2],
+          [visibleLeft + 2, rect.top + 2],
+          [visibleRight - 2, rect.top + 2],
+          [visibleLeft + 2, rect.bottom - 2],
+          [visibleRight - 2, rect.bottom - 2],
         ];
         check(
+          visibleRight - visibleLeft >= 4 &&
           samplePoints.every(([x, y]) => doc.elementFromPoint(x, y) === horse),
-          `${width}px: horse ${index + 1} is clickable across its full zone`
+          `${width}px: visible horse ${index + 1} area maps to the correct trigger`
         );
       });
     }
-    frame.style.width = '375px';
-    frame.style.height = '667px';
+    /* Keep the interaction sequence at a modern tall-phone size. */
+    frame.style.width = '393px';
+    frame.style.height = '852px';
 
     horses[1].click();
     await wait(30);
