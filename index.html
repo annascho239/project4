@@ -133,12 +133,12 @@
     #horse-2 { left: 11%; bottom: 33%; width: 12%; height: 18%; }
     #horse-3 { left: 22%; bottom: 35%; width: 12%; height: 18%; }
 
-    /* Clown booth — right side */
-    #clown-zone {
-      right: 2%;
-      top: 35%;
-      width: 34%;
-      height: 26%;
+    /* Clown nose */
+    #clown-nose {
+      right: 1%;
+      top: 44%;
+      width: 10%;
+      height: 8%;
     }
 
     /* Circus tent — center upper */
@@ -350,6 +350,63 @@
       100% { opacity: 0; }
     }
 
+    /* ── Clown story ─────────────────────────────────────── */
+
+    .nose-pulse {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: nosePulse 0.4s ease-out forwards;
+    }
+    @keyframes nosePulse {
+      0%   { box-shadow: 0 0 6px 4px rgba(255,60,60,0.8); opacity: 1; }
+      100% { box-shadow: 0 0 20px 10px rgba(255,30,30,0); opacity: 0; }
+    }
+
+    .mouth-crack {
+      position: absolute;
+      right: 0%;
+      top: 40%;
+      width: 14%;
+      height: 5%;
+      background: #0a0005;
+      border-radius: 0 0 40% 40%;
+      transform: scaleY(0);
+      transform-origin: top center;
+      animation: mouthOpen 0.6s ease-out 0.3s forwards;
+      pointer-events: none;
+    }
+    @keyframes mouthOpen {
+      to { transform: scaleY(1); }
+    }
+
+    .clown-hand {
+      position: absolute;
+      right: 0;
+      top: 38%;
+      width: 30%;
+      height: 28%;
+      transform: scale(0);
+      transform-origin: right center;
+      animation: handGrow 2s ease-in-out 0.4s forwards;
+      pointer-events: none;
+    }
+    @keyframes handGrow {
+      0%   { transform: scale(0);   }
+      35%  { transform: scale(1);   }
+      65%  { transform: scale(1);   }
+      100% { transform: scale(0);   }
+    }
+
+    .clown-flash {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 40, 40, 0.5);
+      pointer-events: none;
+      animation: flashOut 0.5s ease-out forwards;
+    }
+
     /* Reduced-motion: disable all transitions/animations */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -375,7 +432,7 @@
     <div id="horse-1" class="hotspot horse" role="button" tabindex="0" aria-label="Horse 1"></div>
     <div id="horse-2" class="hotspot horse" role="button" tabindex="0" aria-label="Horse 2"></div>
     <div id="horse-3" class="hotspot horse" role="button" tabindex="0" aria-label="Horse 3"></div>
-    <div id="clown-zone"     class="hotspot" role="button" tabindex="0" aria-label="Clown booth"></div>
+    <div id="clown-nose" class="hotspot" role="button" tabindex="0" aria-label="Clown nose"></div>
     <div id="tent-zone"      class="hotspot" role="button" tabindex="0" aria-label="Circus tent"></div>
   </div>
 
@@ -596,12 +653,54 @@
     }, 6500);
   }
 
+  /* ── Clown story ────────────────────────────────────── */
+
+  let clownTaps = 0;
+  const noseEl = document.getElementById('clown-nose');
+
+  function onClownTap() {
+    clownTaps++;
+
+    /* Pulse nose — gets bigger each tap */
+    const pulse = document.createElement('div');
+    pulse.className = 'nose-pulse';
+    pulse.style.inset = (-4 - clownTaps * 3) + 'px';
+    noseEl.appendChild(pulse);
+    pulse.addEventListener('animationend', () => pulse.remove());
+
+    if (clownTaps >= 3) {
+      clownTaps = 0;
+      playClownStory();
+    }
+  }
+
+  function playClownStory() {
+    storyPlaying = true;
+
+    const hand = document.createElement('div');
+    hand.className = 'clown-hand';
+    hand.innerHTML = `<img src="assets/creepyhand.png" style="width:100%;height:100%;object-fit:contain;" alt="">`;
+    storyLayer.appendChild(hand);
+
+    setTimeout(() => {
+      const flash = document.createElement('div');
+      flash.className = 'clown-flash';
+      storyLayer.appendChild(flash);
+      flash.addEventListener('animationend', () => {
+        flash.remove();
+        hand.remove();
+        storyPlaying = false;
+      });
+    }, 4500);
+  }
+
   /* ── Hotspot dispatch ───────────────────────────────── */
 
   function onHotspotTap(id) {
     if (paused || storyPlaying) return;
-    if (id.startsWith('horse')) { onHorseTap(id); return; }
-    /* TODO: clown and tent stories */
+    if (id.startsWith('horse'))      { onHorseTap(id);  return; }
+    if (id === 'clown-nose')         { onClownTap();    return; }
+    /* TODO: tent story */
   }
 
   document.querySelectorAll('.hotspot').forEach(el => {
