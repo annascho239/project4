@@ -16,13 +16,27 @@ Start or continue a fresh chat with:
 
 ## Checkpoints
 
-Create your own checklist for the next few results, using the workflow in `brief.md` and the current `spec.md`. Name the main risk, what each checkpoint should produce, and how you will verify it. Review and approve the approach before implementation.
+Main risk: the existing pause button changes only fog and lights while JavaScript timers, bats, story effects, and future audio continue. Phase 1 therefore needs one coordinated state/timing system before visual polish.
+
+- [x] **Approve Phase 1 scope.** Use the carousel as the one complete story; preserve but deactivate the unfinished clown and tent interactions. Developer authorized the Agent to choose the most stable Phase 1 approach on 2026-10-19.
+- [x] **Coordinate ambience and pause.** Added verified CC0 ambient audio and a shared pausable scheduler; Pause/Resume now coordinates CSS/Web Animations, the audio element, Web Audio, hints, story timing, ambient generation, and scene interaction.
+- [x] **Complete The Last Ride.** Added distinct correct/wrong audiovisual trigger feedback, a 7-second beginning/middle/end sequence, interaction locking, clean reset, replay, ambient-audio ducking, and a static reduced-motion presentation.
+- [x] **Accessibility and responsive check.** Headless Chrome smoke tests passed for controls, 44×44 minimum targets, wrong-order feedback, keyboard replay, interaction locking, pause/resume, reduced motion, and layouts at 320×568, 375×667, and 430×932.
+- [ ] **Deploy and verify.** Commit the Phase 1 checkpoint, push `main`, confirm `https://annascho239.github.io/project4/` serves it, then have the Developer test that URL on a physical smartphone.
 
 Test each result before continuing, including related behavior that already works. Update priorities as evidence emerges and preserve meaningful working checkpoints in git. Before delivery, verify the deployed app against the brief and specification.
 
 ## Evidence and revisions
 
-Record non-identifying playtest observations, separating what Users did or said from your interpretation. Use the findings to choose revision priorities and record what changed and how you verified the improvement.
+No peer playtest observations have been recorded yet. Automated and Agent-run checks are implementation evidence, not a substitute for the required physical-phone playtest.
+
+### Implementation evidence — 2026-10-19
+
+- `tests/phase1-smoke.html`: all checks passed in headless Chrome, including ambience creation, audio asset loading, three responsive layouts, target sizing, wrong-order reset, story start/end, pause freeze, interaction lock/unlock, and keyboard replay.
+- `tests/phase1-reduced-motion.html`: all checks passed with Chrome forced to `prefers-reduced-motion: reduce`; recurring ambient animation stayed off and the static story completed and reset.
+- A 375×667 rendered scene was visually inspected. The background composition remained legible, controls did not obscure the focal point, and the carousel effect aligned with the horses.
+- The original OpenGameArt page identifies the selected ambient track as CC0. The downloaded Ogg file was recognized as stereo Vorbis audio at 44.1 kHz.
+- Remaining evidence: confirm the deployed commit is live, then record the Developer's physical-phone result and any peer observations.
 
 Keep implementation progress and verification here. Update `research.md` when evidence changes a decision and `spec.md` when intended behavior changes; link to those updates rather than duplicating them. Record consequential changes, not every small adjustment.
 

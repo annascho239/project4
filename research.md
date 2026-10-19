@@ -44,7 +44,7 @@ Start a fresh chat with:
 
 **Notes:** If result is too cartoonish, add "realistic horror illustration, not cartoonish". Generated image is AI-produced (original); no external attribution required.
 
-**Status:** Pending — Developer to generate and select.
+**Status:** Selected and implemented as `assets/halloweenbackground.png`. The portrait image contains the approved tent focal point, carousel, clown booth, game stalls, moon, fog, and string-light composition.
 
 ---
 
@@ -99,6 +99,10 @@ Start a fresh chat with:
 | Ambient loop option B | Creepy Ambient Loop (music box/vibraphone) | OpenGameArt / epb9000 | https://opengameart.org/node/167286 |
 | Story 2 SFX | Evil Laugh 2 | OpenGameArt | https://opengameart.org/content/evil-laugh-2 |
 
+**Phase 1 selection:** “Haunting Chiptune Loop [Void Estate]” by Zane Little Music. The original OpenGameArt item page was checked on 2026-10-19 and labels the work CC0 while offering `.wav` and `.ogg` files. The `.ogg` is stored as `assets/void-estate.ogg`. Attribution is not legally required under CC0, but the in-app credits identify the creator and source.
+
+Phase 1 carousel feedback and story stings are original tones synthesized in the browser with the Web Audio API. They add no external asset or license dependency.
+
 ### CC BY 4.0 (attribution required — usable with credit)
 
 | Use | Title | Author | Source |
@@ -130,6 +134,13 @@ Record only what informs the next build decisions:
 - experiments that resolve uncertainty, the results, and consequential trade-offs
 
 Investigate unfamiliar techniques or asset sources as needed. Verify usage terms and keep source links and required credits here. Distinguish evidence from assumptions; the Agent's recommendation alone is not evidence.
+
+### Phase 1 decisions — 2026-10-19
+
+- The carousel is the one complete Phase 1 story because its three distinct horses naturally support ordered discovery and visible progress.
+- The clown and tent remain visual features, but their experimental hotspots are inactive for the first playtest. Presenting unfinished extra stories would make it unclear which interaction represents the intended quality bar. Their code and assets remain available for Phase 2.
+- Ambient audio uses the verified CC0 track above. Short trigger and story sounds are synthesized locally so feedback responds immediately and remains pausable through the shared audio context.
+- The live target is `https://annascho239.github.io/project4/`, which was serving the last committed version when checked before this Phase 1 update.
 
 ## Revisions
 

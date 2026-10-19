@@ -16,18 +16,51 @@ Start a fresh chat with:
 
 ## Current build contract
 
-Define only enough to build and verify the current direction:
+### Phase 1 goal
 
-- the intended User experience and chosen scene, ambience, and story behavior
-- the system structure, shared rules, and states that keep audiovisual behavior and interaction coordinated
-- the assets and layout needed for that structure, linking to sources and credits in `research.md`
-- acceptance checks for the chosen behavior and every requirement in `brief.md`, including accessibility and failure behavior
+Deliver a stable smartphone playtest of an abandoned carnival that rewards exploration with one complete spooky story. The scene should feel ominous but playful and remain suitable for ages 10 and older.
 
-Reference the brief's fixed requirements rather than copying them. Specify your decisions precisely enough that the Developer and Agent can judge the same result. Leave untested details open until they are needed, and distinguish provisional ideas from approved behavior.
+### Experience and content
+
+- The app is one non-scrolling portrait scene using `assets/halloweenbackground.png`.
+- The tent is the focal point. The carousel, clown booth, and game stalls provide three distinct environmental features.
+- Fog, bats, and unevenly flickering string lights create the ambient motion.
+- `assets/void-estate.ogg` loops quietly after Enter. Its verified CC0 source is recorded in `research.md` and in the in-app credits.
+- Progressive text hints begin atmospheric and eventually suggest the carousel's interaction without directly stating the full solution.
+- The Phase 1 story is **The Last Ride**. The User taps the three carousel horses from left to right. Correct taps glow and play rising notes; a wrong tap gives red visual feedback, a low tone, and resets progress.
+- Completing the sequence begins a 7-second audiovisual story: the carousel activates, ghost riders emerge, the line “They never left” reveals the ending, and a final flash returns the scene to idle.
+- The clown and tent remain environmental features. Their experimental story code and assets are preserved but their hotspots are inactive until Phase 2.
+
+### Shared behavior
+
+- Enter starts ambience, audio, hints, and interaction from a User gesture. It cannot initialize twice.
+- While the story plays, other scene interactions are unavailable. The pause control remains available.
+- Pause freezes CSS/Web Animations, audio, scheduled effects, hint timing, and scene interaction. Resume continues from the same point.
+- The story can be replayed without reloading.
+- Reduced-motion preference is detected before Enter. Ambient motion is omitted and the story uses static audiovisual state changes and text instead of moving effects.
+- Audio playback failure must not prevent visual interaction; the live status announces the failure.
+
+### Accessibility and layout
+
+- The scene fills a phone viewport without scrolling and remains centered at a maximum width of 430px on larger screens.
+- Interactive controls and horse targets are at least 44 by 44 CSS pixels at supported phone widths.
+- Enter, Pause/Resume, credits, and carousel horses work with touch/click and keyboard.
+- Focus indicators, readable high-contrast text, descriptive accessible names, and live status updates are present.
+
+### Phase 1 acceptance checks
+
+1. Enter starts the scene once; ambient audio and all three visual ambient systems begin when reduced motion is not requested.
+2. Each correct and incorrect horse tap gives distinct visual and audio feedback and communicates progress.
+3. The carousel story has a clear beginning, middle, and end, lasts 5–10 seconds, locks other story interaction, resets cleanly, and replays.
+4. Pause during ambience, a hint, and the story freezes the coordinated experience; Resume continues rather than restarting or skipping it.
+5. The experience remains usable at 320×568, 375×667, and 430×932 CSS pixels and with keyboard-only input.
+6. With reduced motion enabled, no recurring ambient animation begins and the complete story remains understandable.
+7. Credits identify the Developer and all visual/audio asset origins and licenses.
+8. The committed build is served over GitHub Pages and the Developer verifies it on a physical smartphone.
 
 ## Scope and revisions
 
-Record excluded ideas, the next behavior that must work, and consequential requirement changes with their evidence.
+Phase 1 intentionally excludes completing the clown and tent stories. They are retained for Phase 2 rather than presented as finished playtest content. The next required evidence is automated browser verification followed by the Developer's physical-phone check.
 
 ## Saving the transcript
 

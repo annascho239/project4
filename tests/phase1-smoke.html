@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phase 1 browser smoke test</title>
+  <style>
+    body { margin: 0; background: #181818; color: #eee; font: 14px/1.5 system-ui, sans-serif; }
+    main { display: flex; gap: 20px; align-items: flex-start; padding: 20px; }
+    iframe { width: 375px; height: 667px; border: 2px solid #777; }
+    #results { white-space: pre-wrap; }
+    .pass { color: #89e089; }
+    .fail { color: #ff8a8a; }
+  </style>
+</head>
+<body>
+<main>
+  <iframe id="app-frame" src="../index.html" title="App under test"></iframe>
+  <section>
+    <h1>Phase 1 smoke test</h1>
+    <div id="results">Running…</div>
+  </section>
+</main>
+<script>
+  const frame = document.getElementById('app-frame');
+  const results = document.getElementById('results');
+  const checks = [];
+  const wait = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
+
+  function check(condition, message) {
+    checks.push({ condition: Boolean(condition), message });
+  }
+
+  frame.addEventListener('load', async () => {
+    const doc = frame.contentDocument;
+    const win = frame.contentWindow;
+
+    check(doc.getElementById('start-screen'), 'Start screen exists');
+    doc.getElementById('enter-btn').click();
+    await wait(150);
+
+    check(doc.getElementById('start-screen').style.display === 'none', 'Enter opens the scene');
+    check(doc.querySelectorAll('.fog').length === 2, 'Two fog layers start');
+    check(doc.querySelectorAll('.light').length === 11, 'Flickering string lights start');
+    check(doc.querySelectorAll('.bat').length >= 1, 'Bat ambience starts');
+    check(doc.getElementById('ambient-audio').error === null, 'Ambient audio asset loads without an error');
+
+    const horses = [...doc.querySelectorAll('.horse')];
+    check(horses.length === 3, 'Only the three Phase 1 horse hotspots are active');
+    for (const [width, height] of [[320, 568], [375, 667], [430, 932]]) {
+      frame.style.width = `${width}px`;
+      frame.style.height = `${height}px`;
+      await wait(30);
+      check(
+        doc.documentElement.scrollWidth <= win.innerWidth,
+        `${width}×${height} layout has no horizontal overflow (${doc.documentElement.scrollWidth}px content / ${win.innerWidth}px viewport)`
+      );
+      horses.forEach((horse, index) => {
+        const rect = horse.getBoundingClientRect();
+        check(rect.width >= 44 && rect.height >= 44, `${width}px: horse ${index + 1} target is at least 44×44`);
+      });
+    }
+    frame.style.width = '375px';
+    frame.style.height = '667px';
+
+    horses[1].click();
+    await wait(30);
+    check(doc.getElementById('status').textContent.includes('reset'), 'Wrong horse gives reset feedback');
+
+    horses.forEach(horse => horse.click());
+    await wait(150);
+    check(Boolean(doc.querySelector('.carousel-spin')), 'Correct sequence starts The Last Ride');
+    check(doc.getElementById('hotspot-layer').inert, 'Story locks scene interaction');
+
+    doc.getElementById('pause-btn').click();
+    await wait(100);
+    const spin = doc.querySelector('.carousel-spin');
+    const beforePause = win.getComputedStyle(spin).transform;
+    await wait(650);
+    const afterPause = win.getComputedStyle(spin).transform;
+    check(beforePause === afterPause, 'Pause freezes the active story animation');
+    check(doc.getElementById('pause-btn').getAttribute('aria-label') === 'Resume', 'Pause control exposes its state');
+
+    doc.getElementById('pause-btn').click();
+    await wait(7200);
+    check(!doc.querySelector('.carousel-spin'), 'Story ends after resume');
+    check(!doc.getElementById('hotspot-layer').inert, 'Interaction unlocks after the story');
+
+    horses.forEach(horse => {
+      horse.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    });
+    await wait(150);
+    check(Boolean(doc.querySelector('.carousel-spin')), 'Keyboard input replays the story');
+
+    const failures = checks.filter(item => !item.condition);
+    results.className = failures.length ? 'fail' : 'pass';
+    results.textContent = checks.map(item => `${item.condition ? 'PASS' : 'FAIL'} — ${item.message}`).join('\n');
+    results.dataset.status = failures.length ? 'fail' : 'pass';
+    document.title = failures.length ? 'FAIL — Phase 1 smoke test' : 'PASS — Phase 1 smoke test';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reduced-motion smoke test</title>
+  <style>
+    body { background: #181818; color: #eee; font: 14px/1.5 system-ui, sans-serif; }
+    #results { white-space: pre-wrap; }
+    .pass { color: #89e089; }
+    .fail { color: #ff8a8a; }
+    iframe { position: absolute; left: -10000px; width: 375px; height: 667px; }
+  </style>
+</head>
+<body>
+  <h1>Reduced-motion smoke test</h1>
+  <div id="results">Running…</div>
+  <iframe id="app-frame" src="../index.html" title="App under test"></iframe>
+<script>
+  const frame = document.getElementById('app-frame');
+  const results = document.getElementById('results');
+  const checks = [];
+  const wait = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
+  const check = (condition, message) => checks.push({ condition: Boolean(condition), message });
+
+  frame.addEventListener('load', async () => {
+    const doc = frame.contentDocument;
+    check(frame.contentWindow.matchMedia('(prefers-reduced-motion: reduce)').matches, 'Browser preference is detected');
+    check(!doc.getElementById('motion-note').classList.contains('sr-only'), 'Start screen visibly acknowledges reduced motion');
+
+    doc.getElementById('enter-btn').click();
+    await wait(100);
+    check(doc.querySelectorAll('.fog, .light, .bat').length === 0, 'Recurring ambient motion does not start');
+
+    [...doc.querySelectorAll('.horse')].forEach(horse => horse.click());
+    await wait(100);
+    check(Boolean(doc.querySelector('.reduced-story-glow')), 'Story uses its static reduced-motion presentation');
+    check(!doc.querySelector('.carousel-spin'), 'Spinning effect is omitted');
+    check(doc.getElementById('hotspot-layer').inert, 'Story still locks interaction');
+
+    await wait(7100);
+    check(!doc.querySelector('.reduced-story-glow'), 'Reduced-motion story ends cleanly');
+    check(!doc.getElementById('hotspot-layer').inert, 'Interaction returns after the story');
+
+    const failures = checks.filter(item => !item.condition);
+    results.className = failures.length ? 'fail' : 'pass';
+    results.textContent = checks.map(item => `${item.condition ? 'PASS' : 'FAIL'} — ${item.message}`).join('\n');
+    results.dataset.status = failures.length ? 'fail' : 'pass';
+    document.title = failures.length ? 'FAIL — Reduced motion' : 'PASS — Reduced motion';
+  });
+</script>
+</body>
+</html>
