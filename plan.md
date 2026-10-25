@@ -16,13 +16,16 @@ Start or continue a fresh chat with:
 
 ## Checkpoints
 
-Main risk: the existing pause button changes only fog and lights while JavaScript timers, bats, story effects, and future audio continue. Phase 1 therefore needs one coordinated state/timing system before visual polish.
+Main risk: expanding the stable one-story prototype could reintroduce small touch targets and unpausable effects. The final build therefore keeps broad targets and routes every story through the existing coordinated timing and locking system.
 
 - [x] **Approve Phase 1 scope.** Use the carousel as the one complete story; preserve but deactivate the unfinished clown and tent interactions. Developer authorized the Agent to choose the most stable Phase 1 approach on 2026-10-19.
 - [x] **Coordinate ambience and pause.** Added verified CC0 ambient audio and a shared pausable scheduler; Pause/Resume now coordinates CSS/Web Animations, the audio element, Web Audio, hints, story timing, ambient generation, and scene interaction.
 - [x] **Complete The Last Ride.** Added three-step audiovisual carousel feedback, a 7-second beginning/middle/end sequence, interaction locking, clean reset, replay, ambient-audio ducking, and a static reduced-motion presentation.
 - [x] **Accessibility and responsive check.** Headless Chrome smoke tests passed for controls, carousel-wide target coverage, three-tap progress, keyboard replay, interaction locking, pause/resume, reduced motion, and layouts at 320×568, 375×667, 390×844, 393×852, and 430×932.
-- [ ] **Deploy and verify.** Phase 1 commit `b69cd05` was pushed to `main`. The public GitHub Pages HTML matched local `index.html` byte-for-byte, and both browser suites passed against `https://annascho239.github.io/project4/`. Remaining: the Developer must test that URL on a physical smartphone.
+- [x] **Approve final three-story scope.** On 2026-10-25, the Developer approved completing the clown and tent stories with broad phone-friendly triggers, contextual hints, and the same quality requirements as the carousel.
+- [x] **Complete all three stories.** Added distinct three-step audiovisual progress, 7–7.5 second beginning/middle/end sequences, shared interaction locking, pausable scheduling, clean reset, replay, and static reduced-motion presentation for the clown booth and tent.
+- [x] **Verify the expanded build.** Updated browser suites pass for all three triggers, responsive target geometry, keyboard input, pause/resume, story cleanup, locking, replay, and reduced motion. A rendered 393×852 layout was visually inspected with the three target regions exposed.
+- [ ] **Deploy and verify.** Push the verified final build to `main`, confirm GitHub Pages matches it, then have the Developer test all three stories at `https://annascho239.github.io/project4/` on a physical smartphone.
 
 Test each result before continuing, including related behavior that already works. Update priorities as evidence emerges and preserve meaningful working checkpoints in git. Before delivery, verify the deployed app against the brief and specification.
 
@@ -48,6 +51,13 @@ Final Phase 1 interaction decision on 2026-10-19: silhouette targets also remain
 - The original OpenGameArt page identifies the selected ambient track as CC0. The downloaded Ogg file was recognized as stereo Vorbis audio at 44.1 kHz.
 - GitHub Pages served the same SHA-1 content hash for the local and deployed `index.html` (`8770c114d6824085ef6fd13880681e2511bd1cbf`), and both deployed smoke-test pages reported `pass`.
 - Remaining evidence: record the Developer's physical-phone result and any peer observations.
+
+### Final-build evidence — 2026-10-25
+
+- `tests/phase1-smoke.html` passed every check for three active story targets, five responsive layouts, background/target alignment, minimum target size, unique progress, keyboard input, pause/resume, credits and scene locking, clean endings, and replay.
+- `tests/phase1-reduced-motion.html` passed for the carousel, clown, and tent. Recurring ambience stayed off; each story used a static presentation, locked interaction, ended cleanly, and restored the scene.
+- A 393×852 render with debug target colors was inspected. The blue carousel, green tent, and red clown regions were broad, adjacent, non-overlapping, and aligned with their illustrated features.
+- Automated checks do not replace the remaining Developer verification on a physical smartphone after deployment.
 
 Keep implementation progress and verification here. Update `research.md` when evidence changes a decision and `spec.md` when intended behavior changes; link to those updates rather than duplicating them. Record consequential changes, not every small adjustment.
 

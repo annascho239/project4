@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Phase 1 browser smoke test</title>
+  <title>Three-story browser smoke test</title>
   <style>
     body { margin: 0; background: #181818; color: #eee; font: 14px/1.5 system-ui, sans-serif; }
     main { display: flex; gap: 20px; align-items: flex-start; padding: 20px; }
@@ -16,7 +16,7 @@
 <main>
   <iframe id="app-frame" src="../index.html" title="App under test"></iframe>
   <section>
-    <h1>Phase 1 smoke test</h1>
+    <h1>Three-story smoke test</h1>
     <div id="results">Running…</div>
   </section>
 </main>
@@ -45,13 +45,14 @@
     check(doc.getElementById('ambient-audio').error === null, 'Ambient audio asset loads without an error');
 
     const carousel = doc.getElementById('carousel-zone');
+    const clown = doc.getElementById('clown-zone');
+    const tent = doc.getElementById('tent-zone');
     if (new URLSearchParams(location.search).has('show-targets')) {
       carousel.style.background = 'rgba(100, 255, 130, .3)';
+      clown.style.background = 'rgba(255, 80, 80, .3)';
+      tent.style.background = 'rgba(120, 220, 80, .3)';
     }
-    const carouselTestPoints = [
-      { x: 8, y: 22 }, { x: 24, y: 32 }, { x: 10, y: 52 }, { x: 30, y: 60 },
-    ];
-    check(doc.querySelectorAll('.hotspot').length === 1, 'Only the carousel-wide Phase 1 hotspot is active');
+    check(doc.querySelectorAll('.hotspot').length === 3, 'All three story hotspots are active');
     for (const [width, height] of [[320, 568], [375, 667], [390, 844], [393, 852], [430, 932]]) {
       frame.style.width = `${width}px`;
       frame.style.height = `${height}px`;
@@ -70,18 +71,13 @@
         Math.abs(backgroundRect.left - sceneRect.left) < 0.5 && Math.abs(backgroundRect.width - sceneRect.width) < 0.5,
         `${width}×${height}: background and hotspot coordinates stay aligned`
       );
-      const carouselRect = carousel.getBoundingClientRect();
-      check(carouselRect.width >= 44 && carouselRect.height >= 44, `${width}px: carousel target is at least 44×44`);
-      const samplePoints = carouselTestPoints
-        .map(point => [
-          sceneRect.left + sceneRect.width * point.x / 100,
-          sceneRect.top + sceneRect.height * point.y / 100,
-        ])
-        .filter(([x, y]) => x >= 0 && x < win.innerWidth && y >= 0 && y < win.innerHeight);
-      check(
-        samplePoints.length > 0 && samplePoints.every(([x, y]) => doc.elementFromPoint(x, y) === carousel),
-        `${width}px: visible carousel structure maps to its single trigger`
-      );
+      for (const [target, name] of [[carousel, 'carousel'], [tent, 'tent'], [clown, 'clown']]) {
+        const rect = target.getBoundingClientRect();
+        check(rect.width >= 44 && rect.height >= 44, `${width}px: ${name} target is at least 44×44`);
+        const x = Math.max(1, Math.min(win.innerWidth - 1, rect.left + rect.width / 2));
+        const y = Math.max(1, Math.min(win.innerHeight - 1, rect.top + rect.height / 2));
+        check(doc.elementFromPoint(x, y) === target, `${width}px: ${name} target is reachable at its visible center`);
+      }
     }
     /* Keep the interaction sequence at a modern tall-phone size. */
     frame.style.width = '393px';
@@ -98,6 +94,7 @@
     await wait(150);
     check(Boolean(doc.querySelector('.carousel-spin')), 'Three carousel taps start The Last Ride');
     check(doc.getElementById('hotspot-layer').inert, 'Story locks scene interaction');
+    check(doc.getElementById('credits').inert, 'Story locks the secondary credits control');
 
     doc.getElementById('pause-btn').click();
     await wait(100);
@@ -112,18 +109,43 @@
     await wait(7200);
     check(!doc.querySelector('.carousel-spin'), 'Story ends after resume');
     check(!doc.getElementById('hotspot-layer').inert, 'Interaction unlocks after the story');
+    check(!doc.getElementById('credits').inert, 'Credits unlock after the story');
+
+    clown.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await wait(30);
+    check(doc.getElementById('status').textContent.includes('1 of 3'), 'Clown trigger reports its own progress');
+    clown.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    clown.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await wait(150);
+    check(Boolean(doc.querySelector('.clown-eyes')), 'Keyboard input starts The Painted Grin');
+    check(doc.getElementById('hotspot-layer').inert, 'Clown story locks interaction');
+    await wait(7100);
+    check(!doc.querySelector('.clown-eyes'), 'Clown story ends and cleans up');
+    check(!doc.getElementById('hotspot-layer').inert, 'Interaction returns after clown story');
+
+    tent.click();
+    await wait(30);
+    check(doc.getElementById('status').textContent.includes('1 of 3'), 'Tent trigger reports its own progress');
+    tent.click();
+    tent.click();
+    await wait(1400);
+    check(Boolean(doc.querySelector('.tent-figure')), 'Three tent taps start The Last Show');
+    check(doc.getElementById('hotspot-layer').inert, 'Tent story locks interaction');
+    await wait(6200);
+    check(!doc.querySelector('.tent-figure'), 'Tent story ends and cleans up');
+    check(!doc.getElementById('hotspot-layer').inert, 'Interaction returns after tent story');
 
     for (let tap = 0; tap < 3; tap++) {
       carousel.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     }
     await wait(150);
-    check(Boolean(doc.querySelector('.carousel-spin')), 'Keyboard input replays the story');
+    check(Boolean(doc.querySelector('.carousel-spin')), 'A completed story can replay without reloading');
 
     const failures = checks.filter(item => !item.condition);
     results.className = failures.length ? 'fail' : 'pass';
     results.textContent = checks.map(item => `${item.condition ? 'PASS' : 'FAIL'} — ${item.message}`).join('\n');
     results.dataset.status = failures.length ? 'fail' : 'pass';
-    document.title = failures.length ? 'FAIL — Phase 1 smoke test' : 'PASS — Phase 1 smoke test';
+    document.title = failures.length ? 'FAIL — Three-story smoke test' : 'PASS — Three-story smoke test';
   });
 </script>
 </body>

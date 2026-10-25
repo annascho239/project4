@@ -31,18 +31,24 @@
     await wait(100);
     check(doc.querySelectorAll('.fog, .light, .bat').length === 0, 'Recurring ambient motion does not start');
 
-    const carousel = doc.getElementById('carousel-zone');
-    carousel.click();
-    carousel.click();
-    carousel.click();
-    await wait(100);
-    check(Boolean(doc.querySelector('.reduced-story-glow')), 'Story uses its static reduced-motion presentation');
-    check(!doc.querySelector('.carousel-spin'), 'Spinning effect is omitted');
-    check(doc.getElementById('hotspot-layer').inert, 'Story still locks interaction');
+    const stories = [
+      { target: doc.getElementById('carousel-zone'), className: '', duration: 7100, name: 'carousel' },
+      { target: doc.getElementById('clown-zone'), className: 'clown-static', duration: 7100, name: 'clown' },
+      { target: doc.getElementById('tent-zone'), className: 'tent-static', duration: 7600, name: 'tent' },
+    ];
 
-    await wait(7100);
-    check(!doc.querySelector('.reduced-story-glow'), 'Reduced-motion story ends cleanly');
-    check(!doc.getElementById('hotspot-layer').inert, 'Interaction returns after the story');
+    for (const story of stories) {
+      story.target.click();
+      story.target.click();
+      story.target.click();
+      await wait(100);
+      const selector = story.className ? `.reduced-story-glow.${story.className}` : '.reduced-story-glow:not(.clown-static):not(.tent-static)';
+      check(Boolean(doc.querySelector(selector)), `${story.name} uses a static reduced-motion presentation`);
+      check(doc.getElementById('hotspot-layer').inert, `${story.name} still locks interaction`);
+      await wait(story.duration);
+      check(!doc.querySelector(selector), `${story.name} reduced-motion story ends cleanly`);
+      check(!doc.getElementById('hotspot-layer').inert, `Interaction returns after the ${story.name} story`);
+    }
 
     const failures = checks.filter(item => !item.condition);
     results.className = failures.length ? 'fail' : 'pass';

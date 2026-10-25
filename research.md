@@ -64,15 +64,15 @@ Start a fresh chat with:
 
 ### Story 2 — The Clown
 
-**Trigger:** Tap nose → left eye → right eye (sequence)
+**Trigger:** Tap anywhere on the clown booth three times; each tap wakes another part of the face.
 **Sequence:**
-- Each tap: that feature briefly pulses/glows with a creak SFX
-- On third tap: clown's mouth cracks open wide
+- First two taps: the painted eyes pulse red; the third pulse spreads across the grin, with descending synthesized tones
+- On third tap: both eyes burn red and the clown's mouth cracks open wide
 - A long jointed hand reaches slowly out, pauses, retracts
-- Clown face resets with a reverberating laugh SFX
-- Total runtime: 5–7 seconds
+- A red flash reveals that it was never a costume, then the booth resets
+- Total runtime: 7 seconds
 
-**Risk:** Tap targets on a painted face need to be large enough on mobile — overlay invisible tap zones over each feature.
+**Mobile revision:** Small painted facial features would repeat the carousel's original precision problem. One broad booth target supplies three clear progress stages while remaining dependable on a phone.
 
 ### Story 3 — The Tent
 
@@ -83,7 +83,7 @@ Start a fresh chat with:
 - On third tap: the tent flap tears open wider, a massive shadow figure briefly fills the entrance
 - A burst of sick green light floods outward, then cuts to black
 - The flap falls back, the glow dims to its original state
-- Total runtime: 6–8 seconds
+- Total runtime: 7.5 seconds
 
 **Risk:** The tent is a large zone — taps anywhere on it should count, not just the flap.
 
@@ -101,7 +101,7 @@ Start a fresh chat with:
 
 **Phase 1 selection:** “Haunting Chiptune Loop [Void Estate]” by Zane Little Music. The original OpenGameArt item page was checked on 2026-10-19 and labels the work CC0 while offering `.wav` and `.ogg` files. The `.ogg` is stored as `assets/void-estate.ogg`. Attribution is not legally required under CC0, but the in-app credits identify the creator and source.
 
-Phase 1 carousel feedback and story stings are original tones synthesized in the browser with the Web Audio API. They add no external asset or license dependency.
+All trigger feedback and story stings are original tones synthesized in the browser with the Web Audio API. They add no external asset or license dependency.
 
 ### CC BY 4.0 (attribution required — usable with credit)
 
@@ -141,6 +141,14 @@ Investigate unfamiliar techniques or asset sources as needed. Verify usage terms
 - The clown and tent remain visual features, but their experimental hotspots are inactive for the first playtest. Presenting unfinished extra stories would make it unclear which interaction represents the intended quality bar. Their code and assets remain available for Phase 2.
 - Ambient audio uses the verified CC0 track above. Short trigger and story sounds are synthesized locally so feedback responds immediately and remains pausable through the shared audio context.
 - The live target is `https://annascho239.github.io/project4/`, which was serving the last committed version when checked before this Phase 1 update.
+
+### Final project decisions — 2026-10-25
+
+- The Developer approved completing the clown and tent stories alongside the carousel story to satisfy the three-story rubric.
+- All three triggers use broad scene regions rather than small illustrated details. The trade-off is a simpler discovery mechanic in exchange for reliable touch input on narrow and tall phones.
+- Each trigger still has a unique audiovisual vocabulary: blue ascending horse notes, red descending clown pulses, and intensifying green tent hums.
+- All story effects use the shared pausable scheduler and Web Audio context. No additional external audio was needed.
+- Progressive hints rotate among the three locations before interaction and respond to the current trigger's progress afterward.
 
 ## Revisions
 

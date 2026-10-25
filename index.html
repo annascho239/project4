@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Virtual Hallo"weenie"</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    html, body {
+    html,
+    body {
       width: 100%;
       height: 100%;
       overflow: hidden;
@@ -96,7 +104,10 @@
       justify-content: center;
       transition: background 0.2s;
     }
-    #pause-btn:hover { background: rgba(0, 0, 0, 0.8); }
+
+    #pause-btn:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
 
     #credits {
       position: absolute;
@@ -127,9 +138,17 @@
       border-radius: 8px;
     }
 
-    #credits[open] summary { margin-bottom: 7px; }
-    #credits p { line-height: 1.45; }
-    #credits a { color: #ffd580; }
+    #credits[open] summary {
+      margin-bottom: 7px;
+    }
+
+    #credits p {
+      line-height: 1.45;
+    }
+
+    #credits a {
+      color: #ffd580;
+    }
 
     .sr-only {
       position: absolute;
@@ -156,14 +175,17 @@
       text-shadow: 0 1px 6px #000;
       letter-spacing: 0.03em;
       padding: 6px 14px;
-      background: rgba(0,0,0,0.35);
+      background: rgba(0, 0, 0, 0.35);
       border-radius: 4px;
       max-width: 80%;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.6s;
     }
-    #hint.visible { opacity: 1; }
+
+    #hint.visible {
+      opacity: 1;
+    }
 
     /* ── Hotspot tap zones ─────────────────────────────── */
     /* Positions are approximate — adjust after viewing on screen */
@@ -175,34 +197,35 @@
       /* Debug outline — remove when tuned: */
       /* outline: 2px dashed rgba(255,0,0,0.5); */
     }
+
     .hotspot:focus-visible {
       outline: 2px solid #ffd580;
       outline-offset: 3px;
     }
 
-    /* One reliable target covers the complete carousel structure. */
+    /* Three broad, adjacent targets keep touch interaction reliable on phones. */
     #carousel-zone {
       left: 0%;
-      top: 13%;
-      width: 36%;
-      height: 57%;
+      top: 34%;
+      width: 34%;
+      height: 36%;
       border-radius: 0;
     }
 
-    /* Clown nose */
-    #clown-nose {
-      right: 1%;
-      top: 44%;
-      width: 10%;
-      height: 8%;
+    #clown-zone {
+      left: 75%;
+      top: 31%;
+      width: 25%;
+      height: 41%;
+      border-radius: 0;
     }
 
-    /* Circus tent — center upper */
     #tent-zone {
-      left: 20%;
-      top: 10%;
-      width: 58%;
-      height: 38%;
+      left: 34%;
+      top: 13%;
+      width: 41%;
+      height: 37%;
+      border-radius: 0;
     }
 
     /* ── Start screen ──────────────────────────────────── */
@@ -249,6 +272,7 @@
       min-width: 44px;
       min-height: 44px;
     }
+
     #enter-btn:hover,
     #enter-btn:focus-visible {
       background: rgba(255, 122, 0, 0.18);
@@ -268,7 +292,7 @@
       width: 88%;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      text-shadow: 0 0 18px rgba(120,180,255,0.7), 0 1px 4px #000;
+      text-shadow: 0 0 18px rgba(120, 180, 255, 0.7), 0 1px 4px #000;
       pointer-events: none;
       animation: storyTextFade 2.5s ease-in-out forwards;
     }
@@ -283,7 +307,7 @@
       text-align: center;
       width: 88%;
       font-style: italic;
-      text-shadow: 0 0 12px rgba(0,0,0,0.9), 0 1px 4px #000;
+      text-shadow: 0 0 12px rgba(0, 0, 0, 0.9), 0 1px 4px #000;
       pointer-events: none;
       animation: storyTextFade 2.2s ease-in-out forwards;
     }
@@ -304,10 +328,21 @@
     }
 
     @keyframes storyTextFade {
-      0%   { opacity: 0; }
-      12%  { opacity: 1; }
-      78%  { opacity: 1; }
-      100% { opacity: 0; }
+      0% {
+        opacity: 0;
+      }
+
+      12% {
+        opacity: 1;
+      }
+
+      78% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
     }
 
     /* ── String lights ─────────────────────────────────── */
@@ -319,20 +354,46 @@
       border-radius: 50%;
       background: #ffcc55;
       box-shadow: 0 0 6px 3px rgba(255, 200, 80, 0.7),
-                  0 0 16px 6px rgba(255, 160, 40, 0.35);
+        0 0 16px 6px rgba(255, 160, 40, 0.35);
       animation: flicker linear infinite;
     }
 
     @keyframes flicker {
-      0%   { opacity: 1;   }
-      8%   { opacity: 0.2; }
-      10%  { opacity: 1;   }
-      40%  { opacity: 0.9; }
-      42%  { opacity: 0.1; }
-      44%  { opacity: 0.9; }
-      76%  { opacity: 0.3; }
-      78%  { opacity: 1;   }
-      100% { opacity: 1;   }
+      0% {
+        opacity: 1;
+      }
+
+      8% {
+        opacity: 0.2;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      40% {
+        opacity: 0.9;
+      }
+
+      42% {
+        opacity: 0.1;
+      }
+
+      44% {
+        opacity: 0.9;
+      }
+
+      76% {
+        opacity: 0.3;
+      }
+
+      78% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 1;
+      }
     }
 
     /* ── Bats ───────────────────────────────────────────── */
@@ -352,15 +413,33 @@
     }
 
     @keyframes wingFlap {
-      from { transform: scaleY(1);    }
-      to   { transform: scaleY(0.35); }
+      from {
+        transform: scaleY(1);
+      }
+
+      to {
+        transform: scaleY(0.35);
+      }
     }
 
     @keyframes batFly {
-      from { transform: translateX(-60px); opacity: 0; }
-      5%   { opacity: 1; }
-      95%  { opacity: 1; }
-      to   { transform: translateX(calc(var(--scene-width) + 120px)); opacity: 0; }
+      from {
+        transform: translateX(-60px);
+        opacity: 0;
+      }
+
+      5% {
+        opacity: 1;
+      }
+
+      95% {
+        opacity: 1;
+      }
+
+      to {
+        transform: translateX(calc(var(--scene-width) + 120px));
+        opacity: 0;
+      }
     }
 
     /* ── Fog ───────────────────────────────────────────── */
@@ -371,12 +450,10 @@
       width: 300%;
       left: -100%;
       height: 22%;
-      background: linear-gradient(
-        to top,
-        rgba(180, 200, 160, 0.35) 0%,
-        rgba(160, 185, 140, 0.18) 40%,
-        transparent 100%
-      );
+      background: linear-gradient(to top,
+          rgba(180, 200, 160, 0.35) 0%,
+          rgba(160, 185, 140, 0.18) 40%,
+          transparent 100%);
     }
 
     .fog-1 {
@@ -391,13 +468,27 @@
     }
 
     @keyframes fogLeft {
-      from { transform: translateX(-25%); opacity: 0.9; }
-      to   { transform: translateX(25%);  opacity: 0.5; }
+      from {
+        transform: translateX(-25%);
+        opacity: 0.9;
+      }
+
+      to {
+        transform: translateX(25%);
+        opacity: 0.5;
+      }
     }
 
     @keyframes fogRight {
-      from { transform: translateX(25%);  opacity: 0.5; }
-      to   { transform: translateX(-25%); opacity: 0.9; }
+      from {
+        transform: translateX(25%);
+        opacity: 0.5;
+      }
+
+      to {
+        transform: translateX(-25%);
+        opacity: 0.9;
+      }
     }
 
     /* ── Carousel story ─────────────────────────────────── */
@@ -405,14 +496,26 @@
     .carousel-progress-glow {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(160,220,255,0.78) 0%, rgba(160,220,255,0.2) 48%, transparent 72%);
+      background: radial-gradient(circle, rgba(160, 220, 255, 0.78) 0%, rgba(160, 220, 255, 0.2) 48%, transparent 72%);
       animation: horsePulse 0.8s ease-out forwards;
       pointer-events: none;
     }
+
     @keyframes horsePulse {
-      0%   { opacity: 1;   transform: scale(0.8); }
-      60%  { opacity: 0.8; transform: scale(1.3); }
-      100% { opacity: 0;   transform: scale(1.5); }
+      0% {
+        opacity: 1;
+        transform: scale(0.8);
+      }
+
+      60% {
+        opacity: 0.8;
+        transform: scale(1.3);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.5);
+      }
     }
 
     .carousel-spin {
@@ -427,25 +530,47 @@
       animation: spinRing 1.5s linear infinite;
       pointer-events: none;
     }
+
     @keyframes spinRing {
-      from { transform: rotate(0deg);   }
-      to   { transform: rotate(360deg); }
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .ghost {
       position: absolute;
       width: 22px;
       height: 30px;
-      background: radial-gradient(ellipse at 50% 40%, rgba(200,235,255,0.85) 0%, rgba(180,220,255,0.3) 60%, transparent 100%);
+      background: radial-gradient(ellipse at 50% 40%, rgba(200, 235, 255, 0.85) 0%, rgba(180, 220, 255, 0.3) 60%, transparent 100%);
       border-radius: 50% 50% 40% 40%;
       animation: ghostRise 3s ease-in forwards;
       pointer-events: none;
     }
+
     @keyframes ghostRise {
-      0%   { opacity: 0;   transform: translateY(0)     scale(0.5); }
-      20%  { opacity: 0.9; transform: translateY(-20px) scale(1);   }
-      80%  { opacity: 0.8; transform: translateY(-80px) scale(1.1); }
-      100% { opacity: 0;   transform: translateY(-110px) scale(0.8); }
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.5);
+      }
+
+      20% {
+        opacity: 0.9;
+        transform: translateY(-20px) scale(1);
+      }
+
+      80% {
+        opacity: 0.8;
+        transform: translateY(-80px) scale(1.1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-110px) scale(0.8);
+      }
     }
 
     .story-flash {
@@ -455,23 +580,37 @@
       pointer-events: none;
       animation: flashOut 0.6s ease-out forwards;
     }
+
     @keyframes flashOut {
-      0%   { opacity: 1; }
-      100% { opacity: 0; }
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
     }
 
     /* ── Clown story ─────────────────────────────────────── */
 
-    .nose-pulse {
+    .clown-progress-pulse {
       position: absolute;
-      inset: -4px;
       border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 80, 55, 0.88) 0%, rgba(150, 0, 0, 0.35) 48%, transparent 72%);
       pointer-events: none;
       animation: nosePulse 0.4s ease-out forwards;
     }
+
     @keyframes nosePulse {
-      0%   { box-shadow: 0 0 6px 4px rgba(255,60,60,0.8); opacity: 1; }
-      100% { box-shadow: 0 0 20px 10px rgba(255,30,30,0); opacity: 0; }
+      0% {
+        box-shadow: 0 0 6px 4px rgba(255, 60, 60, 0.8);
+        opacity: 1;
+      }
+
+      100% {
+        box-shadow: 0 0 20px 10px rgba(255, 30, 30, 0);
+        opacity: 0;
+      }
     }
 
     .mouth-crack {
@@ -484,11 +623,14 @@
       border-radius: 0 0 40% 40%;
       transform: scaleY(0);
       transform-origin: top center;
-      animation: mouthOpen 0.6s ease-out 0.3s forwards;
+      animation: mouthOpen 1.2s ease-out forwards;
       pointer-events: none;
     }
+
     @keyframes mouthOpen {
-      to { transform: scaleY(1); }
+      to {
+        transform: scaleY(1);
+      }
     }
 
     .clown-hand {
@@ -499,14 +641,46 @@
       height: 28%;
       transform: scale(0);
       transform-origin: right center;
-      animation: handGrow 2s ease-in-out 0.4s forwards;
+      animation: handGrow 4.3s ease-in-out forwards;
       pointer-events: none;
     }
+
+    .clown-eyes {
+      position: absolute;
+      right: 1%;
+      top: 36%;
+      width: 18%;
+      height: 13%;
+      background:
+        radial-gradient(circle at 25% 45%, #ff2d1d 0 5%, rgba(120, 0, 0, 0.5) 8%, transparent 18%),
+        radial-gradient(circle at 76% 42%, #ff2d1d 0 5%, rgba(120, 0, 0, 0.5) 8%, transparent 18%);
+      filter: drop-shadow(0 0 8px #ff2d1d);
+      animation: eyesWake 5s ease-in-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes eyesWake {
+      0%, 100% { opacity: 0; }
+      18%, 78% { opacity: 1; }
+      50% { filter: drop-shadow(0 0 16px #ff2d1d); }
+    }
+
     @keyframes handGrow {
-      0%   { transform: scale(0);   }
-      35%  { transform: scale(1);   }
-      65%  { transform: scale(1);   }
-      100% { transform: scale(0);   }
+      0% {
+        transform: scale(0);
+      }
+
+      35% {
+        transform: scale(1);
+      }
+
+      65% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(0);
+      }
     }
 
     .clown-flash {
@@ -526,14 +700,38 @@
       width: 62%;
       height: 42%;
       border-radius: 40% 40% 10% 10%;
-      background: radial-gradient(ellipse at 50% 60%, rgba(80,200,80,0.55) 0%, transparent 70%);
+      background: radial-gradient(ellipse at 50% 60%, rgba(80, 200, 80, 0.55) 0%, transparent 70%);
       pointer-events: none;
       animation: tentGlow 0.6s ease-out forwards;
     }
+
+    .tent-progress-pulse {
+      position: absolute;
+      left: 32%;
+      top: 15%;
+      width: 44%;
+      height: 34%;
+      border-radius: 45% 45% 12% 12%;
+      background: radial-gradient(ellipse at 50% 62%, rgba(125, 255, 70, 0.72) 0%, rgba(60, 140, 35, 0.2) 52%, transparent 72%);
+      animation: tentGlow 0.65s ease-out forwards;
+      pointer-events: none;
+    }
+
     @keyframes tentGlow {
-      0%   { opacity: 0; transform: scale(0.9); }
-      40%  { opacity: 1; transform: scale(1.05); }
-      100% { opacity: 0; transform: scale(1); }
+      0% {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      40% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1);
+      }
     }
 
     .tent-figure {
@@ -544,19 +742,35 @@
       height: 34%;
       background: url('assets/ghosttent.png') center/contain no-repeat;
       pointer-events: none;
-      animation: figureAppear 2.5s ease-in-out forwards;
+      animation: figureAppear 4.7s ease-in-out forwards;
     }
+
     @keyframes figureAppear {
-      0%   { opacity: 0; transform: scaleY(0.3); }
-      25%  { opacity: 1; transform: scaleY(1);   }
-      70%  { opacity: 1; transform: scaleY(1);   }
-      100% { opacity: 0; transform: scaleY(0.8); }
+      0% {
+        opacity: 0;
+        transform: scaleY(0.3);
+      }
+
+      25% {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+
+      70% {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scaleY(0.8);
+      }
     }
 
     .tent-flash {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 60% 40% at 49% 28%, rgba(60,255,60,0.7) 0%, transparent 70%);
+      background: radial-gradient(ellipse 60% 40% at 49% 28%, rgba(60, 255, 60, 0.7) 0%, transparent 70%);
       pointer-events: none;
       animation: tentFlashOut 0.8s ease-out forwards;
     }
@@ -564,18 +778,29 @@
     .tent-dark {
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.6);
       pointer-events: none;
       animation: darkFade 1s ease-in-out forwards;
     }
+
     @keyframes darkFade {
-      0%   { opacity: 1; }
-      100% { opacity: 0; }
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
     }
 
     @keyframes tentFlashOut {
-      0%   { opacity: 1; }
-      100% { opacity: 0; }
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
     }
 
     #app.is-paused * {
@@ -593,602 +818,711 @@
       box-shadow: 0 0 24px 10px rgba(120, 200, 255, 0.38);
     }
 
+    .reduced-story-glow.clown-static {
+      left: 76%;
+      top: 34%;
+      bottom: auto;
+      width: 23%;
+      height: 34%;
+      border-color: rgba(255, 75, 55, 0.8);
+      box-shadow: 0 0 24px 10px rgba(255, 45, 30, 0.35);
+    }
+
+    .reduced-story-glow.tent-static {
+      left: 32%;
+      top: 14%;
+      bottom: auto;
+      width: 44%;
+      height: 35%;
+      border-color: rgba(135, 255, 80, 0.75);
+      box-shadow: 0 0 24px 10px rgba(90, 220, 50, 0.3);
+    }
+
     /* Reduced-motion: disable all transitions/animations */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+
+      *,
+      *::before,
+      *::after {
         animation-duration: 0.001ms !important;
         transition-duration: 0.001ms !important;
       }
 
       .story-title,
-      .story-reveal { animation: none !important; opacity: 1; }
+      .story-reveal {
+        animation: none !important;
+        opacity: 1;
+      }
     }
   </style>
 </head>
+
 <body>
-<div id="app">
+  <div id="app">
 
-  <div id="scene">
+    <div id="scene">
 
-    <!-- Layer 0: Background -->
-    <img id="bg" src="assets/halloweenbackground.png" alt="Abandoned carnival at night">
+      <!-- Layer 0: Background -->
+      <img id="bg" src="assets/halloweenbackground.png" alt="Abandoned carnival at night">
 
-    <!-- Layer 1: Ambient effects -->
-    <div id="ambient-layer">
-      <!-- fog, bats, flickering lights added in JS -->
+      <!-- Layer 1: Ambient effects -->
+      <div id="ambient-layer">
+        <!-- fog, bats, flickering lights added in JS -->
+      </div>
+
+      <!-- Layer 2: Interactive hotspots -->
+      <div id="hotspot-layer">
+        <div id="carousel-zone" class="hotspot" role="button" tabindex="0"
+          aria-label="Carousel, tap three times to wake the horses"></div>
+        <div id="tent-zone" class="hotspot" role="button" tabindex="0"
+          aria-label="Big top tent, tap three times to disturb what is inside"></div>
+        <div id="clown-zone" class="hotspot" role="button" tabindex="0"
+          aria-label="Clown booth, tap three times to wake the painted face"></div>
+      </div>
+
+      <!-- Layer 3: Story animations -->
+      <div id="story-layer" aria-hidden="true"></div>
     </div>
 
-    <!-- Layer 2: Interactive hotspots -->
-    <div id="hotspot-layer">
-      <div id="carousel-zone" class="hotspot" role="button" tabindex="0" aria-label="Carousel, tap three times to wake the horses"></div>
-      <!-- Clown and tent story hotspots return in Phase 2. Their code/assets are preserved. -->
+    <!-- Layer 4: HUD -->
+    <div id="ui-layer">
+      <button id="pause-btn" aria-label="Pause">⏸</button>
+      <div id="hint" role="status" aria-live="polite"></div>
+      <details id="credits">
+        <summary>Credits</summary>
+        <p>Developer: Anna Scho</p>
+        <p>Visual assets: AI-generated with ChatGPT.</p>
+        <p>Music: <a href="https://opengameart.org/content/haunting-chiptune-loop-void-estate" target="_blank"
+            rel="noopener">“Void Estate” by Zane Little Music</a>, CC0.</p>
+        <p>Story tones and code are original to this project.</p>
+      </details>
+      <div id="status" class="sr-only" role="status" aria-live="assertive"></div>
     </div>
 
-    <!-- Layer 3: Story animations -->
-    <div id="story-layer" aria-hidden="true"></div>
+    <audio id="ambient-audio" loop preload="auto">
+      <source src="assets/void-estate.ogg" type="audio/ogg">
+    </audio>
+
+    <!-- Start screen -->
+    <div id="start-screen">
+      <h1>Virtual<br>Hallo"weenie"</h1>
+      <p class="tagline">Enter if you dare…</p>
+      <p id="motion-note" class="sr-only">Reduced-motion mode is active. Moving ambience will remain still.</p>
+      <button id="enter-btn">Enter</button>
+    </div>
+
   </div>
 
-  <!-- Layer 4: HUD -->
-  <div id="ui-layer">
-    <button id="pause-btn" aria-label="Pause">⏸</button>
-    <div id="hint" role="status" aria-live="polite"></div>
-    <details id="credits">
-      <summary>Credits</summary>
-      <p>Developer: Anna Scho</p>
-      <p>Visual assets: AI-generated with ChatGPT.</p>
-      <p>Music: <a href="https://opengameart.org/content/haunting-chiptune-loop-void-estate" target="_blank" rel="noopener">“Void Estate” by Zane Little Music</a>, CC0.</p>
-      <p>Story tones and code are original to this project.</p>
-    </details>
-    <div id="status" class="sr-only" role="status" aria-live="assertive"></div>
-  </div>
+  <script>
+    /* ── State ──────────────────────────────────────────── */
 
-  <audio id="ambient-audio" loop preload="auto">
-    <source src="assets/void-estate.ogg" type="audio/ogg">
-  </audio>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let paused = false;
+    let storyPlaying = false;
+    let started = false;
 
-  <!-- Start screen -->
-  <div id="start-screen">
-    <h1>Virtual<br>Hallo"weenie"</h1>
-    <p class="tagline">Enter if you dare…</p>
-    <p id="motion-note" class="sr-only">Reduced-motion mode is active. Moving ambience will remain still.</p>
-    <button id="enter-btn">Enter</button>
-  </div>
+    const app = document.getElementById('app');
+    const scene = document.getElementById('scene');
+    const hotspotLayer = document.getElementById('hotspot-layer');
+    const storyLayer = document.getElementById('story-layer');
+    const statusEl = document.getElementById('status');
+    const creditsEl = document.getElementById('credits');
+    const ambientAudio = document.getElementById('ambient-audio');
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    let audioContext = null;
 
-</div>
+    const SCENE_ASPECT = 941 / 1672;
 
-<script>
-  /* ── State ──────────────────────────────────────────── */
+    function alignSceneToBackground() {
+      const appWidth = app.clientWidth;
+      const appHeight = app.clientHeight;
+      const appAspect = appWidth / appHeight;
+      const sceneWidth = appAspect > SCENE_ASPECT ? appWidth : appHeight * SCENE_ASPECT;
+      const sceneHeight = appAspect > SCENE_ASPECT ? appWidth / SCENE_ASPECT : appHeight;
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let paused = false;
-  let storyPlaying = false;
-  let started = false;
-
-  const app = document.getElementById('app');
-  const scene = document.getElementById('scene');
-  const hotspotLayer = document.getElementById('hotspot-layer');
-  const storyLayer = document.getElementById('story-layer');
-  const statusEl = document.getElementById('status');
-  const ambientAudio = document.getElementById('ambient-audio');
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  let audioContext = null;
-
-  const SCENE_ASPECT = 941 / 1672;
-
-  function alignSceneToBackground() {
-    const appWidth = app.clientWidth;
-    const appHeight = app.clientHeight;
-    const appAspect = appWidth / appHeight;
-    const sceneWidth = appAspect > SCENE_ASPECT ? appWidth : appHeight * SCENE_ASPECT;
-    const sceneHeight = appAspect > SCENE_ASPECT ? appWidth / SCENE_ASPECT : appHeight;
-
-    scene.style.width = `${sceneWidth}px`;
-    scene.style.height = `${sceneHeight}px`;
-    scene.style.left = `${(appWidth - sceneWidth) / 2}px`;
-    scene.style.setProperty('--scene-width', `${sceneWidth}px`);
-  }
-
-  alignSceneToBackground();
-  if ('ResizeObserver' in window) new ResizeObserver(alignSceneToBackground).observe(app);
-  else window.addEventListener('resize', alignSceneToBackground);
-
-  class PausableTimer {
-    constructor(callback, delay) {
-      this.callback = callback;
-      this.remaining = delay;
-      this.startedAt = 0;
-      this.id = null;
-      this.cleared = false;
-      this.resume();
+      scene.style.width = `${sceneWidth}px`;
+      scene.style.height = `${sceneHeight}px`;
+      scene.style.left = `${(appWidth - sceneWidth) / 2}px`;
+      scene.style.setProperty('--scene-width', `${sceneWidth}px`);
     }
 
-    pause() {
-      if (this.id === null || this.cleared) return;
-      clearTimeout(this.id);
-      this.id = null;
-      this.remaining = Math.max(0, this.remaining - (performance.now() - this.startedAt));
-    }
+    alignSceneToBackground();
+    if ('ResizeObserver' in window) new ResizeObserver(alignSceneToBackground).observe(app);
+    else window.addEventListener('resize', alignSceneToBackground);
 
-    resume() {
-      if (this.id !== null || this.cleared) return;
-      this.startedAt = performance.now();
-      this.id = setTimeout(() => {
+    class PausableTimer {
+      constructor(callback, delay) {
+        this.callback = callback;
+        this.remaining = delay;
+        this.startedAt = 0;
+        this.id = null;
+        this.cleared = false;
+        this.resume();
+      }
+
+      pause() {
+        if (this.id === null || this.cleared) return;
+        clearTimeout(this.id);
+        this.id = null;
+        this.remaining = Math.max(0, this.remaining - (performance.now() - this.startedAt));
+      }
+
+      resume() {
+        if (this.id !== null || this.cleared) return;
+        this.startedAt = performance.now();
+        this.id = setTimeout(() => {
+          this.id = null;
+          this.cleared = true;
+          this.callback();
+        }, this.remaining);
+      }
+
+      clear() {
+        if (this.id !== null) clearTimeout(this.id);
         this.id = null;
         this.cleared = true;
-        this.callback();
-      }, this.remaining);
+      }
     }
 
-    clear() {
-      if (this.id !== null) clearTimeout(this.id);
-      this.id = null;
-      this.cleared = true;
+    const activeTimers = new Set();
+
+    function schedule(callback, delay) {
+      let timer;
+      timer = new PausableTimer(() => {
+        activeTimers.delete(timer);
+        callback();
+      }, delay);
+      activeTimers.add(timer);
+      if (paused) timer.pause();
+      return timer;
     }
-  }
 
-  const activeTimers = new Set();
-
-  function schedule(callback, delay) {
-    let timer;
-    timer = new PausableTimer(() => {
+    function cancelScheduled(timer) {
+      if (!timer) return;
+      timer.clear();
       activeTimers.delete(timer);
-      callback();
-    }, delay);
-    activeTimers.add(timer);
-    if (paused) timer.pause();
-    return timer;
-  }
-
-  function cancelScheduled(timer) {
-    if (!timer) return;
-    timer.clear();
-    activeTimers.delete(timer);
-  }
-
-  function announce(message) {
-    statusEl.textContent = message;
-  }
-
-  function ensureAudio() {
-    if (!AudioContextClass) return;
-    if (!audioContext) audioContext = new AudioContextClass();
-    if (audioContext.state === 'suspended') audioContext.resume();
-  }
-
-  function playTone(frequency, duration = 0.16, type = 'sine', volume = 0.045, delay = 0) {
-    if (!audioContext || audioContext.state === 'closed') return;
-    const start = audioContext.currentTime + delay;
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-    oscillator.type = type;
-    oscillator.frequency.setValueAtTime(frequency, start);
-    gain.gain.setValueAtTime(0.0001, start);
-    gain.gain.exponentialRampToValueAtTime(volume, start + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-    oscillator.connect(gain).connect(audioContext.destination);
-    oscillator.start(start);
-    oscillator.stop(start + duration + 0.03);
-  }
-
-  /* ── Start screen ───────────────────────────────────── */
-
-  const startScreen = document.getElementById('start-screen');
-  const enterBtn    = document.getElementById('enter-btn');
-
-  if (prefersReducedMotion) {
-    const motionNote = document.getElementById('motion-note');
-    motionNote.className = '';
-    motionNote.style.cssText = 'color:#c7b9a6;font-size:.78rem;text-align:center;max-width:80%;margin:-28px 0 24px;';
-  }
-
-  function startScene() {
-    if (started) return;
-    started = true;
-    startScreen.style.display = 'none';
-    if (!prefersReducedMotion) startAmbient();
-    ensureAudio();
-    ambientAudio.volume = 0.24;
-    ambientAudio.play().catch(() => {
-      announce('Ambient audio could not start. The visual experience is still available.');
-      showHint('Audio is unavailable, but the carnival is still open.');
-    });
-    showIntroText();
-    scheduleHints();
-  }
-
-  enterBtn.addEventListener('click', startScene);
-  enterBtn.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') startScene();
-  });
-
-  /* ── Pause / resume ─────────────────────────────────── */
-
-  const pauseBtn = document.getElementById('pause-btn');
-
-  pauseBtn.addEventListener('click', togglePause);
-
-  function togglePause() {
-    if (!started) return;
-    paused = !paused;
-    pauseBtn.textContent = paused ? '▶' : '⏸';
-    pauseBtn.setAttribute('aria-label', paused ? 'Resume' : 'Pause');
-    app.classList.toggle('is-paused', paused);
-
-    activeTimers.forEach(timer => paused ? timer.pause() : timer.resume());
-    document.getAnimations().forEach(animation => paused ? animation.pause() : animation.play());
-
-    if (paused) {
-      ambientAudio.pause();
-      if (audioContext?.state === 'running') audioContext.suspend();
-      announce('Experience paused.');
-    } else {
-      if (audioContext?.state === 'suspended') audioContext.resume();
-      ambientAudio.play().catch(() => announce('Audio could not resume.'));
-      announce('Experience resumed.');
     }
-  }
 
-  /* ── Ambient effects (stubs) ────────────────────────── */
+    function announce(message) {
+      statusEl.textContent = message;
+    }
 
-  const ambientLayer = document.getElementById('ambient-layer');
-  const fogEls = [];
-  const lightEls = [];
-  let ambientStarted = false;
+    function ensureAudio() {
+      if (!AudioContextClass) return;
+      if (!audioContext) audioContext = new AudioContextClass();
+      if (audioContext.state === 'suspended') audioContext.resume();
+    }
 
-  /* Horizontal positions (% from left) and vertical position (% from top)
-     for each string light — adjust to match your image */
-  const lightPositions = [
-    { x: 5,  y: 22 }, { x: 13, y: 24 }, { x: 22, y: 26 },
-    { x: 31, y: 27 }, { x: 40, y: 28 }, { x: 50, y: 29 },
-    { x: 60, y: 28 }, { x: 69, y: 27 }, { x: 78, y: 26 },
-    { x: 88, y: 24 }, { x: 96, y: 22 },
-  ];
+    function playTone(frequency, duration = 0.16, type = 'sine', volume = 0.045, delay = 0) {
+      if (!audioContext || audioContext.state === 'closed') return;
+      const start = audioContext.currentTime + delay;
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(frequency, start);
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(volume, start + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+      oscillator.connect(gain).connect(audioContext.destination);
+      oscillator.start(start);
+      oscillator.stop(start + duration + 0.03);
+    }
 
-  function startAmbient() {
-    if (ambientStarted) return;
-    ambientStarted = true;
-    /* Fog */
-    [1, 2].forEach(n => {
-      const fog = document.createElement('div');
-      fog.className = `fog fog-${n}`;
-      ambientLayer.appendChild(fog);
-      fogEls.push(fog);
+    /* ── Start screen ───────────────────────────────────── */
+
+    const startScreen = document.getElementById('start-screen');
+    const enterBtn = document.getElementById('enter-btn');
+
+    if (prefersReducedMotion) {
+      const motionNote = document.getElementById('motion-note');
+      motionNote.className = '';
+      motionNote.style.cssText = 'color:#c7b9a6;font-size:.78rem;text-align:center;max-width:80%;margin:-28px 0 24px;';
+    }
+
+    function startScene() {
+      if (started) return;
+      started = true;
+      startScreen.style.display = 'none';
+      if (!prefersReducedMotion) startAmbient();
+      ensureAudio();
+      ambientAudio.volume = 0.24;
+      ambientAudio.play().catch(() => {
+        announce('Ambient audio could not start. The visual experience is still available.');
+        showHint('Audio is unavailable, but the carnival is still open.');
+      });
+      showIntroText();
+      scheduleHints();
+    }
+
+    enterBtn.addEventListener('click', startScene);
+    enterBtn.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') startScene();
     });
 
-    /* Bats — spawn periodically, fly across */
-    function spawnBat() {
-      const bat = document.createElement('div');
-      bat.className = 'bat';
-      const topPct = 8 + Math.random() * 35; /* upper portion of scene */
-      const duration = 4 + Math.random() * 4;
-      const size = 20 + Math.random() * 16;
-      bat.style.top    = topPct + '%';
-      bat.style.left   = '0';
-      bat.style.width  = size + 'px';
-      bat.style.height = (size * 0.5) + 'px';
-      bat.style.animation = `batFly ${duration}s linear forwards`;
-      bat.innerHTML = `<svg viewBox="0 0 40 20" fill="#111">
+    /* ── Pause / resume ─────────────────────────────────── */
+
+    const pauseBtn = document.getElementById('pause-btn');
+
+    pauseBtn.addEventListener('click', togglePause);
+
+    function togglePause() {
+      if (!started) return;
+      paused = !paused;
+      pauseBtn.textContent = paused ? '▶' : '⏸';
+      pauseBtn.setAttribute('aria-label', paused ? 'Resume' : 'Pause');
+      app.classList.toggle('is-paused', paused);
+
+      activeTimers.forEach(timer => paused ? timer.pause() : timer.resume());
+      document.getAnimations().forEach(animation => paused ? animation.pause() : animation.play());
+
+      if (paused) {
+        ambientAudio.pause();
+        if (audioContext?.state === 'running') audioContext.suspend();
+        announce('Experience paused.');
+      } else {
+        if (audioContext?.state === 'suspended') audioContext.resume();
+        ambientAudio.play().catch(() => announce('Audio could not resume.'));
+        announce('Experience resumed.');
+      }
+    }
+
+    /* ── Ambient effects (stubs) ────────────────────────── */
+
+    const ambientLayer = document.getElementById('ambient-layer');
+    const fogEls = [];
+    const lightEls = [];
+    let ambientStarted = false;
+
+    /* Horizontal positions (% from left) and vertical position (% from top)
+       for each string light — adjust to match your image */
+    const lightPositions = [
+      { x: 5, y: 22 }, { x: 13, y: 24 }, { x: 22, y: 26 },
+      { x: 31, y: 27 }, { x: 40, y: 28 }, { x: 50, y: 29 },
+      { x: 60, y: 28 }, { x: 69, y: 27 }, { x: 78, y: 26 },
+      { x: 88, y: 24 }, { x: 96, y: 22 },
+    ];
+
+    function startAmbient() {
+      if (ambientStarted) return;
+      ambientStarted = true;
+      /* Fog */
+      [1, 2].forEach(n => {
+        const fog = document.createElement('div');
+        fog.className = `fog fog-${n}`;
+        ambientLayer.appendChild(fog);
+        fogEls.push(fog);
+      });
+
+      /* Bats — spawn periodically, fly across */
+      function spawnBat() {
+        const bat = document.createElement('div');
+        bat.className = 'bat';
+        const topPct = 8 + Math.random() * 35; /* upper portion of scene */
+        const duration = 4 + Math.random() * 4;
+        const size = 20 + Math.random() * 16;
+        bat.style.top = topPct + '%';
+        bat.style.left = '0';
+        bat.style.width = size + 'px';
+        bat.style.height = (size * 0.5) + 'px';
+        bat.style.animation = `batFly ${duration}s linear forwards`;
+        bat.innerHTML = `<svg viewBox="0 0 40 20" fill="#111">
         <path d="M20 10 C14 4 4 2 0 6 C4 8 8 8 10 10 C8 12 4 14 2 18 C6 16 12 14 16 12 L20 14 L24 12 C28 14 34 16 38 18 C36 14 32 12 30 10 C32 8 36 8 40 6 C36 2 26 4 20 10Z"/>
       </svg>`;
-      ambientLayer.appendChild(bat);
-      bat.addEventListener('animationend', () => bat.remove());
+        ambientLayer.appendChild(bat);
+        bat.addEventListener('animationend', () => bat.remove());
+      }
+
+      spawnBat();
+      schedule(spawnBat, 1800);
+
+      function scheduleBatFlight() {
+        schedule(() => {
+          spawnBat();
+          if (Math.random() > 0.6) schedule(spawnBat, 900);
+          scheduleBatFlight();
+        }, 4000 + Math.random() * 3000);
+      }
+
+      scheduleBatFlight();
+
+      /* String lights */
+      lightPositions.forEach(({ x, y }, i) => {
+        const light = document.createElement('div');
+        light.className = 'light';
+        light.style.left = x + '%';
+        light.style.top = y + '%';
+        light.style.animationDuration = (2.5 + Math.random() * 3) + 's';
+        light.style.animationDelay = -(Math.random() * 4) + 's';
+        ambientLayer.appendChild(light);
+        lightEls.push(light);
+      });
     }
 
-    spawnBat();
-    schedule(spawnBat, 1800);
+    /* ── Hint system ────────────────────────────────────── */
 
-    function scheduleBatFlight() {
-      schedule(() => {
-        spawnBat();
-        if (Math.random() > 0.6) schedule(spawnBat, 900);
-        scheduleBatFlight();
-      }, 4000 + Math.random() * 3000);
+    const hintEl = document.getElementById('hint');
+    let hintHideTimer = null;
+    let nextHintTimer = null;
+    let discoveryHintLevel = 0;
+
+    const discoveryHints = [
+      "The carousel creaks louder than anything else here.",
+      "The painted clown watches the midway without blinking.",
+      "Green light leaks through the big top's torn canvas.",
+      "The old ride seems to answer every knock.",
+      "The clown's grin changes when the booth is disturbed.",
+      "The tent seems to breathe whenever the canvas is touched.",
+    ];
+
+    function contextualHint() {
+      if (carouselProgress === 1) return 'One horse glows. The carousel is waiting for another knock.';
+      if (carouselProgress === 2) return 'Two horses are awake. One final knock remains.';
+      if (clownProgress === 1) return 'One painted eye burns red. The grin is listening.';
+      if (clownProgress === 2) return 'Both eyes are open. Something presses behind the smile.';
+      if (tentProgress === 1) return 'The canvas answers with a sickly green pulse.';
+      if (tentProgress === 2) return 'A tall shadow leans closer from inside the tent.';
+      const index = Math.min(discoveryHintLevel, discoveryHints.length - 1);
+      discoveryHintLevel++;
+      return discoveryHints[index];
     }
 
-    scheduleBatFlight();
+    function scheduleHints(delay = 12000) {
+      cancelScheduled(nextHintTimer);
+      nextHintTimer = schedule(() => {
+        showHint(contextualHint());
+        scheduleHints(20000);
+      }, delay);
+    }
 
-    /* String lights */
-    lightPositions.forEach(({ x, y }, i) => {
-      const light = document.createElement('div');
-      light.className = 'light';
-      light.style.left = x + '%';
-      light.style.top  = y + '%';
-      light.style.animationDuration  = (2.5 + Math.random() * 3) + 's';
-      light.style.animationDelay     = -(Math.random() * 4) + 's';
-      ambientLayer.appendChild(light);
-      lightEls.push(light);
-    });
-  }
+    function showHint(text) {
+      if (storyPlaying) return;
+      hintEl.textContent = text;
+      hintEl.classList.add('visible');
+      cancelScheduled(hintHideTimer);
+      hintHideTimer = schedule(() => hintEl.classList.remove('visible'), 5000);
+    }
 
-  /* ── Hint system ────────────────────────────────────── */
+    function showInteractionHint(text) {
+      showHint(text);
+      scheduleHints(16000);
+    }
 
-  const hintEl = document.getElementById('hint');
-  let hintHideTimer = null;
-  let nextHintTimer = null;
-  let discoveryHintLevel = 0;
+    /* ── Story text helpers ─────────────────────────────── */
 
-  const discoveryHints = [
-    "The carousel creaks louder than anything else here.",
-    "The old ride seems to answer every knock.",
-    "Each knock wakes another horse beneath the dead carnival lights.",
-  ];
-
-  function contextualHint() {
-    if (carouselProgress === 1) return 'One horse glows. The carousel is waiting for another knock.';
-    if (carouselProgress === 2) return 'Two horses are awake. One final knock remains.';
-    const index = Math.min(discoveryHintLevel, discoveryHints.length - 1);
-    discoveryHintLevel++;
-    return discoveryHints[index];
-  }
-
-  function scheduleHints(delay = 12000) {
-    cancelScheduled(nextHintTimer);
-    nextHintTimer = schedule(() => {
-      showHint(contextualHint());
-      scheduleHints(20000);
-    }, delay);
-  }
-
-  function showHint(text) {
-    if (storyPlaying) return;
-    hintEl.textContent = text;
-    hintEl.classList.add('visible');
-    cancelScheduled(hintHideTimer);
-    hintHideTimer = schedule(() => hintEl.classList.remove('visible'), 5000);
-  }
-
-  function showInteractionHint(text) {
-    showHint(text);
-    scheduleHints(16000);
-  }
-
-  /* ── Story text helpers ─────────────────────────────── */
-
-  function showIntroText() {
-    const el = document.createElement('div');
-    el.className = 'intro-text';
-    el.textContent = 'The carnival closed one night and never reopened. No one says why. Explore — if you dare.';
-    storyLayer.appendChild(el);
-    if (prefersReducedMotion) schedule(() => el.remove(), 4000);
-    else el.addEventListener('animationend', () => el.remove(), { once: true });
-  }
-
-  function showStoryTitle(text, duration = 2500) {
-    const el = document.createElement('div');
-    el.className = 'story-title';
-    el.textContent = text;
-    el.style.animationDuration = duration + 'ms';
-    el.classList.add('phase-one-story');
-    storyLayer.appendChild(el);
-    if (prefersReducedMotion) schedule(() => el.remove(), duration);
-    else el.addEventListener('animationend', () => el.remove(), { once: true });
-  }
-
-  function showStoryReveal(text, delay, duration = 2200) {
-    schedule(() => {
+    function showIntroText() {
       const el = document.createElement('div');
-      el.className = 'story-reveal phase-one-story';
+      el.className = 'intro-text';
+      el.textContent = 'The carnival closed one night and never reopened. No one says why. Explore — if you dare.';
+      storyLayer.appendChild(el);
+      if (prefersReducedMotion) schedule(() => el.remove(), 4000);
+      else el.addEventListener('animationend', () => el.remove(), { once: true });
+    }
+
+    function showStoryTitle(text, duration = 2500) {
+      const el = document.createElement('div');
+      el.className = 'story-title';
       el.textContent = text;
       el.style.animationDuration = duration + 'ms';
+      el.classList.add('active-story');
       storyLayer.appendChild(el);
       if (prefersReducedMotion) schedule(() => el.remove(), duration);
       else el.addEventListener('animationend', () => el.remove(), { once: true });
-    }, delay);
-  }
-
-  /* ── Carousel story ─────────────────────────────────── */
-
-  let carouselProgress = 0;
-  const horseNotes = [261.63, 329.63, 392.00];
-  const progressGlowPositions = [
-    { left: '2%',  top: '43%', width: '16%', height: '19%' },
-    { left: '14%', top: '49%', width: '16%', height: '18%' },
-    { left: '27%', top: '51%', width: '15%', height: '17%' },
-  ];
-
-  function onCarouselTap() {
-    /* Every carousel tap wakes the next horse. */
-    const glowPosition = progressGlowPositions[carouselProgress];
-    const glow = document.createElement('div');
-    glow.className = 'carousel-progress-glow';
-    Object.assign(glow.style, glowPosition);
-    storyLayer.appendChild(glow);
-    glow.addEventListener('animationend', () => glow.remove(), { once: true });
-
-    carouselProgress++;
-    playTone(horseNotes[carouselProgress - 1], 0.18, 'triangle', 0.05);
-    announce(`Carousel progress: ${carouselProgress} of 3 taps.`);
-    if (carouselProgress >= 3) {
-      carouselProgress = 0;
-      playCarouselStory();
-    } else if (carouselProgress === 1) {
-      showInteractionHint('One horse wakes. The carousel waits for another knock.');
-    } else {
-      showInteractionHint('A second horse answers. One final knock remains.');
     }
-  }
 
-  function playCarouselStory() {
-    storyPlaying = true;
-    ambientAudio.volume = 0.1;
-    hotspotLayer.inert = true;
-    hotspotLayer.setAttribute('aria-hidden', 'true');
-    cancelScheduled(nextHintTimer);
-    cancelScheduled(hintHideTimer);
-    hintEl.classList.remove('visible');
-    announce('The Last Ride begins.');
-    showStoryTitle('The Last Ride');
-    showStoryReveal('They never left.', 4600, 2200);
-
-    [261.63, 311.13, 392, 466.16, 523.25].forEach((note, index) => {
-      playTone(note, 0.34, 'triangle', 0.04, index * 0.34);
-    });
-
-    if (prefersReducedMotion) {
-      const glow = document.createElement('div');
-      glow.className = 'reduced-story-glow phase-one-story';
-      storyLayer.appendChild(glow);
+    function showStoryReveal(text, delay, duration = 2200) {
       schedule(() => {
-        playTone(783.99, 0.7, 'sine', 0.035);
-        announce('Ghost riders are waiting on the carousel.');
-      }, 2700);
-      schedule(finishCarouselStory, 7000);
-      return;
+        const el = document.createElement('div');
+        el.className = 'story-reveal active-story';
+        el.textContent = text;
+        el.style.animationDuration = duration + 'ms';
+        storyLayer.appendChild(el);
+        if (prefersReducedMotion) schedule(() => el.remove(), duration);
+        else el.addEventListener('animationend', () => el.remove(), { once: true });
+      }, delay);
     }
 
-    /* Spinning ring over carousel */
-    const spin = document.createElement('div');
-    spin.className = 'carousel-spin phase-one-story';
-    storyLayer.appendChild(spin);
+    function beginStory(name) {
+      storyPlaying = true;
+      ambientAudio.volume = 0.1;
+      hotspotLayer.inert = true;
+      hotspotLayer.setAttribute('aria-hidden', 'true');
+      creditsEl.open = false;
+      creditsEl.inert = true;
+      cancelScheduled(nextHintTimer);
+      cancelScheduled(hintHideTimer);
+      hintEl.classList.remove('visible');
+      announce(`${name} begins.`);
+    }
 
-    /* Ghost children rise after 1.5s */
-    const ghostPositions = [
-      { left: '4%',  bottom: '42%' },
-      { left: '13%', bottom: '44%' },
-      { left: '22%', bottom: '42%' },
+    function finishStory(name) {
+      storyLayer.querySelectorAll('.active-story').forEach(el => el.remove());
+      storyPlaying = false;
+      hotspotLayer.inert = false;
+      hotspotLayer.removeAttribute('aria-hidden');
+      creditsEl.inert = false;
+      ambientAudio.volume = 0.24;
+      announce(`${name} has ended. The carnival is interactive again.`);
+      showHint('The midway goes still. Something else is waiting.');
+      scheduleHints(10000);
+    }
+
+    /* ── Carousel story ─────────────────────────────────── */
+
+    let carouselProgress = 0;
+    const horseNotes = [261.63, 329.63, 392.00];
+    const progressGlowPositions = [
+      { left: '2%', top: '43%', width: '16%', height: '19%' },
+      { left: '14%', top: '49%', width: '16%', height: '18%' },
+      { left: '27%', top: '51%', width: '15%', height: '17%' },
     ];
-    ghostPositions.forEach(({ left, bottom }, i) => {
-      schedule(() => {
-        const ghost = document.createElement('div');
-        ghost.className = 'ghost phase-one-story';
-        ghost.style.left   = left;
-        ghost.style.bottom = bottom;
-        storyLayer.appendChild(ghost);
-        ghost.addEventListener('animationend', () => ghost.remove());
-      }, 1500 + i * 400);
-    });
 
-    /* Flash near the end; reset at 7 seconds. */
-    schedule(() => {
-      const flash = document.createElement('div');
-      flash.className = 'story-flash phase-one-story';
-      storyLayer.appendChild(flash);
-      playTone(880, 0.55, 'sawtooth', 0.025);
-    }, 6300);
+    function onCarouselTap() {
+      /* Every carousel tap wakes the next horse. */
+      const glowPosition = progressGlowPositions[carouselProgress];
+      const glow = document.createElement('div');
+      glow.className = 'carousel-progress-glow';
+      Object.assign(glow.style, glowPosition);
+      storyLayer.appendChild(glow);
+      glow.addEventListener('animationend', () => glow.remove(), { once: true });
 
-    schedule(finishCarouselStory, 7000);
-  }
-
-  function finishCarouselStory() {
-    storyLayer.querySelectorAll('.phase-one-story').forEach(el => el.remove());
-    storyPlaying = false;
-    hotspotLayer.inert = false;
-    hotspotLayer.removeAttribute('aria-hidden');
-    ambientAudio.volume = 0.24;
-    announce('The Last Ride has ended. The carousel can be played again.');
-    scheduleHints(10000);
-  }
-
-  /* ── Clown story ────────────────────────────────────── */
-
-  let clownTaps = 0;
-  const noseEl = document.getElementById('clown-nose');
-
-  function onClownTap() {
-    clownTaps++;
-
-    /* Pulse nose — gets bigger each tap */
-    const pulse = document.createElement('div');
-    pulse.className = 'nose-pulse';
-    pulse.style.inset = (-4 - clownTaps * 3) + 'px';
-    noseEl.appendChild(pulse);
-    pulse.addEventListener('animationend', () => pulse.remove());
-
-    if (clownTaps >= 3) {
-      clownTaps = 0;
-      playClownStory();
-    }
-  }
-
-  function playClownStory() {
-    storyPlaying = true;
-    showStoryTitle('The Vessel');
-    showStoryReveal('It\'s still reaching.', 3200);
-
-    const hand = document.createElement('div');
-    hand.className = 'clown-hand';
-    hand.innerHTML = `<img src="assets/creepyhand.png" style="width:100%;height:100%;object-fit:contain;" alt="">`;
-    storyLayer.appendChild(hand);
-
-    setTimeout(() => {
-      const flash = document.createElement('div');
-      flash.className = 'clown-flash';
-      storyLayer.appendChild(flash);
-      flash.addEventListener('animationend', () => {
-        flash.remove();
-        hand.remove();
-        storyPlaying = false;
-      });
-    }, 4500);
-  }
-
-  /* ── Tent story ─────────────────────────────────────── */
-
-  let tentTaps = 0;
-
-  function onTentTap() {
-    tentTaps++;
-
-    /* Green glow pulse on each tap */
-    const pulse = document.createElement('div');
-    pulse.className = 'tent-pulse';
-    pulse.style.opacity = 0.4 + tentTaps * 0.2;
-    storyLayer.appendChild(pulse);
-    pulse.addEventListener('animationend', () => pulse.remove());
-
-    if (tentTaps >= 3) {
-      tentTaps = 0;
-      playTentStory();
-    }
-  }
-
-  function playTentStory() {
-    storyPlaying = true;
-
-    /* Shadow figure looms */
-    const figure = document.createElement('div');
-    figure.className = 'tent-figure';
-    storyLayer.appendChild(figure);
-
-    /* Green flash at peak */
-    setTimeout(() => {
-      const flash = document.createElement('div');
-      flash.className = 'tent-flash';
-      storyLayer.appendChild(flash);
-      flash.addEventListener('animationend', () => flash.remove());
-    }, 1500);
-
-    /* Darkness follows */
-    setTimeout(() => {
-      const dark = document.createElement('div');
-      dark.className = 'tent-dark';
-      storyLayer.appendChild(dark);
-      dark.addEventListener('animationend', () => {
-        dark.remove();
-        figure.remove();
-        storyPlaying = false;
-      });
-    }, 2000);
-  }
-
-  /* ── Hotspot dispatch ───────────────────────────────── */
-
-  function onHotspotTap(id) {
-    if (paused || storyPlaying) return;
-    if (id === 'carousel-zone')      { onCarouselTap(); return; }
-    if (id === 'clown-nose')         { onClownTap();    return; }
-    if (id === 'tent-zone')          { onTentTap();     return; }
-  }
-
-  document.querySelectorAll('.hotspot').forEach(el => {
-    el.addEventListener('click', () => onHotspotTap(el.id));
-    el.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        onHotspotTap(el.id);
+      carouselProgress++;
+      playTone(horseNotes[carouselProgress - 1], 0.18, 'triangle', 0.05);
+      announce(`Carousel progress: ${carouselProgress} of 3 taps.`);
+      if (carouselProgress >= 3) {
+        carouselProgress = 0;
+        playCarouselStory();
+      } else if (carouselProgress === 1) {
+        showInteractionHint('One horse wakes. The carousel waits for another knock.');
+      } else {
+        showInteractionHint('A second horse answers. One final knock remains.');
       }
+    }
+
+    function playCarouselStory() {
+      beginStory('The Last Ride');
+      showStoryTitle('The Last Ride');
+      showStoryReveal('They never left.', 4600, 2200);
+
+      [261.63, 311.13, 392, 466.16, 523.25].forEach((note, index) => {
+        playTone(note, 0.34, 'triangle', 0.04, index * 0.34);
+      });
+
+      if (prefersReducedMotion) {
+        const glow = document.createElement('div');
+        glow.className = 'reduced-story-glow active-story';
+        storyLayer.appendChild(glow);
+        schedule(() => {
+          playTone(783.99, 0.7, 'sine', 0.035);
+          announce('Ghost riders are waiting on the carousel.');
+        }, 2700);
+        schedule(finishCarouselStory, 7000);
+        return;
+      }
+
+      /* Spinning ring over carousel */
+      const spin = document.createElement('div');
+      spin.className = 'carousel-spin active-story';
+      storyLayer.appendChild(spin);
+
+      /* Ghost children rise after 1.5s */
+      const ghostPositions = [
+        { left: '4%', bottom: '42%' },
+        { left: '13%', bottom: '44%' },
+        { left: '22%', bottom: '42%' },
+      ];
+      ghostPositions.forEach(({ left, bottom }, i) => {
+        schedule(() => {
+          const ghost = document.createElement('div');
+          ghost.className = 'ghost active-story';
+          ghost.style.left = left;
+          ghost.style.bottom = bottom;
+          storyLayer.appendChild(ghost);
+          ghost.addEventListener('animationend', () => ghost.remove());
+        }, 1500 + i * 400);
+      });
+
+      /* Flash near the end; reset at 7 seconds. */
+      schedule(() => {
+        const flash = document.createElement('div');
+        flash.className = 'story-flash active-story';
+        storyLayer.appendChild(flash);
+        playTone(880, 0.55, 'sawtooth', 0.025);
+      }, 6300);
+
+      schedule(finishCarouselStory, 7000);
+    }
+
+    function finishCarouselStory() {
+      finishStory('The Last Ride');
+    }
+
+    /* ── Clown story ────────────────────────────────────── */
+
+    let clownProgress = 0;
+    const clownProgressPositions = [
+      { right: '14%', top: '38%', width: '8%', height: '7%' },
+      { right: '2%', top: '38%', width: '8%', height: '7%' },
+      { right: '3%', top: '47%', width: '19%', height: '12%' },
+    ];
+
+    function onClownTap() {
+      const pulse = document.createElement('div');
+      pulse.className = 'clown-progress-pulse';
+      Object.assign(pulse.style, clownProgressPositions[clownProgress]);
+      storyLayer.appendChild(pulse);
+      pulse.addEventListener('animationend', () => pulse.remove(), { once: true });
+
+      clownProgress++;
+      playTone([196, 164.81, 130.81][clownProgress - 1], 0.22, 'square', 0.028);
+      announce(`Clown booth progress: ${clownProgress} of 3 taps.`);
+      if (clownProgress >= 3) {
+        clownProgress = 0;
+        playClownStory();
+      } else if (clownProgress === 1) {
+        showInteractionHint('A painted eye opens red. The smile stays perfectly still.');
+      } else {
+        showInteractionHint('The second eye wakes. Something moves behind the grin.');
+      }
+    }
+
+    function playClownStory() {
+      beginStory('The Painted Grin');
+      showStoryTitle('The Painted Grin');
+      showStoryReveal('It was never a costume.', 4700, 2100);
+      playTone(123.47, 0.8, 'sawtooth', 0.025);
+
+      if (prefersReducedMotion) {
+        const glow = document.createElement('div');
+        glow.className = 'reduced-story-glow clown-static active-story';
+        storyLayer.appendChild(glow);
+        schedule(() => {
+          playTone(92.5, 0.7, 'square', 0.025);
+          announce('A long hand waits behind the painted clown grin.');
+        }, 3000);
+        schedule(() => finishStory('The Painted Grin'), 7000);
+        return;
+      }
+
+      const eyes = document.createElement('div');
+      eyes.className = 'clown-eyes active-story';
+      storyLayer.appendChild(eyes);
+
+      schedule(() => {
+        const mouth = document.createElement('div');
+        mouth.className = 'mouth-crack active-story';
+        storyLayer.appendChild(mouth);
+        playTone(110, 0.7, 'sawtooth', 0.025);
+      }, 1200);
+
+      schedule(() => {
+        const hand = document.createElement('div');
+        hand.className = 'clown-hand active-story';
+        hand.innerHTML = `<img src="assets/creepyhand.png" style="width:100%;height:100%;object-fit:contain;" alt="">`;
+        storyLayer.appendChild(hand);
+        playTone(82.41, 1.1, 'triangle', 0.035);
+        announce('A hand reaches through the painted grin.');
+      }, 2200);
+
+      schedule(() => {
+        const flash = document.createElement('div');
+        flash.className = 'clown-flash active-story';
+        storyLayer.appendChild(flash);
+        playTone(739.99, 0.45, 'square', 0.025);
+      }, 6200);
+
+      schedule(() => finishStory('The Painted Grin'), 7000);
+    }
+
+    /* ── Tent story ─────────────────────────────────────── */
+
+    let tentProgress = 0;
+
+    function onTentTap() {
+      const pulse = document.createElement('div');
+      pulse.className = 'tent-progress-pulse';
+      pulse.style.filter = `brightness(${1 + tentProgress * 0.45})`;
+      storyLayer.appendChild(pulse);
+      pulse.addEventListener('animationend', () => pulse.remove(), { once: true });
+
+      tentProgress++;
+      playTone([220, 277.18, 369.99][tentProgress - 1], 0.25, 'sine', 0.045);
+      announce(`Big top progress: ${tentProgress} of 3 taps.`);
+      if (tentProgress >= 3) {
+        tentProgress = 0;
+        playTentStory();
+      } else if (tentProgress === 1) {
+        showInteractionHint('The torn canvas breathes out a green pulse.');
+      } else {
+        showInteractionHint('A second pulse answers. The shadow inside stands taller.');
+      }
+    }
+
+    function playTentStory() {
+      beginStory('The Last Show');
+      showStoryTitle('The Last Show');
+      showStoryReveal('The audience is already inside.', 5000, 2200);
+      playTone(73.42, 1.1, 'sine', 0.04);
+
+      if (prefersReducedMotion) {
+        const glow = document.createElement('div');
+        glow.className = 'reduced-story-glow tent-static active-story';
+        storyLayer.appendChild(glow);
+        schedule(() => {
+          playTone(55, 0.9, 'sawtooth', 0.02);
+          announce('A towering shadow fills the opening of the big top.');
+        }, 3200);
+        schedule(() => finishStory('The Last Show'), 7500);
+        return;
+      }
+
+      const openingGlow = document.createElement('div');
+      openingGlow.className = 'tent-pulse active-story';
+      storyLayer.appendChild(openingGlow);
+
+      schedule(() => {
+        const figure = document.createElement('div');
+        figure.className = 'tent-figure active-story';
+        storyLayer.appendChild(figure);
+        playTone(65.41, 1.2, 'sawtooth', 0.022);
+        announce('A towering shadow fills the opening of the big top.');
+      }, 1200);
+
+      schedule(() => {
+        const flash = document.createElement('div');
+        flash.className = 'tent-flash active-story';
+        storyLayer.appendChild(flash);
+        playTone(440, 0.65, 'triangle', 0.035);
+      }, 3500);
+
+      schedule(() => {
+        const dark = document.createElement('div');
+        dark.className = 'tent-dark active-story';
+        storyLayer.appendChild(dark);
+        playTone(55, 0.8, 'sawtooth', 0.02);
+      }, 6200);
+
+      schedule(() => finishStory('The Last Show'), 7500);
+    }
+
+    /* ── Hotspot dispatch ───────────────────────────────── */
+
+    function onHotspotTap(id) {
+      if (paused || storyPlaying) return;
+      if (id === 'carousel-zone') { onCarouselTap(); return; }
+      if (id === 'clown-zone') { onClownTap(); return; }
+      if (id === 'tent-zone') { onTentTap(); return; }
+    }
+
+    document.querySelectorAll('.hotspot').forEach(el => {
+      el.addEventListener('click', () => onHotspotTap(el.id));
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onHotspotTap(el.id);
+        }
+      });
     });
-  });
-</script>
+  </script>
 </body>
+
 </html>
