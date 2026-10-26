@@ -25,6 +25,7 @@ Main risk: expanding the stable one-story prototype could reintroduce small touc
 - [x] **Approve final three-story scope.** On 2026-10-25, the Developer approved completing the clown and tent stories with broad phone-friendly triggers, contextual hints, and the same quality requirements as the carousel.
 - [x] **Complete all three stories.** Added distinct three-step audiovisual progress, 7–7.5 second beginning/middle/end sequences, shared interaction locking, pausable scheduling, clean reset, replay, and static reduced-motion presentation for the clown booth and tent.
 - [x] **Verify the expanded build.** Updated browser suites pass for all three triggers, responsive target geometry, keyboard input, pause/resume, story cleanup, locking, replay, and reduced motion. A rendered 393×852 layout was visually inspected with the three target regions exposed.
+- [x] **Clarify the complete narrative.** Added a two-part opening, connected text after each discovery tap, middle and ending captions, individual epilogues, and a final ending after all three stories. Phone-sized frozen frames confirmed that the captions remain readable without covering the controls or active attraction.
 - [ ] **Deploy and verify.** Commits `0fd0410` and `b9d633e` were pushed to `main`; GitHub Pages matches the committed app and both deployed browser suites pass. Remaining: the Developer must test all three stories at `https://annascho239.github.io/project4/` on a physical smartphone.
 
 Test each result before continuing, including related behavior that already works. Update priorities as evidence emerges and preserve meaningful working checkpoints in git. Before delivery, verify the deployed app against the brief and specification.
@@ -60,6 +61,7 @@ Final Phase 1 interaction decision on 2026-10-19: silhouette targets also remain
 - GitHub Pages served an `index.html` with the same SHA-1 content hash as the committed file (`a1d3e1d41337ff7acdc48c7ca1426a93b23d3a16`). Both test pages also reported `pass` when run against the public HTTPS deployment.
 - Automated checks do not replace the remaining Developer verification on a physical smartphone after deployment.
 - Clown-story refinement: exact frozen frames exposed a misplaced black mouth rectangle and a second-eye effect that could fall outside tall-phone crops. The mouth overlay was removed; thin eye rings now share the background's pupil coordinates and clip naturally. The hand was visually inspected at 393×852 and 430×932 and stays anchored to the painted mouth within the right third of the scene.
+- Narrative refinement: the normal and reduced-motion browser suites pass with checks for the premise, all six pre-story interaction responses, three location-specific epilogues, and the connected ending. Frozen 393×852 frames of the opening and all three middle captions were inspected; text is centered, readable, and clear of the top controls.
 
 Keep implementation progress and verification here. Update `research.md` when evidence changes a decision and `spec.md` when intended behavior changes; link to those updates rather than duplicating them. Record consequential changes, not every small adjustment.
 

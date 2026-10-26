@@ -39,6 +39,7 @@
     await wait(150);
 
     check(doc.getElementById('start-screen').style.display === 'none', 'Enter opens the scene');
+    check(doc.querySelector('.intro-text')?.textContent.includes('one final show'), 'Opening establishes why the carnival is abandoned');
     check(doc.querySelectorAll('.fog').length === 2, 'Two fog layers start');
     check(doc.querySelectorAll('.light').length === 11, 'Flickering string lights start');
     check(doc.querySelectorAll('.bat').length >= 1, 'Bat ambience starts');
@@ -52,6 +53,48 @@
       carousel.style.background = 'rgba(100, 255, 130, .3)';
       clown.style.background = 'rgba(255, 80, 80, .3)';
       tent.style.background = 'rgba(120, 220, 80, .3)';
+    }
+    if (testParams.has('visual-opening')) {
+      const visualDelay = Number(testParams.get('visual-opening')) || 1000;
+      frame.style.width = `${Number(testParams.get('visual-width')) || 393}px`;
+      frame.style.height = `${Number(testParams.get('visual-height')) || 852}px`;
+      await wait(visualDelay);
+      doc.getElementById('pause-btn').click();
+      const introCaptions = doc.querySelectorAll('.intro-text');
+      const intro = introCaptions[introCaptions.length - 1];
+      const introAnimation = intro?.getAnimations()[0];
+      if (introAnimation) {
+        const elapsed = visualDelay + 150;
+        introAnimation.currentTime = elapsed > 4400 ? elapsed - 4400 : elapsed;
+      }
+      results.textContent = intro
+        ? `Opening frozen at ${visualDelay + 150}ms\nCaption: ${intro.textContent}\nOpacity: ${win.getComputedStyle(intro).opacity}`
+        : `Opening frozen at ${visualDelay + 150}ms\nCaption not present`;
+      results.dataset.status = 'visual';
+      return;
+    }
+    if (testParams.has('visual-story')) {
+      const storyName = testParams.get('visual-story');
+      const storyTargets = { carousel, clown, tent };
+      const target = storyTargets[storyName];
+      const visualDelay = Number(testParams.get('visual-time')) || 3000;
+      frame.style.width = `${Number(testParams.get('visual-width')) || 393}px`;
+      frame.style.height = `${Number(testParams.get('visual-height')) || 852}px`;
+      await wait(50);
+      target.click();
+      target.click();
+      target.click();
+      await wait(visualDelay);
+      doc.getElementById('pause-btn').click();
+      const reveal = doc.querySelector('.story-reveal');
+      const revealStarts = { carousel: 2500, clown: 2600, tent: 2800 };
+      const revealAnimation = reveal?.getAnimations()[0];
+      if (revealAnimation) revealAnimation.currentTime = Math.max(0, visualDelay - revealStarts[storyName]);
+      results.textContent = reveal
+        ? `${storyName} story frozen at ${visualDelay}ms\nCaption: ${reveal.textContent}\nOpacity: ${win.getComputedStyle(reveal).opacity}`
+        : `${storyName} story frozen at ${visualDelay}ms\nCaption not present`;
+      results.dataset.status = 'visual';
+      return;
     }
     if (testParams.has('visual-clown')) {
       const visualDelay = Number(testParams.get('visual-clown')) || 2500;
@@ -142,11 +185,15 @@
     check(!doc.querySelector('.carousel-spin'), 'Story ends after resume');
     check(!doc.getElementById('hotspot-layer').inert, 'Interaction unlocks after the story');
     check(!doc.getElementById('credits').inert, 'Credits unlock after the story');
+    check(doc.getElementById('hint').textContent.includes('final horse slows'), 'Carousel ending explains what remains afterward');
 
     clown.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     await wait(30);
     check(doc.getElementById('status').textContent.includes('1 of 3'), 'Clown trigger reports its own progress');
+    check(doc.getElementById('hint').textContent.includes('painted eye notices'), 'First clown tap advances its story');
     clown.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await wait(30);
+    check(doc.getElementById('hint').textContent.includes('red nose warms'), 'Second clown tap advances its story');
     clown.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     await wait(150);
     check(Boolean(doc.querySelector('.clown-eye-glow')), 'Keyboard input starts The Painted Grin');
@@ -154,11 +201,15 @@
     await wait(7100);
     check(!doc.querySelector('.clown-eye-glow'), 'Clown story ends and cleans up');
     check(!doc.getElementById('hotspot-layer').inert, 'Interaction returns after clown story');
+    check(doc.getElementById('hint').textContent.includes('hand slips back'), 'Clown ending explains what remains afterward');
 
     tent.click();
     await wait(30);
     check(doc.getElementById('status').textContent.includes('1 of 3'), 'Tent trigger reports its own progress');
+    check(doc.getElementById('hint').textContent.includes('shape shifts'), 'First tent tap advances its story');
     tent.click();
+    await wait(30);
+    check(doc.getElementById('hint').textContent.includes('second pulse answers'), 'Second tent tap advances its story');
     tent.click();
     await wait(1400);
     check(Boolean(doc.querySelector('.tent-figure')), 'Three tent taps start The Last Show');
@@ -166,6 +217,7 @@
     await wait(6200);
     check(!doc.querySelector('.tent-figure'), 'Tent story ends and cleans up');
     check(!doc.getElementById('hotspot-layer').inert, 'Interaction returns after tent story');
+    check(doc.getElementById('hint').textContent.includes('fall silent together'), 'Completing all stories reveals the connected ending');
 
     for (let tap = 0; tap < 3; tap++) {
       carousel.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));

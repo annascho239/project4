@@ -317,12 +317,15 @@
       top: 44%;
       left: 50%;
       transform: translateX(-50%);
-      color: rgba(180, 160, 140, 0.9);
-      font-size: 0.88rem;
+      color: rgba(240, 224, 198, 0.96);
+      background: rgba(4, 5, 6, 0.48);
+      border-radius: 0.4rem;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.92rem;
       text-align: center;
       width: 76%;
       line-height: 1.6;
-      text-shadow: 0 1px 6px #000;
+      text-shadow: 0 1px 5px #000, 0 0 12px #000;
       pointer-events: none;
       animation: storyTextFade 4s ease-in-out forwards;
     }
@@ -1132,6 +1135,13 @@
     let hintHideTimer = null;
     let nextHintTimer = null;
     let discoveryHintLevel = 0;
+    const completedStories = new Set();
+
+    const storyEpilogues = {
+      'The Last Ride': 'The final horse slows. The ghost riders vanish, but three empty saddles keep rocking.',
+      'The Painted Grin': 'The hand slips back behind the grin. The painted eyes follow you as the booth goes still.',
+      'The Last Show': 'The canvas falls closed. Whatever stood inside is gone—or has learned how to hide.',
+    };
 
     const discoveryHints = [
       "The carousel creaks louder than anything else here.",
@@ -1162,12 +1172,12 @@
       }, delay);
     }
 
-    function showHint(text) {
+    function showHint(text, duration = 5000) {
       if (storyPlaying) return;
       hintEl.textContent = text;
       hintEl.classList.add('visible');
       cancelScheduled(hintHideTimer);
-      hintHideTimer = schedule(() => hintEl.classList.remove('visible'), 5000);
+      hintHideTimer = schedule(() => hintEl.classList.remove('visible'), duration);
     }
 
     function showInteractionHint(text) {
@@ -1177,13 +1187,20 @@
 
     /* ── Story text helpers ─────────────────────────────── */
 
-    function showIntroText() {
+    function showIntroCaption(text, duration) {
+      if (storyPlaying) return;
       const el = document.createElement('div');
       el.className = 'intro-text';
-      el.textContent = 'The carnival closed one night and never reopened. No one says why. Explore — if you dare.';
+      el.textContent = text;
+      el.style.animationDuration = duration + 'ms';
       storyLayer.appendChild(el);
-      if (prefersReducedMotion) schedule(() => el.remove(), 4000);
+      if (prefersReducedMotion) schedule(() => el.remove(), duration);
       else el.addEventListener('animationend', () => el.remove(), { once: true });
+    }
+
+    function showIntroText() {
+      showIntroCaption('The carnival closed after one final show. By morning, every worker and every child was gone.', 4300);
+      schedule(() => showIntroCaption('Three attractions were left running: a carousel, a painted clown, and the green-lit big top. Listen. They still remember.', 4500), 4400);
     }
 
     function showStoryTitle(text, duration = 2500) {
@@ -1232,9 +1249,16 @@
       hotspotLayer.removeAttribute('aria-hidden');
       creditsEl.inert = false;
       ambientAudio.volume = 0.24;
-      announce(`${name} has ended. The carnival is interactive again.`);
-      showHint('The midway goes still. Something else is waiting.');
-      scheduleHints(10000);
+      completedStories.add(name);
+      announce(`${name} has ended. ${completedStories.size} of 3 stories discovered.`);
+
+      if (completedStories.size === 3) {
+        showHint('The carousel, clown, and big top fall silent together. For the first time in years, the carnival feels empty. You can revisit any memory.', 8000);
+        scheduleHints(15000);
+      } else {
+        showHint(`${storyEpilogues[name]} Something else in the midway is still waiting.`, 6500);
+        scheduleHints(12000);
+      }
     }
 
     /* ── Carousel story ─────────────────────────────────── */
@@ -1263,16 +1287,17 @@
         carouselProgress = 0;
         playCarouselStory();
       } else if (carouselProgress === 1) {
-        showInteractionHint('One horse wakes. The carousel waits for another knock.');
+        showInteractionHint('One horse wakes beneath the dead lights. A low note rolls through the empty ride.');
       } else {
-        showInteractionHint('A second horse answers. One final knock remains.');
+        showInteractionHint('A second horse answers. The empty saddles begin to sway, waiting for one more voice.');
       }
     }
 
     function playCarouselStory() {
       beginStory('The Last Ride');
       showStoryTitle('The Last Ride');
-      showStoryReveal('They never left.', 4600, 2200);
+      showStoryReveal('The organ plays, but no one is turning the crank.', 2500, 1800);
+      showStoryReveal('They never left.', 4700, 2100);
 
       [261.63, 311.13, 392, 466.16, 523.25].forEach((note, index) => {
         playTone(note, 0.34, 'triangle', 0.04, index * 0.34);
@@ -1350,15 +1375,16 @@
         clownProgress = 0;
         playClownStory();
       } else if (clownProgress === 1) {
-        showInteractionHint('A painted eye opens red. The smile stays perfectly still.');
+        showInteractionHint('The painted eye notices you. Somewhere behind the booth, wood creaks.');
       } else {
-        showInteractionHint('The red nose warms. Something moves behind the grin.');
+        showInteractionHint('The red nose warms beneath your hand. The grin stays still, but something behind it moves.');
       }
     }
 
     function playClownStory() {
       beginStory('The Painted Grin');
       showStoryTitle('The Painted Grin');
+      showStoryReveal('Something behind the booth reaches back.', 2600, 1800);
       showStoryReveal('It was never a costume.', 4700, 2100);
       playTone(123.47, 0.8, 'sawtooth', 0.025);
 
@@ -1424,15 +1450,16 @@
         tentProgress = 0;
         playTentStory();
       } else if (tentProgress === 1) {
-        showInteractionHint('The torn canvas breathes out a green pulse.');
+        showInteractionHint('The torn canvas breathes out a green pulse. A shape shifts behind it.');
       } else {
-        showInteractionHint('A second pulse answers. The shadow inside stands taller.');
+        showInteractionHint('A second pulse answers. The shadow inside stands taller than any performer should.');
       }
     }
 
     function playTentStory() {
       beginStory('The Last Show');
       showStoryTitle('The Last Show');
+      showStoryReveal('The shadow stands up—and keeps rising.', 2800, 1800);
       showStoryReveal('The audience is already inside.', 5000, 2200);
       playTone(73.42, 1.1, 'sine', 0.04);
 

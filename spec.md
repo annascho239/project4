@@ -26,10 +26,12 @@ Deliver a stable smartphone experience of an abandoned carnival with three disco
 - The tent is the focal point. The carousel, clown booth, and game stalls provide three distinct environmental features.
 - Fog, bats, and unevenly flickering string lights create the ambient motion.
 - `assets/void-estate.ogg` loops quietly after Enter. Its verified CC0 source is recorded in `research.md` and in the in-app credits.
+- A two-part opening establishes that the carnival emptied after its final show and identifies the three attractions that still hold memories. It gives a first-time visitor enough context without revealing the interaction solution.
 - Text hints rotate among all three story areas, become more explicit over time, and switch to progress-specific language after interaction. Interaction postpones the next discovery hint so messages do not compete.
-- **The Last Ride:** three carousel taps wake the horses left to right with blue glows and rising notes. The third tap begins a 7-second story in which the carousel activates, ghost riders emerge, “They never left” reveals the ending, and a final flash returns the scene to idle.
-- **The Painted Grin:** three clown-booth taps wake the visible eye, nose, and grin with precisely aligned red pulses and descending tones. The third tap begins a 7-second story in which thin rings flare around the painted pupils, a hand reaches directly from the unaltered grin, and “It was never a costume” reveals the ending before a localized red flash resets the booth.
-- **The Last Show:** three tent taps intensify a green glow and rising hum. The third tap begins a 7.5-second story in which the opening glows, a towering figure appears, “The audience is already inside” reveals the ending, and darkness returns the tent to idle.
+- **The Last Ride:** three carousel taps wake the horses left to right with blue glows, rising notes, and connected narrative responses. The third tap begins a 7-second story in which the carousel activates, the unattended organ plays, ghost riders emerge, “They never left” reveals the ending, and a short epilogue returns the scene to idle.
+- **The Painted Grin:** three clown-booth taps wake the visible eye, nose, and grin with aligned red pulses, descending tones, and connected narrative responses. The third tap begins a 7-second story in which thin rings flare around the painted pupils, a hand reaches from the unaltered grin, the text explains what is reaching back, and a short epilogue resets the booth.
+- **The Last Show:** three tent taps intensify a green glow, rising hum, and description of the growing shape inside. The third tap begins a 7.5-second story in which the opening glows, a towering figure rises, the audience is revealed, and a short epilogue returns the tent to idle.
+- After all three stories have been discovered, one connected ending explains that the entire carnival has finally fallen silent while keeping every story replayable.
 
 ### Shared behavior
 
@@ -53,7 +55,7 @@ Deliver a stable smartphone experience of an abandoned carnival with three disco
 
 1. Enter starts the scene once; ambient audio and all three visual ambient systems begin when reduced motion is not requested.
 2. Every carousel, clown, and tent interaction gives distinct visual and audio feedback, advances exactly one step, and communicates progress toward three taps.
-3. All three stories have a clear beginning, middle, and end, last 5–10 seconds, lock other interaction, reset cleanly, and replay.
+3. All three stories use interaction responses, a beginning title, a middle caption, an ending caption, and an epilogue to remain understandable to a first-time visitor; each lasts 5–10 seconds, locks other interaction, resets cleanly, and replays.
 4. Pause during ambience, a hint, and each story freezes the coordinated experience; Resume continues rather than restarting or skipping it.
 5. The experience remains usable at 320×568, 375×667, and 430×932 CSS pixels and with keyboard-only input.
 6. With reduced motion enabled, no recurring ambient animation begins and all three stories remain understandable.

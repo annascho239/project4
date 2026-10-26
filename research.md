@@ -151,6 +151,7 @@ Investigate unfamiliar techniques or asset sources as needed. Verify usage terms
 - Each trigger still has a unique audiovisual vocabulary: blue ascending horse notes, red descending clown pulses, and intensifying green tent hums.
 - All story effects use the shared pausable scheduler and Web Audio context. No additional external audio was needed.
 - Progressive hints rotate among the three locations before interaction and respond to the current trigger's progress afterward.
+- Narrative text now follows the same structure across the experience: a two-part premise, story-specific responses after the first two taps, a middle and ending caption during each story, a location-specific epilogue, and one connected ending after all three. The discovery text remains suggestive rather than directly instructing the User where or how many times to tap.
 
 ## Revisions
 
