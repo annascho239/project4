@@ -25,7 +25,7 @@ Main risk: expanding the stable one-story prototype could reintroduce small touc
 - [x] **Approve final three-story scope.** On 2026-10-25, the Developer approved completing the clown and tent stories with broad phone-friendly triggers, contextual hints, and the same quality requirements as the carousel.
 - [x] **Complete all three stories.** Added distinct three-step audiovisual progress, 7–7.5 second beginning/middle/end sequences, shared interaction locking, pausable scheduling, clean reset, replay, and static reduced-motion presentation for the clown booth and tent.
 - [x] **Verify the expanded build.** Updated browser suites pass for all three triggers, responsive target geometry, keyboard input, pause/resume, story cleanup, locking, replay, and reduced motion. A rendered 393×852 layout was visually inspected with the three target regions exposed.
-- [ ] **Deploy and verify.** Push the verified final build to `main`, confirm GitHub Pages matches it, then have the Developer test all three stories at `https://annascho239.github.io/project4/` on a physical smartphone.
+- [ ] **Deploy and verify.** Commits `0fd0410` and `b9d633e` were pushed to `main`; GitHub Pages matches the committed app and both deployed browser suites pass. Remaining: the Developer must test all three stories at `https://annascho239.github.io/project4/` on a physical smartphone.
 
 Test each result before continuing, including related behavior that already works. Update priorities as evidence emerges and preserve meaningful working checkpoints in git. Before delivery, verify the deployed app against the brief and specification.
 
@@ -57,6 +57,7 @@ Final Phase 1 interaction decision on 2026-10-19: silhouette targets also remain
 - `tests/phase1-smoke.html` passed every check for three active story targets, five responsive layouts, background/target alignment, minimum target size, unique progress, keyboard input, pause/resume, credits and scene locking, clean endings, and replay.
 - `tests/phase1-reduced-motion.html` passed for the carousel, clown, and tent. Recurring ambience stayed off; each story used a static presentation, locked interaction, ended cleanly, and restored the scene.
 - A 393×852 render with debug target colors was inspected. The blue carousel, green tent, and red clown regions were broad, adjacent, non-overlapping, and aligned with their illustrated features.
+- GitHub Pages served an `index.html` with the same SHA-1 content hash as the committed file (`a1d3e1d41337ff7acdc48c7ca1426a93b23d3a16`). Both test pages also reported `pass` when run against the public HTTPS deployment.
 - Automated checks do not replace the remaining Developer verification on a physical smartphone after deployment.
 
 Keep implementation progress and verification here. Update `research.md` when evidence changes a decision and `spec.md` when intended behavior changes; link to those updates rather than duplicating them. Record consequential changes, not every small adjustment.

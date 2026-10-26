@@ -2,7 +2,7 @@ Project 4 Git History Export
 Generated: 2026-10-25
 Repository: https://github.com/annascho239/project4
 
-This export covers the substantive project history through commit 0fd0410.
+This export covers the project history through commit b9d633e.
 The commit that adds this file appears in the repository's canonical Git history.
 
 73292fb | 2026-10-19 | anna-s-c | Initial commit: project scaffold, background image, and index.html
@@ -18,3 +18,4 @@ e38ff3e | 2026-10-19 | anna-s-c | Make carousel hints respond to player progress
 d1a9288 | 2026-10-19 | anna-s-c | Simplify carousel trigger to three broad taps
 604e15f | 2026-10-19 | anna-s-c | Add Git history export for submission
 0fd0410 | 2026-10-25 | anna-s-c | Complete all three spooky stories
+b9d633e | 2026-10-25 | anna-s-c | Update submission Git history
