@@ -73,6 +73,22 @@
       results.dataset.status = 'visual';
       return;
     }
+    if (testParams.has('visual-progress')) {
+      const storyName = testParams.get('visual-progress');
+      const storyTargets = { carousel, clown, tent };
+      const target = storyTargets[storyName];
+      const tapCount = Math.min(2, Math.max(1, Number(testParams.get('visual-taps')) || 1));
+      frame.style.width = `${Number(testParams.get('visual-width')) || 393}px`;
+      frame.style.height = `${Number(testParams.get('visual-height')) || 852}px`;
+      await wait(50);
+      for (let tap = 0; tap < tapCount; tap++) target.click();
+      await wait(500);
+      doc.getElementById('pause-btn').click();
+      doc.getElementById('hint').getAnimations().forEach(animation => animation.currentTime = 500);
+      results.textContent = `${storyName} progress after ${tapCount} tap${tapCount === 1 ? '' : 's'}\n${doc.getElementById('hint').textContent}`;
+      results.dataset.status = 'visual';
+      return;
+    }
     if (testParams.has('visual-story')) {
       const storyName = testParams.get('visual-story');
       const storyTargets = { carousel, clown, tent };
@@ -86,6 +102,8 @@
       target.click();
       await wait(visualDelay);
       doc.getElementById('pause-btn').click();
+      const titleAnimation = doc.querySelector('.story-title')?.getAnimations()[0];
+      if (titleAnimation) titleAnimation.currentTime = visualDelay;
       const reveal = doc.querySelector('.story-reveal');
       const revealStarts = { carousel: 2500, clown: 2600, tent: 2800 };
       const revealAnimation = reveal?.getAnimations()[0];
@@ -161,13 +179,16 @@
     carousel.click();
     await wait(30);
     check(doc.getElementById('status').textContent.includes('1 of 3'), 'First carousel tap reports progress');
+    check(doc.getElementById('hint').textContent.includes('1 of 3 awakened'), 'First carousel tap shows visible three-step progress');
     check(doc.getElementById('hint').textContent.includes('One horse wakes'), 'First tap wakes one horse');
     carousel.click();
     await wait(30);
+    check(doc.getElementById('hint').textContent.includes('2 of 3 awakened'), 'Second carousel tap shows visible three-step progress');
     check(doc.getElementById('hint').textContent.includes('second horse'), 'Second tap wakes another horse');
     carousel.click();
     await wait(150);
     check(Boolean(doc.querySelector('.carousel-spin')), 'Three carousel taps start The Last Ride');
+    check(doc.querySelector('.story-title-progress')?.textContent.includes('3 of 3'), 'Third carousel tap visibly completes the memory');
     check(doc.getElementById('hotspot-layer').inert, 'Story locks scene interaction');
     check(doc.getElementById('credits').inert, 'Story locks the secondary credits control');
 
@@ -190,13 +211,16 @@
     clown.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     await wait(30);
     check(doc.getElementById('status').textContent.includes('1 of 3'), 'Clown trigger reports its own progress');
+    check(doc.getElementById('hint').textContent.includes('1 of 3 awakened'), 'First clown tap shows visible three-step progress');
     check(doc.getElementById('hint').textContent.includes('painted eye notices'), 'First clown tap advances its story');
     clown.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     await wait(30);
+    check(doc.getElementById('hint').textContent.includes('2 of 3 awakened'), 'Second clown tap shows visible three-step progress');
     check(doc.getElementById('hint').textContent.includes('red nose warms'), 'Second clown tap advances its story');
     clown.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     await wait(150);
     check(Boolean(doc.querySelector('.clown-eye-glow')), 'Keyboard input starts The Painted Grin');
+    check(doc.querySelector('.story-title-progress')?.textContent.includes('3 of 3'), 'Third clown tap visibly completes the memory');
     check(doc.getElementById('hotspot-layer').inert, 'Clown story locks interaction');
     await wait(7100);
     check(!doc.querySelector('.clown-eye-glow'), 'Clown story ends and cleans up');
@@ -206,13 +230,16 @@
     tent.click();
     await wait(30);
     check(doc.getElementById('status').textContent.includes('1 of 3'), 'Tent trigger reports its own progress');
-    check(doc.getElementById('hint').textContent.includes('shape shifts'), 'First tent tap advances its story');
+    check(doc.getElementById('hint').textContent.includes('1 of 3 awakened'), 'First tent tap shows visible three-step progress');
+    check(doc.getElementById('hint').textContent.includes('green pulse'), 'First tent tap advances its story');
     tent.click();
     await wait(30);
-    check(doc.getElementById('hint').textContent.includes('second pulse answers'), 'Second tent tap advances its story');
+    check(doc.getElementById('hint').textContent.includes('2 of 3 awakened'), 'Second tent tap shows visible three-step progress');
+    check(doc.getElementById('hint').textContent.includes('shadow rises'), 'Second tent tap advances its story');
     tent.click();
     await wait(1400);
     check(Boolean(doc.querySelector('.tent-figure')), 'Three tent taps start The Last Show');
+    check(doc.querySelector('.story-title-progress')?.textContent.includes('3 of 3'), 'Third tent tap visibly completes the memory');
     check(doc.getElementById('hotspot-layer').inert, 'Tent story locks interaction');
     await wait(6200);
     check(!doc.querySelector('.tent-figure'), 'Tent story ends and cleans up');

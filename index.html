@@ -297,6 +297,14 @@
       animation: storyTextFade 2.5s ease-in-out forwards;
     }
 
+    .story-title-progress {
+      display: block;
+      margin-top: 0.55rem;
+      color: rgba(255, 209, 112, 0.96);
+      font-size: 0.62em;
+      letter-spacing: 0.12em;
+    }
+
     .story-reveal {
       position: absolute;
       bottom: 22%;
@@ -1200,13 +1208,19 @@
 
     function showIntroText() {
       showIntroCaption('The carnival closed after one final show. By morning, every worker and every child was gone.', 4300);
-      schedule(() => showIntroCaption('Three attractions were left running: a carousel, a painted clown, and the green-lit big top. Listen. They still remember.', 4500), 4400);
+      schedule(() => showIntroCaption('Three attractions were left running: the carousel, the painted clown, and the green-lit big top. Each memory answers in three beats. Listen. They still remember.', 5500), 4400);
     }
 
     function showStoryTitle(text, duration = 2500) {
       const el = document.createElement('div');
       el.className = 'story-title';
-      el.textContent = text;
+      const name = document.createElement('span');
+      name.textContent = text;
+      const progress = document.createElement('span');
+      progress.className = 'story-title-progress';
+      progress.textContent = 'Memory awakened · 3 of 3';
+      el.append(name, progress);
+      el.setAttribute('aria-label', `${text}. Memory awakened, 3 of 3.`);
       el.style.animationDuration = duration + 'ms';
       el.classList.add('active-story');
       storyLayer.appendChild(el);
@@ -1287,9 +1301,9 @@
         carouselProgress = 0;
         playCarouselStory();
       } else if (carouselProgress === 1) {
-        showInteractionHint('One horse wakes beneath the dead lights. A low note rolls through the empty ride.');
+        showInteractionHint('Carousel memory · 1 of 3 awakened. One horse wakes beneath the dead lights.');
       } else {
-        showInteractionHint('A second horse answers. The empty saddles begin to sway, waiting for one more voice.');
+        showInteractionHint('Carousel memory · 2 of 3 awakened. A second horse answers. One final beat remains.');
       }
     }
 
@@ -1375,9 +1389,9 @@
         clownProgress = 0;
         playClownStory();
       } else if (clownProgress === 1) {
-        showInteractionHint('The painted eye notices you. Somewhere behind the booth, wood creaks.');
+        showInteractionHint('Clown memory · 1 of 3 awakened. The painted eye notices you.');
       } else {
-        showInteractionHint('The red nose warms beneath your hand. The grin stays still, but something behind it moves.');
+        showInteractionHint('Clown memory · 2 of 3 awakened. The red nose warms. One final beat remains.');
       }
     }
 
@@ -1450,9 +1464,9 @@
         tentProgress = 0;
         playTentStory();
       } else if (tentProgress === 1) {
-        showInteractionHint('The torn canvas breathes out a green pulse. A shape shifts behind it.');
+        showInteractionHint('Big-top memory · 1 of 3 awakened. The torn canvas breathes out a green pulse.');
       } else {
-        showInteractionHint('A second pulse answers. The shadow inside stands taller than any performer should.');
+        showInteractionHint('Big-top memory · 2 of 3 awakened. The shadow rises. One final beat remains.');
       }
     }
 
