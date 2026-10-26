@@ -2,7 +2,7 @@ Project 4 Git History Export
 Generated: 2026-10-25
 Repository: https://github.com/annascho239/project4
 
-This export covers the project history through commit bceb539.
+This export covers the project history through commit eb6c8a0.
 The commit that adds this file appears in the repository's canonical Git history.
 
 73292fb | 2026-10-19 | anna-s-c | Initial commit: project scaffold, background image, and index.html
@@ -21,3 +21,5 @@ d1a9288 | 2026-10-19 | anna-s-c | Simplify carousel trigger to three broad taps
 b9d633e | 2026-10-25 | anna-s-c | Update submission Git history
 f2e4077 | 2026-10-25 | anna-s-c | Record final deployment verification
 bceb539 | 2026-10-25 | anna-s-c | Realign and refine clown story
+1a672ce | 2026-10-25 | anna-s-c | Update Git history after clown refinement
+eb6c8a0 | 2026-10-25 | anna-s-c | Align clown eyes and remove mouth overlay
