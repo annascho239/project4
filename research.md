@@ -64,15 +64,17 @@ Start a fresh chat with:
 
 ### Story 2 — The Clown
 
-**Trigger:** Tap anywhere on the clown booth three times; each tap wakes another part of the face.
+**Trigger:** Tap anywhere on the clown booth three times; the feedback advances across the visible eye, nose, and mouth.
 **Sequence:**
-- First two taps: the painted eyes pulse red; the third pulse spreads across the grin, with descending synthesized tones
-- On third tap: both eyes burn red and the clown's mouth cracks open wide
+- First tap: the visible eye pulses red; second tap: the nose warms; third tap: the pulse spreads across the grin, with descending synthesized tones
+- On third tap: the visible eye burns red and the clown's mouth darkens
 - A long jointed hand reaches slowly out, pauses, retracts
 - A red flash reveals that it was never a costume, then the booth resets
 - Total runtime: 7 seconds
 
 **Mobile revision:** Small painted facial features would repeat the carousel's original precision problem. One broad booth target supplies three clear progress stages while remaining dependable on a phone.
+
+**Visual-alignment revision — 2026-10-25:** Frame inspection showed the original mouth overlay at 40% scene height while the painted grin sits around 49–60%, and tall-phone cropping can hide the second eye. The final sequence uses source-image coordinates for the visible eye, nose, and mouth. The hand's wrist is anchored inside the mouth and reaches into, rather than over, the midway.
 
 ### Story 3 — The Tent
 

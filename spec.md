@@ -28,7 +28,7 @@ Deliver a stable smartphone experience of an abandoned carnival with three disco
 - `assets/void-estate.ogg` loops quietly after Enter. Its verified CC0 source is recorded in `research.md` and in the in-app credits.
 - Text hints rotate among all three story areas, become more explicit over time, and switch to progress-specific language after interaction. Interaction postpones the next discovery hint so messages do not compete.
 - **The Last Ride:** three carousel taps wake the horses left to right with blue glows and rising notes. The third tap begins a 7-second story in which the carousel activates, ghost riders emerge, “They never left” reveals the ending, and a final flash returns the scene to idle.
-- **The Painted Grin:** three clown-booth taps wake two painted eyes and the grin with red pulses and descending tones. The third tap begins a 7-second story in which the eyes open, the mouth cracks, a hand reaches through, and “It was never a costume” reveals the ending before a red flash resets the booth.
+- **The Painted Grin:** three clown-booth taps wake the visible eye, nose, and grin with precisely aligned red pulses and descending tones. The third tap begins a 7-second story in which the eye burns red, the mouth darkens, a hand reaches from the painted grin, and “It was never a costume” reveals the ending before a localized red flash resets the booth.
 - **The Last Show:** three tent taps intensify a green glow and rising hum. The third tap begins a 7.5-second story in which the opening glows, a towering figure appears, “The audience is already inside” reveals the ending, and darkness returns the tent to idle.
 
 ### Shared behavior

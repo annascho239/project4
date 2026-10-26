@@ -6,7 +6,7 @@
   <style>
     body { margin: 0; background: #181818; color: #eee; font: 14px/1.5 system-ui, sans-serif; }
     main { display: flex; gap: 20px; align-items: flex-start; padding: 20px; }
-    iframe { width: 375px; height: 667px; border: 2px solid #777; }
+    iframe { width: 375px; height: 667px; border: 2px solid #777; flex: 0 0 auto; }
     #results { white-space: pre-wrap; }
     .pass { color: #89e089; }
     .fail { color: #ff8a8a; }
@@ -47,10 +47,41 @@
     const carousel = doc.getElementById('carousel-zone');
     const clown = doc.getElementById('clown-zone');
     const tent = doc.getElementById('tent-zone');
-    if (new URLSearchParams(location.search).has('show-targets')) {
+    const testParams = new URLSearchParams(location.search);
+    if (testParams.has('show-targets')) {
       carousel.style.background = 'rgba(100, 255, 130, .3)';
       clown.style.background = 'rgba(255, 80, 80, .3)';
       tent.style.background = 'rgba(120, 220, 80, .3)';
+    }
+    if (testParams.has('visual-clown')) {
+      const visualDelay = Number(testParams.get('visual-clown')) || 2500;
+      frame.style.width = `${Number(testParams.get('visual-width')) || 393}px`;
+      frame.style.height = `${Number(testParams.get('visual-height')) || 852}px`;
+      await wait(50);
+      clown.click();
+      clown.click();
+      clown.click();
+      await wait(visualDelay);
+      const animationTimes = [
+        ['.clown-eye-glow', visualDelay],
+        ['.clown-mouth-wake', visualDelay - 1200],
+        ['.clown-hand', visualDelay - 2200],
+      ];
+      for (const [selector, storyTime] of animationTimes) {
+        const animation = doc.querySelector(selector)?.getAnimations()[0];
+        if (!animation) continue;
+        animation.pause();
+        animation.currentTime = Math.max(0, storyTime);
+      }
+      doc.getElementById('pause-btn').click();
+      const hand = doc.querySelector('.clown-hand');
+      const handRect = hand?.getBoundingClientRect();
+      const handStyle = hand ? win.getComputedStyle(hand) : null;
+      results.textContent = hand
+        ? `Clown story frozen at ${visualDelay}ms\nHand: ${Math.round(handRect.width)}×${Math.round(handRect.height)} at ${Math.round(handRect.left)},${Math.round(handRect.top)}; opacity ${handStyle.opacity}; transform ${handStyle.transform}`
+        : `Clown story frozen at ${visualDelay}ms\nHand not created yet`;
+      results.dataset.status = 'visual';
+      return;
     }
     check(doc.querySelectorAll('.hotspot').length === 3, 'All three story hotspots are active');
     for (const [width, height] of [[320, 568], [375, 667], [390, 844], [393, 852], [430, 932]]) {
@@ -117,10 +148,10 @@
     clown.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     clown.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     await wait(150);
-    check(Boolean(doc.querySelector('.clown-eyes')), 'Keyboard input starts The Painted Grin');
+    check(Boolean(doc.querySelector('.clown-eye-glow')), 'Keyboard input starts The Painted Grin');
     check(doc.getElementById('hotspot-layer').inert, 'Clown story locks interaction');
     await wait(7100);
-    check(!doc.querySelector('.clown-eyes'), 'Clown story ends and cleans up');
+    check(!doc.querySelector('.clown-eye-glow'), 'Clown story ends and cleans up');
     check(!doc.getElementById('hotspot-layer').inert, 'Interaction returns after clown story');
 
     tent.click();

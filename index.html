@@ -613,80 +613,72 @@
       }
     }
 
-    .mouth-crack {
+    .clown-eye-glow {
       position: absolute;
-      right: 0%;
-      top: 40%;
-      width: 14%;
-      height: 5%;
-      background: #0a0005;
-      border-radius: 0 0 40% 40%;
-      transform: scaleY(0);
-      transform-origin: top center;
-      animation: mouthOpen 1.2s ease-out forwards;
+      left: 81%;
+      top: 42%;
+      width: 8%;
+      height: 7%;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffb06b 0 5%, #ff2d1d 9%, rgba(150, 0, 0, 0.34) 28%, transparent 68%);
+      filter: drop-shadow(0 0 6px #ff2d1d);
+      animation: clownEyeWake 5.8s ease-in-out forwards;
       pointer-events: none;
     }
 
-    @keyframes mouthOpen {
-      to {
-        transform: scaleY(1);
-      }
+    @keyframes clownEyeWake {
+      0%, 100% { opacity: 0; transform: scale(0.6); }
+      12%, 82% { opacity: 1; transform: scale(1); }
+      52% { filter: drop-shadow(0 0 13px #ff2d1d); transform: scale(1.08); }
+    }
+
+    .clown-mouth-wake {
+      position: absolute;
+      left: 83%;
+      top: 49%;
+      width: 17%;
+      height: 11%;
+      background: radial-gradient(ellipse at 78% 46%, rgba(0, 0, 0, 0.96) 0 40%, rgba(105, 0, 0, 0.68) 54%, transparent 74%);
+      clip-path: polygon(7% 23%, 100% 0, 100% 100%, 16% 86%, 0 56%);
+      transform: scaleY(0.18);
+      transform-origin: 78% 36%;
+      animation: clownMouthWake 4.9s ease-in-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes clownMouthWake {
+      0% { opacity: 0; transform: scaleY(0.18); }
+      18%, 78% { opacity: 0.88; transform: scaleY(1); }
+      100% { opacity: 0; transform: scaleY(0.35); }
     }
 
     .clown-hand {
       position: absolute;
-      right: 0;
-      top: 38%;
-      width: 30%;
-      height: 28%;
-      transform: scale(0);
-      transform-origin: right center;
-      animation: handGrow 4.3s ease-in-out forwards;
+      right: -4%;
+      top: 44%;
+      width: 32%;
+      height: 30%;
+      transform: translate(62%, 16%) scale(0.16) rotate(12deg);
+      transform-origin: 90% 68%;
+      animation: clownHandReach 4.3s cubic-bezier(0.32, 0, 0.2, 1) forwards;
+      filter: drop-shadow(-7px 8px 8px rgba(0, 0, 0, 0.75));
       pointer-events: none;
     }
 
-    .clown-eyes {
-      position: absolute;
-      right: 1%;
-      top: 36%;
-      width: 18%;
-      height: 13%;
-      background:
-        radial-gradient(circle at 25% 45%, #ff2d1d 0 5%, rgba(120, 0, 0, 0.5) 8%, transparent 18%),
-        radial-gradient(circle at 76% 42%, #ff2d1d 0 5%, rgba(120, 0, 0, 0.5) 8%, transparent 18%);
-      filter: drop-shadow(0 0 8px #ff2d1d);
-      animation: eyesWake 5s ease-in-out forwards;
-      pointer-events: none;
-    }
-
-    @keyframes eyesWake {
-      0%, 100% { opacity: 0; }
-      18%, 78% { opacity: 1; }
-      50% { filter: drop-shadow(0 0 16px #ff2d1d); }
-    }
-
-    @keyframes handGrow {
-      0% {
-        transform: scale(0);
-      }
-
-      35% {
-        transform: scale(1);
-      }
-
-      65% {
-        transform: scale(1);
-      }
-
-      100% {
-        transform: scale(0);
-      }
+    @keyframes clownHandReach {
+      0% { opacity: 0; transform: translate(62%, 16%) scale(0.16) rotate(12deg); }
+      28% { opacity: 1; transform: translate(-5%, -6%) scale(0.88) rotate(-7deg); }
+      68% { opacity: 1; transform: translate(-7%, -8%) scale(0.92) rotate(-9deg); }
+      100% { opacity: 0; transform: translate(58%, 14%) scale(0.2) rotate(10deg); }
     }
 
     .clown-flash {
       position: absolute;
-      inset: 0;
-      background: rgba(255, 40, 40, 0.5);
+      right: 0;
+      top: 33%;
+      width: 31%;
+      height: 34%;
+      background: radial-gradient(ellipse at 80% 48%, rgba(255, 75, 48, 0.68) 0%, rgba(145, 0, 0, 0.28) 45%, transparent 76%);
       pointer-events: none;
       animation: flashOut 0.5s ease-out forwards;
     }
@@ -1178,7 +1170,7 @@
       if (carouselProgress === 1) return 'One horse glows. The carousel is waiting for another knock.';
       if (carouselProgress === 2) return 'Two horses are awake. One final knock remains.';
       if (clownProgress === 1) return 'One painted eye burns red. The grin is listening.';
-      if (clownProgress === 2) return 'Both eyes are open. Something presses behind the smile.';
+      if (clownProgress === 2) return 'The red nose warms. Something presses behind the smile.';
       if (tentProgress === 1) return 'The canvas answers with a sickly green pulse.';
       if (tentProgress === 2) return 'A tall shadow leans closer from inside the tent.';
       const index = Math.min(discoveryHintLevel, discoveryHints.length - 1);
@@ -1251,6 +1243,9 @@
       cancelScheduled(nextHintTimer);
       cancelScheduled(hintHideTimer);
       hintEl.classList.remove('visible');
+      hintEl.textContent = '';
+      storyLayer.querySelectorAll('.intro-text, .carousel-progress-glow, .clown-progress-pulse, .tent-progress-pulse')
+        .forEach(el => el.remove());
       announce(`${name} begins.`);
     }
 
@@ -1360,9 +1355,9 @@
 
     let clownProgress = 0;
     const clownProgressPositions = [
-      { right: '14%', top: '38%', width: '8%', height: '7%' },
-      { right: '2%', top: '38%', width: '8%', height: '7%' },
-      { right: '3%', top: '47%', width: '19%', height: '12%' },
+      { left: '81%', top: '42%', width: '8%', height: '7%' },
+      { left: '87%', top: '44%', width: '10%', height: '9%' },
+      { left: '83%', top: '49%', width: '17%', height: '11%' },
     ];
 
     function onClownTap() {
@@ -1381,7 +1376,7 @@
       } else if (clownProgress === 1) {
         showInteractionHint('A painted eye opens red. The smile stays perfectly still.');
       } else {
-        showInteractionHint('The second eye wakes. Something moves behind the grin.');
+        showInteractionHint('The red nose warms. Something moves behind the grin.');
       }
     }
 
@@ -1403,13 +1398,13 @@
         return;
       }
 
-      const eyes = document.createElement('div');
-      eyes.className = 'clown-eyes active-story';
-      storyLayer.appendChild(eyes);
+      const eye = document.createElement('div');
+      eye.className = 'clown-eye-glow active-story';
+      storyLayer.appendChild(eye);
 
       schedule(() => {
         const mouth = document.createElement('div');
-        mouth.className = 'mouth-crack active-story';
+        mouth.className = 'clown-mouth-wake active-story';
         storyLayer.appendChild(mouth);
         playTone(110, 0.7, 'sawtooth', 0.025);
       }, 1200);
