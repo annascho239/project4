@@ -59,7 +59,7 @@ Final Phase 1 interaction decision on 2026-10-19: silhouette targets also remain
 - A 393×852 render with debug target colors was inspected. The blue carousel, green tent, and red clown regions were broad, adjacent, non-overlapping, and aligned with their illustrated features.
 - GitHub Pages served an `index.html` with the same SHA-1 content hash as the committed file (`a1d3e1d41337ff7acdc48c7ca1426a93b23d3a16`). Both test pages also reported `pass` when run against the public HTTPS deployment.
 - Automated checks do not replace the remaining Developer verification on a physical smartphone after deployment.
-- Clown-story refinement: exact frozen frames exposed a misplaced black mouth rectangle and a second-eye effect that could fall outside tall-phone crops. The revised eye, nose, mouth, and hand effects were visually inspected at 393×852 and 430×932; the hand stays anchored to the painted mouth and contained to the right third of the scene.
+- Clown-story refinement: exact frozen frames exposed a misplaced black mouth rectangle and a second-eye effect that could fall outside tall-phone crops. The mouth overlay was removed; thin eye rings now share the background's pupil coordinates and clip naturally. The hand was visually inspected at 393×852 and 430×932 and stays anchored to the painted mouth within the right third of the scene.
 
 Keep implementation progress and verification here. Update `research.md` when evidence changes a decision and `spec.md` when intended behavior changes; link to those updates rather than duplicating them. Record consequential changes, not every small adjustment.
 

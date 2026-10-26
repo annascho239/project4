@@ -67,14 +67,14 @@ Start a fresh chat with:
 **Trigger:** Tap anywhere on the clown booth three times; the feedback advances across the visible eye, nose, and mouth.
 **Sequence:**
 - First tap: the visible eye pulses red; second tap: the nose warms; third tap: the pulse spreads across the grin, with descending synthesized tones
-- On third tap: the visible eye burns red and the clown's mouth darkens
+- On third tap: thin red rings flare around the painted pupils wherever they remain visible after phone cropping; the original mouth artwork remains uncovered
 - A long jointed hand reaches slowly out, pauses, retracts
 - A red flash reveals that it was never a costume, then the booth resets
 - Total runtime: 7 seconds
 
 **Mobile revision:** Small painted facial features would repeat the carousel's original precision problem. One broad booth target supplies three clear progress stages while remaining dependable on a phone.
 
-**Visual-alignment revision — 2026-10-25:** Frame inspection showed the original mouth overlay at 40% scene height while the painted grin sits around 49–60%, and tall-phone cropping can hide the second eye. The final sequence uses source-image coordinates for the visible eye, nose, and mouth. The hand's wrist is anchored inside the mouth and reaches into, rather than over, the midway.
+**Visual-alignment revision — 2026-10-25:** Frame inspection showed the original mouth overlay at 40% scene height while the painted grin sits around 49–60%, and tall-phone cropping can hide the second eye. The mouth overlay was removed entirely. Thin rings use source-image pupil coordinates and clip naturally with the background; the hand's wrist is anchored inside the original painted mouth and reaches into, rather than over, the midway.
 
 ### Story 3 — The Tent
 

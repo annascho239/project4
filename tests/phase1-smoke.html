@@ -64,14 +64,15 @@
       await wait(visualDelay);
       const animationTimes = [
         ['.clown-eye-glow', visualDelay],
-        ['.clown-mouth-wake', visualDelay - 1200],
         ['.clown-hand', visualDelay - 2200],
       ];
       for (const [selector, storyTime] of animationTimes) {
-        const animation = doc.querySelector(selector)?.getAnimations()[0];
-        if (!animation) continue;
-        animation.pause();
-        animation.currentTime = Math.max(0, storyTime);
+        doc.querySelectorAll(selector).forEach(element => {
+          const animation = element.getAnimations()[0];
+          if (!animation) return;
+          animation.pause();
+          animation.currentTime = Math.max(0, storyTime);
+        });
       }
       doc.getElementById('pause-btn').click();
       const hand = doc.querySelector('.clown-hand');
